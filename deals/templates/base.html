@@ -8,7 +8,7 @@
 
     <!-- CSS -->
     {% load static %}
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -29,7 +29,7 @@
         </ul>
     </div>
     <div class="mx-auto order-0">
-        <a class="navbar-brand mx-auto" href="#">| DEAL FINDER |</a>
+        <a class="navbar-brand mx-auto" href="{% url 'index' %}">| DEAL FINDER |</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -50,43 +50,22 @@
     <!-- Links -->
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link" href="#">SHOP</a>
+            <a class="nav-link" href="{% url 'shop' %}">SHOP</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">BUDGET</a>
+            <a class="nav-link" href="{% url 'budget' %}">BUDGET</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">DASHBOARD</a>
+            <a class="nav-link" href="{% url 'dashboard' %}">DASHBOARD</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">MAP</a>
+            <a class="nav-link" href="{% url 'map' %}">MAP</a>
         </li>
     </ul>
 
 </nav>
 
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
 
-    <!-- Links -->
-
-    <ul class="navbar-nav">
-        <div class="d-flex justify-content-between">
-        <li class="nav-item">
-            <a class="nav-link" href="#">BROWSE</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">CATEGORIES</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">SHOPPING LIST</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">COMPARE LIST</a>
-        </li>
-        </div>
-    </ul>
-
-</nav>
 
 {% block content %}
 
