@@ -6,6 +6,13 @@ from django.shortcuts import render
 def index(request):
     return HttpResponse('Homepage')
 
+def home(request):
+    return render(request, 'home/home.html')
+
+
+def profile(request):
+    return render(request, 'profile.html')
+
 
 def shop(request):
     return HttpResponse('shop')
