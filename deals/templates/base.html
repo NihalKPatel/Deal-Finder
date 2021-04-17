@@ -1,4 +1,5 @@
 <!doctype html>
+
 <html lang="en">
 <head>
     <!-- Required meta tags -->
@@ -11,7 +12,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>Deal Finder</title>
 </head>
 <body>
 
@@ -39,12 +40,11 @@
                 <a class="nav-link" href="#">$$$ / $$$</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link " href={% url 'profile' %}>Profile</a>
+                <a class="nav-link" href="{% url 'profile' %}">profile</a>
             </li>
         </ul>
     </div>
 </nav>
-<div class="p-3 mb-2 bg-secondary">
 <nav class="navbar navbar-expand-sm bg-light navbar-light justify-content-center">
 
     <!-- Links -->
@@ -87,6 +87,9 @@
     </ul>
 
 </nav>
-</div>
+
+{% block content %}
+
+{% endblock %}
 </body>
 </html>

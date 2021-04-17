@@ -4,14 +4,11 @@ from django.shortcuts import render
 
 # HomePage
 def index(request):
-    return HttpResponse('Homepage')
-
-def home(request):
-    return render(request, 'home/home.html')
+    return render(request, 'index.html')
 
 
 def profile(request):
-    return render(request, 'profile.html')
+    return render(request, 'pages/profile.html')
 
 
 def shop(request):
