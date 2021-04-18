@@ -39,9 +39,21 @@
             <li class="nav-item">
                 <a class="nav-link" href="#">$$$ / $$$</a>
             </li>
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <p class="navbar-text m-0">Welcome {{ user.get_username }}</p>
+                </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'profile' %}">profile</a>
+                <a class="nav-link" href="{% url 'profile' %}">Profile</a>
             </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+            {% endif %}
         </ul>
     </div>
 </nav>
@@ -66,9 +78,10 @@
 </nav>
 
 
-
+<div class="container">
 {% block content %}
 
 {% endblock %}
+</div>
 </body>
 </html>
