@@ -14,4 +14,5 @@ urlpatterns = [
     path('browse', views.browse, name='browse'),
     path('categories', views.categories, name='categories'),
     path('map', views.map, name='map'),
+    path('notification', views.notification, name='notification'),
 ]
