@@ -15,6 +15,7 @@
     <title>Deal Finder</title>
 </head>
 <body>
+
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
 
@@ -33,42 +34,14 @@
             <span class="navbar-toggler-icon"></span>
         </button>
     </div>
-
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
                 <a class="nav-link" href="#">$$$ / $$$</a>
             </li>
-            {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <p class="navbar-text m-0">Welcome {{ user.get_username }}</p>
-                </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                <a class="nav-link" href="{% url 'profile' %}">profile</a>
             </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                </li>
-
-            {% if user.is_authenticated %}
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Welcome {{ user.get_username }}
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
-                    <a class="dropdown-item" href="{% url 'notification' %}">Notification</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
-                </div>
-            </li>
-
-            {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Login</a>
-                </li>
-            {% endif %}
         </ul>
     </div>
 </nav>
@@ -93,17 +66,9 @@
 </nav>
 
 
-<div class="container">
+
 {% block content %}
 
 {% endblock %}
-
-</div>
-
-</div>
-
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>
