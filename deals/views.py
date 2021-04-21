@@ -1,22 +1,49 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.http import HttpResponse
 
 
-def dashboard(request):
-    return HttpResponse('<h1>This is the dashboard</h1>')
+# HomePage
+def index(request):
+    return render(request, 'index.html')
 
 
 def profile(request):
-    return HttpResponse('<h1>This is the profile page</h1>')
+    return render(request, 'pages/profile.html')
 
 
-def shopping(request):
-    return HttpResponse('<h1>This is the shopping page</h1>')
+def shop(request):
+    return render(request, 'pages/shop.html')
+
+
+def dashboard(request):
+    return render(request, 'pages/dashboard.html')
 
 
 def budget(request):
-    return HttpResponse('<h1>This is the budget page</h1>')
+    return render(request, 'pages/budget.html')
 
 
-def mapping(request):
-    return HttpResponse('<h1>This is the maps page</h1>')
+def browse(request):
+    return render(request, 'pages/browse.html')
+
+
+def categories(request):
+    return render(request, 'pages/categories.html')
+
+
+def compare_list(request):
+    return render(request, 'pages/compare_list.html')
+
+
+def shopping_list(request):
+    return render(request, 'pages/shopping_list.html')
+
+
+def map(request):
+    return render(request, 'pages/map.html')
+
+
+def notification(request):
+    return render(request, 'pages/notification.html')
+
