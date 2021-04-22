@@ -8,6 +8,9 @@ class Profile(models.Model):
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
     address = models.CharField(max_length=255)
 
+    def __str__(self):
+        return f'{self.user.username} Profile'
+
 
 class Budget(models.Model):
     max_spend = models.IntegerField()
