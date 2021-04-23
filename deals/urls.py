@@ -13,5 +13,5 @@ urlpatterns = [
     path('compare_list', views.compare_list, name='compare_list'),
     path('browse', views.browse, name='browse'),
     path('categories', views.categories, name='categories'),
-    path('map', views.map, name='map'),
+    path('details', views.details, name='details'),
 ]
