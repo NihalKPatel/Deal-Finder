@@ -1,5 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from deals.forms import SearchForm
+from . import utils
 
 
 # HomePage
@@ -24,7 +26,13 @@ def budget(request):
 
 
 def browse(request):
-    return render(request, 'pages/browse.html')
+    form = SearchForm(request.GET)
+    search = ""
+    if request.method == 'GET' and 'search' in request.GET:
+        search = request.GET['search']
+
+    name_and_price = utils.get_item_search_data_nw('https://www.newworld.co.nz/shop/Search?q=' + search)
+    return render(request, 'pages/browse.html', {'form': form, 'search_results': name_and_price})
 
 
 def categories(request):

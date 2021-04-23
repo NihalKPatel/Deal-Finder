@@ -28,6 +28,7 @@ def get_single_item_data_amazon(url):
 
 
 def get_item_search_data_nw(url):
+    name_and_price = []
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.128 Safari/537.36',
         'Accept-Language': 'en',
@@ -38,20 +39,23 @@ def get_item_search_data_nw(url):
     soup = BeautifulSoup(r.text, "lxml")
 
     products = soup.select(selector=".js-product-card-footer")
-    data = []
+    product_data = []
 
     for product in products:
         if "data-options" in product.attrs:
-            data.append(json.loads(product["data-options"]))
-    return data
+            product_data.append(json.loads(product["data-options"]))
 
-print(get_item_search_data_nw(new_world_url))
-itemStringNw = ''
-for item in get_item_search_data_nw(new_world_url):
-    itemStringNw += (item['productName'] + " " + item['ProductDetails']['PricePerItem'] + ",")
-print(itemStringNw)
-print(get_item_search_data_nw(pakinsave_url))
-itemStringPak = ''
-for item in get_item_search_data_nw(pakinsave_url):
-    itemStringPak += (item['productName'] + " " + item['ProductDetails']['PricePerItem'] + ",")
-print(itemStringPak)
+    for item in product_data:
+        name_and_price.append((item['productName'], item['ProductDetails']['PricePerItem']))
+    return name_and_price
+
+# print(get_item_search_data_nw(new_world_url))
+# itemStringNw = ''
+# for item in get_item_search_data_nw(new_world_url):
+#     itemStringNw += (item['productName'] + " " + item['ProductDetails']['PricePerItem'] + ",")
+# print(itemStringNw)
+# print(get_item_search_data_nw(pakinsave_url))
+# itemStringPak = ''
+# for item in get_item_search_data_nw(pakinsave_url):
+#     itemStringPak += (item['productName'] + " " + item['ProductDetails']['PricePerItem'] + ",")
+# print(itemStringPak)
