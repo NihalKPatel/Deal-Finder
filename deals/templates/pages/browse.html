@@ -38,19 +38,18 @@
             <button type="submit" class="btn btn-dark col-1">Search</button>
         </div>
     </form>
-
+    <br>
     {% for name, price in search_results %}
-        <div class="row">
-            <div class="col">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ name }}</h5>
-                        <p class="card-text">${{ price }}</p>
-                        <a href="#" class="btn btn-dark">Go to store</a>
-                    </div>
-                </div>
+        {% if forloop.counter0|divisibleby:3 %} <div class="card-group text-center"> {%  endif %}
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ name }}</h5>
+                <p class="card-text">${{ price }}</p>
+                <a href="#" class="btn btn-dark">Go to store</a>
             </div>
         </div>
+    {%  if forloop.counter|divisibleby:3 or forloop.last %}</div><!-- row closing --><hr>{%  endif %}
+
     {% endfor %}
 
     </body>
