@@ -15,5 +15,6 @@ urlpatterns = [
     path('categories', views.categories, name='categories'),
     path('map', views.map, name='map'),
     path('notification', views.notification, name='notification'),
+    path('register/', views.register, name='register'),
 ]
 
