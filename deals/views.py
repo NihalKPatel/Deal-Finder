@@ -28,10 +28,14 @@ def budget(request):
 def browse(request):
     form = SearchForm(request.GET)
     search = ""
-    if request.method == 'GET' and 'search' in request.GET:
-        search = request.GET['search']
+    page = 1
+    if request.method == 'GET':
+        if 'search' in request.GET:
+            search = request.GET['search']
+        if 'page' in request.GET:
+            page = request.GET['page']
 
-    name_and_price = utils.get_item_search_data_nw('https://www.newworld.co.nz/shop/Search?q=' + search)
+    name_and_price = utils.get_item_search_data_nw('https://www.newworld.co.nz/shop/Search?q=' + search + '&pg=' + str(page))
     return render(request, 'pages/browse.html', {'form': form, 'search_results': name_and_price})
 
 

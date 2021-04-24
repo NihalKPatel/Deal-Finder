@@ -2,12 +2,6 @@
 
 {% block content %}
 
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Title</title>
-    </head>
-    <body>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
 
         <!-- Links -->
@@ -40,19 +34,27 @@
     </form>
     <br>
     {% for name, price in search_results %}
-        {% if forloop.counter0|divisibleby:3 %} <div class="card-group text-center"> {%  endif %}
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">{{ name }}</h5>
-                <p class="card-text">${{ price }}</p>
-                <a href="#" class="btn btn-dark">Go to store</a>
-            </div>
+        {% if forloop.counter0|divisibleby:3 %}
+            <div class="card-group text-center">
+        {% endif %}
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ name }}</h5>
+            <p class="card-text">${{ price }}</p>
+            <a href="#" class="btn btn-dark">Go to store</a>
         </div>
-    {%  if forloop.counter|divisibleby:3 or forloop.last %}</div><!-- row closing --><hr>{%  endif %}
-
+    </div>
+    {% if forloop.counter|divisibleby:3 or forloop.last %}</div><!-- row closing -->
+        <hr>{% endif %}
     {% endfor %}
 
-    </body>
-    </html>
+    <form method="GET" action="{% url 'browse' %}">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li class="page-item"><a class="" href="#">Previous</a></li>
+            <li class="page-item"><a class="" href="#">Next</a></li>
+        </ul>
+    </nav>
+    </form>
 
 {% endblock %}
