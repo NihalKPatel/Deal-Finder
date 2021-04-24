@@ -28,7 +28,16 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Application definition
-
+MAP_WIDGETS = {
+    "GoogleStaticMapWidget": (
+        ("zoom", 15),
+        ("size", "320x320"),
+    ),
+    "GoogleStaticMapMarkerSettings": (
+        ("color", "green"),
+    ),
+    "GOOGLE_MAP_API_KEY": "AIzaSyCtRbNrJLwvsLHEWG5SGBjXTjW4--gC4Xw"
+}
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -37,6 +46,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'deals.apps.DealsConfig',
+
+    'mapwidgets',
+
 ]
 
 MIDDLEWARE = [
@@ -47,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'dealfinder.urls'
