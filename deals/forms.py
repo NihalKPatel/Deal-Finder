@@ -1,5 +1,12 @@
 from django import forms
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+# create a new form that inherits from UserCreationForm
 
 
-class SearchForm(forms.Form):
-    search = forms.CharField(help_text="Search here!")
+class UserRegisterForm(UserCreationForm):
+    email = forms.EmailField()
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
