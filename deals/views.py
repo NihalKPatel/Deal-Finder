@@ -1,4 +1,6 @@
 from django.http import HttpResponse
+from django.shortcuts import render
+from . import utils
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import UserRegisterForm
@@ -27,7 +29,16 @@ def budget(request):
 
 
 def browse(request):
-    return render(request, 'pages/browse.html')
+    search = ""
+    page = 1
+    if request.method == 'GET':
+        if 'search' in request.GET:
+            search = request.GET['search']
+        if 'page' in request.GET:
+            page = request.GET['page']
+
+    name_and_price = utils.get_item_search_data_nw('https://www.newworld.co.nz/shop/Search?q=' + search + '&pg=' + str(page))
+    return render(request, 'pages/browse.html', {'search_results': name_and_price})
 
 
 def categories(request):
