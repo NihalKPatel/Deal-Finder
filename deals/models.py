@@ -1,5 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.gis.db.models import PointField
+from django.contrib.gis.db import models
+
+
 # Create your models here.
 
 
@@ -38,3 +42,10 @@ class Product(models.Model):
     location = models.CharField(max_length=255)
     list = models.ForeignKey(List, on_delete=models.CASCADE, null=False)
 
+
+class Location(models.Model):
+    name = models.CharField(max_length=255)
+    location = models.PointField(help_text="Use map widget for point the house location")
+
+    def __str__(self):
+        return self.name

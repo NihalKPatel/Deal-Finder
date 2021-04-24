@@ -8,6 +8,13 @@
     <title>Title</title>
 </head>
 <body>
+<h2 class="display-4">details</h2>
+<form method="POST" action="">
+    {% csrf_token %}
+    {{form.media}}
+    {{form.as_p}}
+</form>
+
 
 </body>
 </html>
