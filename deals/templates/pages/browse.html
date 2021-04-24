@@ -2,35 +2,59 @@
 
 {% block content %}
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
 
-    <!-- Links -->
+        <!-- Links -->
 
-    <ul class="navbar-nav">
-        <div class="d-flex justify-content-between">
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'browse' %}">BROWSE</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'categories' %}">CATEGORIES</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'shopping_list' %}">SHOPPING LIST</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'compare_list' %}">COMPARE LIST</a>
-            </li>
+        <ul class="navbar-nav">
+            <div class="d-flex justify-content-between">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'browse' %}">BROWSE</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'categories' %}">CATEGORIES</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'shopping_list' %}">SHOPPING LIST</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'compare_list' %}">COMPARE LIST</a>
+                </li>
+            </div>
+        </ul>
+
+    </nav>
+
+    <br>
+    <form method="GET" action="{% url 'browse' %}">
+        <div class="form-row justify-content-center">
+            <input type="text" class="form-control col-9" id="search" name="search" placeholder="Search here!">
+            <button type="submit" class="btn btn-dark col-1">Search</button>
         </div>
-    </ul>
+    </form>
+    <br>
+    {% for name, price in search_results %}
+        {% if forloop.counter0|divisibleby:3 %}
+            <div class="card-group text-center">
+        {% endif %}
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ name }}</h5>
+            <p class="card-text">${{ price }}</p>
+            <a href="#" class="btn btn-dark">Go to store</a>
+        </div>
+    </div>
+    {% if forloop.counter|divisibleby:3 or forloop.last %}</div><!-- row closing -->
+        <hr>{% endif %}
+    {% endfor %}
 
-</nav>
-</body>
-</html>
+    <form method="GET" action="{% url 'browse' %}">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li class="page-item"><a class="" href="#">Previous</a></li>
+            <li class="page-item"><a class="" href="#">Next</a></li>
+        </ul>
+    </nav>
+    </form>
 
 {% endblock %}

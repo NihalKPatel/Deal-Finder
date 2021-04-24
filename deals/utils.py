@@ -1,9 +1,11 @@
 import requests
 from bs4 import BeautifulSoup
 import lxml
+import json
 
 single_item_url = 'https://www.amazon.com/PlayStation-5-DualSense-Wireless-Controller/dp/B08H99BPJN/'
-item_search_url = 'https://www.amazon.com/s?k=controller'
+new_world_url = 'https://www.newworld.co.nz/shop/Search?q=apple'
+pakinsave_url = 'https://www.paknsaveonline.co.nz/Search?q=apple'
 
 
 def get_single_item_data_amazon(url):
@@ -25,9 +27,8 @@ def get_single_item_data_amazon(url):
     return name, price
 
 
-def get_item_search_data_amazon(url):
-    product_list = []
-
+def get_item_search_data_nw(url):
+    name_and_price = []
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.128 Safari/537.36',
         'Accept-Language': 'en',
@@ -37,23 +38,24 @@ def get_item_search_data_amazon(url):
 
     soup = BeautifulSoup(r.text, "lxml")
 
-    name = soup.select(selector=".s-result-item")
-    price = soup.select(selector=".s-result-item .a-offscreen")
+    products = soup.select(selector=".js-product-card-footer")
+    product_data = []
 
-    for i in range(len(name)):
-        # if name[i].attrs["data-component-type"] == 's-search-result':
-        if "data-component-id" in name[i].attrs:
-            print(name[i].select_one(selector='.a-text-normal').getText())
-        print()
-    # for i in range(len(price)):
-    #     product = {
-    #         'name': name[i],
-    #         'price': price[i],
-    #     }
-    #     product_list.append(product)
-    return name
+    for product in products:
+        if "data-options" in product.attrs:
+            product_data.append(json.loads(product["data-options"]))
 
+    for item in product_data:
+        name_and_price.append((item['productName'], item['ProductDetails']['PricePerItem']))
+    return name_and_price
 
-print(get_item_search_data_amazon(item_search_url))
-
-# print(get_single_item_data_amazon(url))
+# print(get_item_search_data_nw(new_world_url))
+# itemStringNw = ''
+# for item in get_item_search_data_nw(new_world_url):
+#     itemStringNw += (item['productName'] + " " + item['ProductDetails']['PricePerItem'] + ",")
+# print(itemStringNw)
+# print(get_item_search_data_nw(pakinsave_url))
+# itemStringPak = ''
+# for item in get_item_search_data_nw(pakinsave_url):
+#     itemStringPak += (item['productName'] + " " + item['ProductDetails']['PricePerItem'] + ",")
+# print(itemStringPak)
