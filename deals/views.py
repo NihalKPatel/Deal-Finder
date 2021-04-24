@@ -1,14 +1,10 @@
 from django.http import HttpResponse
-<<<<<<< HEAD
 from django.shortcuts import render
-from deals.forms import SearchForm
 from . import utils
-=======
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from .forms import UserRegisterForm
->>>>>>> e8bc1ec2457d569746f1cc526fa3cf5d032cb867
 
 
 # HomePage
@@ -33,7 +29,6 @@ def budget(request):
 
 
 def browse(request):
-    form = SearchForm(request.GET)
     search = ""
     page = 1
     if request.method == 'GET':
@@ -43,7 +38,7 @@ def browse(request):
             page = request.GET['page']
 
     name_and_price = utils.get_item_search_data_nw('https://www.newworld.co.nz/shop/Search?q=' + search + '&pg=' + str(page))
-    return render(request, 'pages/browse.html', {'form': form, 'search_results': name_and_price})
+    return render(request, 'pages/browse.html', {'search_results': name_and_price})
 
 
 def categories(request):
@@ -60,8 +55,6 @@ def shopping_list(request):
 
 def map(request):
     return render(request, 'pages/map.html')
-<<<<<<< HEAD
-=======
 
 
 def notification(request):
@@ -80,4 +73,3 @@ def register(request):
         form = UserRegisterForm()
     return render(request, 'registration/register.html', {'form': form})
 
->>>>>>> e8bc1ec2457d569746f1cc526fa3cf5d032cb867

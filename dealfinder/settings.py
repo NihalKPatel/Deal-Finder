@@ -126,13 +126,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-<<<<<<< HEAD
 LOGIN_REDIRECT_URL = '/deals/'
-=======
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-LOGIN_REDIRECT_URL = '/deals/'
->>>>>>> e8bc1ec2457d569746f1cc526fa3cf5d032cb867
