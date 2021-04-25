@@ -2,49 +2,58 @@
 
 {% block content %}
 
-
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <style>
-        .map-container-4{
-            overflow:hidden;
-            padding-bottom:56.25%;
-            position:relative;
-            height:0;
-        }
-        .map-container iframe{
-            position: absolute;
-            width: 100%;
-            left: 0;
-            height: 400px;
-
-        }
-    </style>
-
-
-</head>
-<body>
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
-
-    <!--Main layout-->
-
-    <main class=" m-0 p-0">
-        <div class="container-fluid m-0 p-0">
-
-            <!--Google map-->
-            <div id="map-container-google-4" class="z-depth-1-half map-container-4" style="height: 1000px">
- 
-                <iframe src="https://maps.google.com/maps?q=newworld&t=&z=13&ie=UTF8&iwloc=&output=embed" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-            </div>
-
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Google Maps Project</title>
+        <script src="js/store-data.js"></script>
+        <script src="js/index.js"></script>
+        <link rel="stylesheet" href="style/style.css" />
+        <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
+        <link
+                rel="shortcut icon"
+                href="img/google-maps-icon.png"
+                type="image/x-icon"
+        />
+    </head>
+    <body>
+    <div class="title">Store Locator</div>
+    <div class="search-container">
+        <div class="search">
+            <input type="text" id="zip-code-input" placeholder="Enter Zip" />
+            <i class="fas fa-search" onclick="searchStores()"></i>
         </div>
-    </main>
-    <!--Main layout-->
-</nav>
-</body>
-</html>
+    </div>
+    <div class="stores-list-container">
+        <div class="stores-list">
+            <div class="store-container">
+                <div class="store-info-container">
+                    <div class="store-address">
+                        <span>queens street</span>
+                        <span>Auckland, NZ 1041</span>
+                    </div>
+                    <div class="store-phone-number">+92 308 1334342</div>
+                </div>
+                <div class="store-number-container">
+                    <div class="store-number">
+                        1
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div id="map"></div>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtRbNrJLwvsLHEWG5SGBjXTjW4--gC4Xw
+&callback=initMap">
+    </script>
+    </body>
+    </html>
 {% endblock %}
+
+
 
 
