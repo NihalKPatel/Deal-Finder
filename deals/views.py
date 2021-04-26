@@ -52,8 +52,8 @@ def shopping_list(request):
     return render(request, 'pages/shopping_list.html')
 
 
-def map(request):
-    return render(request, 'pages/map.html')
+def details(request):
+    return render(request, 'pages/details.html')
 
 
 def notification(request):
