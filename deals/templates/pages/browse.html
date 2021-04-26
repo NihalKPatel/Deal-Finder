@@ -41,7 +41,7 @@
         <div class="card-body">
             <h5 class="card-title">{{ name }}</h5>
             <p class="card-text">${{ price }}</p>
-            <a href="{% url 'details' %}" class="btn btn-dark">Go to store</a>
+            <a href="{% url 'details' %}" class="btn btn-dark">details</a>
         </div>
     </div>
     {% if forloop.counter|divisibleby:3 or forloop.last %}</div><!-- row closing -->
