@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from .forms import UserRegisterForm
+from .models import Product, Budget
 
 
 # HomePage
@@ -25,7 +26,9 @@ def dashboard(request):
 
 
 def budget(request):
-    return render(request, 'pages/budget.html')
+    products = Product.objects.all()
+    budget = Budget.objects.all()
+    return render(request, 'pages/budget.html', {'products': products, 'budget': budget})
 
 
 def browse(request):
