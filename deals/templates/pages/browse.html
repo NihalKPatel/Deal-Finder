@@ -49,12 +49,25 @@
     {% endfor %}
 
     <form method="GET" action="{% url 'browse' %}">
-    <nav aria-label="Page navigation">
-        <ul class="pagination">
-            <li class="page-item"><a class="" href="#">Previous</a></li>
-            <li class="page-item"><a class="" href="#">Next</a></li>
-        </ul>
-    </nav>
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <li class="page-item">
+                    <button a class="page-link" name="page" value="1">1</button>
+                </li>
+                <li class="page-item">
+                    <button class="page-link" name="page" value="2">2</button>
+                </li>
+                <li class="page-item">
+                    <button class="page-link" name="page" value="3">3</button>
+                </li>
+                <li class="page-item">
+                    <button class="page-link" name="page" value="4">4</button>
+                </li>
+                <li class="page-item">
+                    <button class="page-link" name="page" value="5">5</button>
+                </li>
+            </ul>
+        </nav>
     </form>
 
 {% endblock %}

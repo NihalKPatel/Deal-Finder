@@ -5,6 +5,10 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from .forms import UserRegisterForm
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from .models import List, Profile
+from django.views import generic
+from django.urls import reverse, reverse_lazy
 
 
 # HomePage
@@ -49,8 +53,23 @@ def compare_list(request):
     return render(request, 'pages/compare_list.html')
 
 
-def shopping_list(request):
-    return render(request, 'pages/shopping_list.html')
+class ShoppingList(generic.ListView):
+    model = List
+    template_name = 'pages/shopping_list.html'
+    context_object_name = 'shopping_lists'
+
+
+class ShoppingListCreate(CreateView):
+    model = List
+    template_name = 'pages/shopping_list_create.html'
+    fields = ['type']
+    success_url = reverse_lazy('shopping_list')
+
+    def form_valid(self, form):
+        form.instance.profile = Profile.objects.filter(user_id=self.request.user.id)[0]
+        print(type(form.instance.profile))
+        print(type(Profile.objects.filter(user_id=self.request.user.id)[0]))
+        return super().form_valid(form)
 
 
 def details(request):

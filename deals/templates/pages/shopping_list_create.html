@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
+
+    <ul class="navbar-nav">
+        <div class="d-flex justify-content-between">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'browse' %}">BROWSE</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'categories' %}">CATEGORIES</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'shopping_list' %}">SHOPPING LIST</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'compare_list' %}">COMPARE LIST</a>
+            </li>
+        </div>
+    </ul>
+
+    </nav>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <input type="submit" value="Submit">
+    </form>
+{% endblock %}
