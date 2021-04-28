@@ -8,3 +8,8 @@ admin.site.register(List)
 admin.site.register(Product)
 admin.site.register(Analytics)
 
+
+from .models import Profile
+
+admin.site.register(Profile)
+

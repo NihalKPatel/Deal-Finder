@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+
 from . import utils
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
@@ -75,6 +75,3 @@ def register(request):
 
 def analytics(request):
     return render(request, 'pages/analytics.html')
-
-
-

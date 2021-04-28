@@ -17,7 +17,5 @@ urlpatterns = [
     path('notification', views.notification, name='notification'),
     path('register/', views.register, name='register'),
     path('analytics/', views.analytics, name='analytics'),
-
-
 ]
 
