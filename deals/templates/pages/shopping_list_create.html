@@ -22,11 +22,12 @@
 
     </nav>
 
+    {% load crispy_forms_tags %}
     <form action="" method="post">
         {% csrf_token %}
-        <table>
-            {{ form.as_table }}
-        </table>
-        <input type="submit" value="Submit">
+
+            {{ form|crispy }}
+
+        <input type="submit" class="btn btn-dark" value="Submit">
     </form>
 {% endblock %}
