@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2 class="display-4">SCRAPE DATA</h2>
+    <form method="post">
+        {% csrf_token %}
+        <button class="btn btn-dark" type="submit" name="scrape">Scrape products from New World</button>
+    </form>
+{% endblock %}

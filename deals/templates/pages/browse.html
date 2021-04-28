@@ -2,19 +2,20 @@
 
 {% block content %}
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <style>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"
+              id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <style>
 
-    </style>
-</head>
-<body>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+        </style>
+    </head>
+    <body>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
 
         <!-- Links -->
@@ -65,15 +66,15 @@
         </div>
     </form>
     <br>
-    {% for name, price in search_results %}
+    {% for product in product_list %}
         {% if forloop.counter0|divisibleby:3 %}
             <div class="card-group text-center">
         {% endif %}
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">{{ name }}</h5>
-            <p class="card-text">${{ price }}</p>
-            <a href="https://www.newworld.co.nz/" class="btn btn-dark">Go to store</a>
+            <h5 class="card-title">{{ product.name }}</h5>
+            <p class="card-text">${{ product.price }}</p>
+            <a href="{{ product.link }}" class="btn btn-dark">Go to store</a>
             <a href="{% url 'details' %}" class="btn btn-dark">Go to details</a>
 
         </div>
@@ -82,27 +83,19 @@
         <hr>{% endif %}
     {% endfor %}
 
-    <form method="GET" action="{% url 'browse' %}">
-        <nav aria-label="Page navigation">
-            <ul class="pagination">
-                <li class="page-item">
-                    <button a class="page-link" name="page" value="1">1</button>
-                </li>
-                <li class="page-item">
-                    <button class="page-link" name="page" value="2">2</button>
-                </li>
-                <li class="page-item">
-                    <button class="page-link" name="page" value="3">3</button>
-                </li>
-                <li class="page-item">
-                    <button class="page-link" name="page" value="4">4</button>
-                </li>
-                <li class="page-item">
-                    <button class="page-link" name="page" value="5">5</button>
-                </li>
-            </ul>
-        </nav>
-    </form>
-</body>
-</html>
+
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}&search={{ search }}">previous</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a class="page-item" href="{{ request.path }}?page={{ page_obj.next_page_number }}&search={{ search }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+
 {% endblock %}

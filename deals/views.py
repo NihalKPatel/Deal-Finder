@@ -7,6 +7,8 @@ from django.urls import reverse, reverse_lazy
 from django.contrib import messages
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 
 # HomePage
@@ -26,6 +28,7 @@ def dashboard(request):
     return render(request, 'pages/dashboard.html')
 
 
+@login_required(login_url='/accounts/login/')
 def budget(request):
     total_spent = 0
     index = 1
@@ -36,7 +39,7 @@ def budget(request):
     if budgets.count() <= 0:
         return redirect('budget_create')
 
-    current_budget = Budget.objects.filter(profile_id=request.user.id)[index-1]
+    current_budget = Budget.objects.filter(profile_id=request.user.id)[index - 1]
     budget_list = List.objects.get(budget=current_budget.id)
 
     products = budget_list.products.all()
@@ -44,7 +47,7 @@ def budget(request):
     for product in products:
         total_spent += product.price
 
-    money_remaining = current_budget.max_spend-total_spent
+    money_remaining = current_budget.max_spend - total_spent
     return render(request, 'pages/budget.html', {'products': products,
                                                  'budget': current_budget,
                                                  'all_budgets': budgets,
@@ -53,18 +56,44 @@ def budget(request):
                                                  })
 
 
-def browse(request):
-    search = ""
-    page = 1
-    if request.method == 'GET':
-        if 'search' in request.GET:
-            search = request.GET['search']
-        if 'page' in request.GET:
-            page = request.GET['page']
+# @login_required(login_url='/accounts/login/')
+# def browse(request):
+#     search = ""
+#     page = 1
+#     if request.method == 'GET':
+#         if 'search' in request.GET:
+#             search = request.GET['search']
+#         if 'page' in request.GET:
+#             page = request.GET['page']
+#
+#     name_and_price = utils.get_item_search_data_nw(
+#         'https://www.newworld.co.nz/shop/Search?q=' + search + '&pg=' + str(page))
+#     return render(request, 'pages/browse.html', {'search_results': name_and_price})
 
-    name_and_price = utils.get_item_search_data_nw('https://www.newworld.co.nz/shop/Search?q=' + search + '&pg=' + str(page))
-    return render(request, 'pages/browse.html', {'search_results': name_and_price})
 
+class Browse(LoginRequiredMixin, generic.ListView):
+    model = Product
+    template_name = 'pages/browse.html'
+    paginate_by = 20
+    login_url = '/accounts/login/'
+
+    def get_queryset(self):
+        if self.request.method == 'GET' and 'search' in self.request.GET:
+            search = self.request.GET['search']
+            return Product.objects.filter(name__icontains=search)
+        else:
+            return Product.objects.all()
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        if self.request.method == 'GET' and 'search' in self.request.GET:
+            search = self.request.GET['search']
+            context['search'] = search
+        else:
+            context['search'] = ''
+        return context
 
 def categories(request):
     return render(request, 'pages/categories.html')
@@ -74,13 +103,13 @@ def compare_list(request):
     return render(request, 'pages/compare_list.html')
 
 
-class ShoppingList(generic.ListView):
+class ShoppingList(LoginRequiredMixin, generic.ListView):
     model = List
     template_name = 'pages/shopping_list.html'
     context_object_name = 'shopping_lists'
 
 
-class ShoppingListCreate(CreateView):
+class ShoppingListCreate(LoginRequiredMixin, CreateView):
     model = List
     template_name = 'pages/shopping_list_create.html'
     fields = ['name']
@@ -92,20 +121,20 @@ class ShoppingListCreate(CreateView):
         return super().form_valid(form)
 
 
-class ShoppingListUpdate(UpdateView):
+class ShoppingListUpdate(LoginRequiredMixin, UpdateView):
     model = List
     template_name = 'pages/shopping_list_update.html'
     fields = ['name']
     success_url = reverse_lazy('shopping_list')
 
 
-class ShoppingListDelete(DeleteView):
+class ShoppingListDelete(LoginRequiredMixin, DeleteView):
     model = List
     template_name = 'pages/shopping_list_delete.html'
     success_url = reverse_lazy('shopping_list')
 
 
-class BudgetCreateView(CreateView):
+class BudgetCreateView(LoginRequiredMixin, CreateView):
     model = Budget
     template_name = 'pages/budget_create.html'
     fields = ['name', 'max_spend', 'list']
@@ -116,14 +145,14 @@ class BudgetCreateView(CreateView):
         return super().form_valid(form)
 
 
-class BudgetUpdate(UpdateView):
+class BudgetUpdate(LoginRequiredMixin, UpdateView):
     model = Budget
     template_name = 'pages/shopping_list_update.html'
     fields = ['name', 'max_spend', 'list']
     success_url = reverse_lazy('budget')
 
 
-class BudgetDelete(DeleteView):
+class BudgetDelete(LoginRequiredMixin, DeleteView):
     model = Budget
     template_name = 'pages/shopping_list_delete.html'
     success_url = reverse_lazy('budget')
@@ -172,3 +201,11 @@ def profile(request):
     }
 
     return render(request, 'pages/profile.html', context)
+
+
+@login_required(login_url='/accounts/login/')
+def staff(request):
+    if request.method == 'POST' and 'scrape' in request.POST:
+        utils.scrape_all_products()
+
+    return render(request, 'pages/staff.html')

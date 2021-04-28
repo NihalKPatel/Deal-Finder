@@ -2,10 +2,11 @@ import requests
 from bs4 import BeautifulSoup
 import lxml
 import json
+from .models import Product
 
 single_item_url = 'https://www.amazon.com/PlayStation-5-DualSense-Wireless-Controller/dp/B08H99BPJN/'
-new_world_url = 'https://www.newworld.co.nz/shop/Search?q=apple'
-pakinsave_url = 'https://www.paknsaveonline.co.nz/Search?q=apple'
+new_world_url = 'https://www.newworld.co.nz/shop/Search?q='
+pakinsave_url = 'https://www.paknsaveonline.co.nz/Search?q='
 
 
 def get_single_item_data_amazon(url):
@@ -48,6 +49,15 @@ def get_item_search_data_nw(url):
     for item in product_data:
         name_and_price.append((item['productName'], item['ProductDetails']['PricePerItem']))
     return name_and_price
+
+
+def scrape_all_products():
+    Product.objects.all().delete()
+    for i in range(1, 51):
+        for item in get_item_search_data_nw(new_world_url + '&pg=' + str(i)):
+            Product.objects.create(name=item[0], price=item[1], link='https://www.newworld.com/', location='New World')
+
+
 
 # print(get_item_search_data_nw(new_world_url))
 # itemStringNw = ''

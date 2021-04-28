@@ -2,14 +2,4 @@
 
 {% block content %}
 <h2 class="display-4">HOMEPAGE - INDEX</h2>
-    <!-- The div to hold the map -->
-    <div id="map" style="height: 100%; width: 100%"></div>
-
-    {% load static %}
-    <script src="{% static 'js/app.js' %}"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCrmmRmgAj75a6WgqAHOKz_4orMRmZMGE&callback=initMap"
-            type="text/javascript"></script>
-
-    {#    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCrmmRmgAj75a6WgqAHOKz_4orMRmZMGE&libraries=places&callback=initMap">#}
-    </script>
 {% endblock %}

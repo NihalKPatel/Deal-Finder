@@ -21,11 +21,12 @@ urlpatterns = [
     path('shopping_list/<int:pk>/update/', views.ShoppingListUpdate.as_view(), name='shopping_list_update'),
     path('shopping_list/<int:pk>/delete/', views.ShoppingListDelete.as_view(), name='shopping_list_delete'),
     path('compare_list', views.compare_list, name='compare_list'),
-    path('browse', views.browse, name='browse'),
+    path('browse', views.Browse.as_view(), name='browse'),
     path('categories', views.categories, name='categories'),
     path('details', views.details, name='details'),
     path('notification', views.notification, name='notification'),
     path('register/', views.register, name='register'),
+    path('staff/', views.staff, name='staff'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
