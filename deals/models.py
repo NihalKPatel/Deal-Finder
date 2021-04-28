@@ -51,24 +51,14 @@ class Product(models.Model):
 
 class Budget(models.Model):
     name = models.CharField(max_length=255, default='')
-    max_spend = models.FloatField()
-    current_spending = models.FloatField(default=0)
-    remaining_spending = models.FloatField(default=0)
+    max_spend = models.FloatField(default=400)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, null=False)
-
-    @staticmethod
-    def spent():
-        spent_done = Product.spending()
-        return spent_done
+    list = models.ForeignKey(List, on_delete=models.DO_NOTHING, null=True)
 
     def spent_warning_amount(self):
         warning_spending = self.max_spend * 0.95
         return warning_spending
 
-    def calculate_spending_left(self):
-        left = self.max_spend - self.spent()
-        self.remaining_spending = left
-        return self.remaining_spending
 
 
 class Category(models.Model):

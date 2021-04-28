@@ -3,6 +3,8 @@ from django.conf.urls import url
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import RedirectView
+
 
 
 urlpatterns = [
@@ -10,6 +12,7 @@ urlpatterns = [
     path('profile', views.profile, name='profile'),
     path('shop', views.shop, name='shop'),
     path('budget', views.budget, name='budget'),
+    path('budget/create', views.BudgetCreateView.as_view(), name='budget_create'),
     path('dashboard', views.dashboard, name='dashboard'),
     path('shopping_list', views.ShoppingList.as_view(), name='shopping_list'),
     path('shopping_list/create', views.ShoppingListCreate.as_view(), name='shopping_list_create'),

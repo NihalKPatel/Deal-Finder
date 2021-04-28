@@ -4,15 +4,30 @@
 <h1>Products</h1>
 
 <div class="container">
-    <div class="row">
 
+    <div class="row justify-content-center">
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Budgets
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                {% for budget in all_budgets %}
+                <a class="dropdown-item" href="#">Action</a>
+                {% endfor %}
+            </div>
+        </div>
+        <a class="btn btn-secondary mx-4" href="{% url 'budget_create' %}">Create new budget</a>
+
+    </div>
+
+    <br>
+
+    <div class="row">
         <div class="col 14">
             <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                 <div class="card-header"> Budget</div>
                 <div class="card-body">
-                    {% for budget in budget %}
                     <p class="card-text">${{ budget.max_spend }}</p>
-                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -21,30 +36,24 @@
             <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                 <div class="card-header">Current Spending</div>
                 <div class="card-body">
-                    {% for budget in budget %}
-                    <p class="card-text">${{ budget.spent }} </p>
-                    {% endfor %}
+                    <p class="card-text">${{ money_spent }} </p>
                 </div>
             </div>
         </div>
 
         <div class="col 14">
-            {% for budget in budget %}
-            {% if budget.spent > budget.max_spend %}
+            {% if money_spent > budget.max_spend %}
             <div class="card text-white bg-danger mb-3" style="max-width: 18rem;">
                 <div class="card-header">Remaining Budget(!!OVER BUDGET!!)</div>
-                {% elif budget.spent > budget.spent_warning_amount %}
+                {% elif money_spent > budget.spent_warning_amount %}
                 <div class="card text-dark bg-warning mb-3" style="max-width: 18rem;">
                     <div class="card-header">Remaining Budget(!Budget Limit Nearing!)</div>
                     {% else %}
                     <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                         <div class="card-header">Remaining Budget</div>
                         {% endif %}
-                        {% endfor %}
                         <div class="card-body">
-                            {% for budget in budget %}
-                            <p class="card-text">${{budget.calculate_spending_left}} </p>
-                            {% endfor %}
+                            <p class="card-text">${{money_remaining}} </p>
                         </div>
                     </div>
                 </div>

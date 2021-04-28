@@ -27,14 +27,30 @@ def dashboard(request):
 
 
 def budget(request):
-    products = Product.objects.all()
-    budget = Budget.objects.all()
-    return render(request, 'pages/budget.html', {'products': products, 'budget': budget})
+    total_spent = 0
+    index = 1
+    if request.method['GET']:
+        if 'budget' in request.GET:
+            index=request.GET['budget']
+    budgets = Budget.objects.filter(profile_id=request.user.id)
+    current_budget = Budget.objects.filter(profile_id=request.user.id)[index-1]
+    products = Product.objects.filter(list_id=current_budget.list_id)
+    for product in products:
+        total_spent += product.price
+
+    money_remaining = budget.max_spend-total_spent
+    return render(request, 'pages/budget.html', {'products': products,
+                                                 'budget': current_budget,
+                                                 'all_budgets': budgets,
+                                                 'money_spent': total_spent,
+                                                 'money_remaining': money_remaining
+                                                 })
 
 
 def browse(request):
     search = ""
     page = 1
+    budgets = Budget.objects.filter(profile_id=request.user.id)
     if request.method == 'GET':
         if 'search' in request.GET:
             search = request.GET['search']
@@ -64,6 +80,17 @@ class ShoppingListCreate(CreateView):
     template_name = 'pages/shopping_list_create.html'
     fields = ['type']
     success_url = reverse_lazy('shopping_list')
+
+    def form_valid(self, form):
+        form.instance.profile = Profile.objects.filter(user_id=self.request.user.id)[0]
+        return super().form_valid(form)
+
+
+class BudgetCreateView(CreateView):
+    model = Budget
+    template_name = 'pages/budget_create.html'
+    fields = ['name','max_spend' ,'list']
+    success_url = reverse_lazy('budget')
 
     def form_valid(self, form):
         form.instance.profile = Profile.objects.filter(user_id=self.request.user.id)[0]
