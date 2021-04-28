@@ -73,3 +73,8 @@ def register(request):
         form = UserRegisterForm()
     return render(request, 'registration/register.html', {'form': form})
 
+def analytics(request):
+    return render(request, 'pages/analytics.html')
+
+
+
