@@ -12,7 +12,7 @@
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 {% for budget in all_budgets %}
-                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">{{ budget.name }}</a>
                 {% endfor %}
             </div>
         </div>

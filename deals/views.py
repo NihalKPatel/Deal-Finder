@@ -29,16 +29,19 @@ def dashboard(request):
 def budget(request):
     total_spent = 0
     index = 1
-    if request.method['GET']:
-        if 'budget' in request.GET:
-            index=request.GET['budget']
+    # if request.method['GET']:
+    #     if 'budget' in request.GET:
+    #         index=request.GET['budget']
     budgets = Budget.objects.filter(profile_id=request.user.id)
+    if budgets.count() <= 0:
+        return BudgetCreateView.as_view()
+
     current_budget = Budget.objects.filter(profile_id=request.user.id)[index-1]
     products = Product.objects.filter(list_id=current_budget.list_id)
     for product in products:
         total_spent += product.price
 
-    money_remaining = budget.max_spend-total_spent
+    money_remaining = current_budget.max_spend-total_spent
     return render(request, 'pages/budget.html', {'products': products,
                                                  'budget': current_budget,
                                                  'all_budgets': budgets,
@@ -78,7 +81,7 @@ class ShoppingList(generic.ListView):
 class ShoppingListCreate(CreateView):
     model = List
     template_name = 'pages/shopping_list_create.html'
-    fields = ['type']
+    fields = ['name']
     success_url = reverse_lazy('shopping_list')
 
     def form_valid(self, form):
@@ -89,7 +92,7 @@ class ShoppingListCreate(CreateView):
 class BudgetCreateView(CreateView):
     model = Budget
     template_name = 'pages/budget_create.html'
-    fields = ['name','max_spend' ,'list']
+    fields = ['name', 'max_spend', 'list']
     success_url = reverse_lazy('budget')
 
     def form_valid(self, form):

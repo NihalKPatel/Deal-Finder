@@ -25,6 +25,7 @@ class Profile(models.Model):
 
 
 class List(models.Model):
+    name = models.CharField(max_length=30, default="default name")
     TYPE = (
         ('W', 'Wish List'),
         ('S', 'Shopping List'),
