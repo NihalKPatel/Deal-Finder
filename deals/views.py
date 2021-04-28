@@ -34,10 +34,13 @@ def budget(request):
             index = int(request.GET['budget'])
     budgets = Budget.objects.filter(profile_id=request.user.id)
     if budgets.count() <= 0:
-        return BudgetCreateView.as_view()
+        return redirect('budget_create')
 
     current_budget = Budget.objects.filter(profile_id=request.user.id)[index-1]
-    products = Product.objects.filter(list_id=current_budget.list_id)
+    budget_list = List.objects.get(budget=current_budget.id)
+
+    products = budget_list.products.all()
+    print(products)
     for product in products:
         total_spent += product.price
 
@@ -53,7 +56,6 @@ def budget(request):
 def browse(request):
     search = ""
     page = 1
-    budgets = Budget.objects.filter(profile_id=request.user.id)
     if request.method == 'GET':
         if 'search' in request.GET:
             search = request.GET['search']
@@ -86,7 +88,21 @@ class ShoppingListCreate(CreateView):
 
     def form_valid(self, form):
         form.instance.profile = Profile.objects.filter(user_id=self.request.user.id)[0]
+        form.instance.type = 'S'
         return super().form_valid(form)
+
+
+class ShoppingListUpdate(UpdateView):
+    model = List
+    template_name = 'pages/shopping_list_update.html'
+    fields = ['name']
+    success_url = reverse_lazy('shopping_list')
+
+
+class ShoppingListDelete(DeleteView):
+    model = List
+    template_name = 'pages/shopping_list_delete.html'
+    success_url = reverse_lazy('shopping_list')
 
 
 class BudgetCreateView(CreateView):
@@ -98,6 +114,19 @@ class BudgetCreateView(CreateView):
     def form_valid(self, form):
         form.instance.profile = Profile.objects.filter(user_id=self.request.user.id)[0]
         return super().form_valid(form)
+
+
+class BudgetUpdate(UpdateView):
+    model = Budget
+    template_name = 'pages/shopping_list_update.html'
+    fields = ['name', 'max_spend', 'list']
+    success_url = reverse_lazy('budget')
+
+
+class BudgetDelete(DeleteView):
+    model = Budget
+    template_name = 'pages/shopping_list_delete.html'
+    success_url = reverse_lazy('budget')
 
 
 def details(request):

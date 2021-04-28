@@ -35,6 +35,10 @@ class List(models.Model):
         choices=TYPE,
     )
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, null=False)
+    products = models.ManyToManyField('Product',)
+
+    def __str__(self):
+        return self.name
 
 
 class Product(models.Model):
@@ -42,24 +46,25 @@ class Product(models.Model):
     link = models.CharField(max_length=255)
     price = models.FloatField()
     location = models.CharField(max_length=255)
-    list = models.ForeignKey(List, on_delete=models.CASCADE, null=False)
 
     @staticmethod
     def spending():
         current_spending = Product.objects.all().aggregate(sum=Sum('price'))['sum']
         return current_spending
 
+    def __str__(self):
+        return self.name
+
 
 class Budget(models.Model):
     name = models.CharField(max_length=255, default='')
     max_spend = models.FloatField(default=400)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, null=False)
-    list = models.ForeignKey(List, on_delete=models.DO_NOTHING, null=True)
+    list = models.ForeignKey(List, on_delete=models.SET_NULL, null=True)
 
     def spent_warning_amount(self):
         warning_spending = self.max_spend * 0.95
         return warning_spending
-
 
 
 class Category(models.Model):

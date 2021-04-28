@@ -1,10 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
-
-        <!-- Links -->
 
         <ul class="navbar-nav">
             <div class="d-flex justify-content-between">
@@ -25,21 +22,14 @@
 
     </nav>
 
-    <br>
-    <a class="btn btn-dark" href="{% url 'shopping_list_create' %}">Create new list</a>
+    {% load crispy_forms_tags %}
+    <form action="" method="post">
+        {% csrf_token %}
 
+        {{ form|crispy }}
 
-    {% for list in shopping_lists %}
-        <div class="card">
-            <div class="card-body">
-                <p class="card-title"><span class="h4">{{ list.name }} </span><a href="{% url 'shopping_list_update' list.id %}">Edit</a></p>
-                <p class="card-text">
-                    {% for product in list.products.all %}
-                        <span>{{ product.name }}, ${{ product.price }} </span>
-                    {% endfor %}
-                </p>
-            </div>
-        </div>
-    {% endfor %}
+        <input type="submit" class="btn btn-dark" value="Submit">
+        <a class="btn btn-dark" href="{% url 'shopping_list_delete' request.resolver_match.kwargs.pk %}">Delete</a>
+    </form>
 
 {% endblock %}

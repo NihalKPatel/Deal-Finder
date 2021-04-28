@@ -18,6 +18,8 @@
             </div>
         </div>
         </form>
+        <a class="btn btn-secondary mx-4" href="{% url 'budget_update' budget.id %}">Edit budget</a>
+
         <a class="btn btn-secondary mx-4" href="{% url 'budget_create' %}">Create new budget</a>
     </div>
 
@@ -78,11 +80,11 @@
         <th>Price</th>
         </thead>
         <tbody>
-        {% for products in products %}
+        {% for product in products %}
         <tr>
-            <td>{{products.name}}</td>
-            <td>{{products.link}}</td>
-            <td>{{products.price}}</td>
+            <td>{{product.name}}</td>
+            <td>{{product.link}}</td>
+            <td>{{product.price}}</td>
         </tr>
         {% endfor %}
         </tbody>

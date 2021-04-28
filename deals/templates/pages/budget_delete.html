@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>Delete Budget</h1>
+
+    <p>Are you sure you want to delete the budget: {{ budget.name }}?</p>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-dark" value="Yes, delete.">
+
+    </form>
+
+{% endblock %}
