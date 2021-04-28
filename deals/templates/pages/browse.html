@@ -2,6 +2,19 @@
 
 {% block content %}
 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
 
         <!-- Links -->
@@ -26,10 +39,29 @@
     </nav>
 
     <br>
+
     <form method="GET" action="{% url 'browse' %}">
         <div class="form-row justify-content-center">
             <input type="text" class="form-control col-9" id="search" name="search" placeholder="Search here!">
             <button type="submit" class="btn btn-dark col-1">Search</button>
+            <div class="container">
+                <div class="row">
+                    <form class="col-md-4">
+                        <label>Categories</label>
+                        <select class="form-control select2">
+                            <option>All</option>
+                            <option>Dairy</option>
+                            <option>Fruit</option>
+                            <option>Vegetables</option>
+                            <option>Meat</option>
+                            <option>Bakery</option>
+                        </select>
+                    </form>
+                </div>
+            </div>
+            <script>
+                $('.select2').select2();
+            </script>
         </div>
     </form>
     <br>
@@ -41,7 +73,9 @@
         <div class="card-body">
             <h5 class="card-title">{{ name }}</h5>
             <p class="card-text">${{ price }}</p>
-            <a href="{% url 'details' %}" class="btn btn-dark">details</a>
+            <a href="https://www.newworld.co.nz/" class="btn btn-dark">Go to store</a>
+            <a href="{% url 'details' %}" class="btn btn-dark">Go to details</a>
+
         </div>
     </div>
     {% if forloop.counter|divisibleby:3 or forloop.last %}</div><!-- row closing -->
@@ -69,5 +103,6 @@
             </ul>
         </nav>
     </form>
-
+</body>
+</html>
 {% endblock %}

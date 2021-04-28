@@ -1,9 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from .models import Profile
 # create a new form that inherits from UserCreationForm
-from django.forms import ModelForm
-from .models import Product
 
 
 class UserRegisterForm(UserCreationForm):
@@ -14,7 +13,15 @@ class UserRegisterForm(UserCreationForm):
         fields = ['username', 'email', 'password1', 'password2']
 
 
-class CreateNewProduct(ModelForm):
+class UserUpdateForm(forms.ModelForm):
+    email = forms.EmailField()
+
     class Meta:
-        model = Product
-        fields = '__all__'
+        model = User
+        fields = ['username', 'email']
+
+
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['image']
