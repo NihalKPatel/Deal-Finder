@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.contrib import messages
 from .forms import UserRegisterForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import List, Profile
+from .models import List, Profile, Product, Budget
 from django.views import generic
 from django.urls import reverse, reverse_lazy
 
@@ -29,7 +29,9 @@ def dashboard(request):
 
 
 def budget(request):
-    return render(request, 'pages/budget.html')
+    products = Product.objects.all()
+    budget = Budget.objects.all()
+    return render(request, 'pages/budget.html', {'products': products, 'budget': budget})
 
 
 def browse(request):
@@ -67,8 +69,6 @@ class ShoppingListCreate(CreateView):
 
     def form_valid(self, form):
         form.instance.profile = Profile.objects.filter(user_id=self.request.user.id)[0]
-        print(type(form.instance.profile))
-        print(type(Profile.objects.filter(user_id=self.request.user.id)[0]))
         return super().form_valid(form)
 
 

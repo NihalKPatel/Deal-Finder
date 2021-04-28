@@ -1,15 +1,110 @@
 {% extends "base.html" %}
 
 {% block content %}
+<h1>Products</h1>
 
-<html lang="en">
+<div class="container">
+    <div class="row">
+
+        <div class="col 14">
+            <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+                <div class="card-header"> Budget</div>
+                <div class="card-body">
+                    {% for budget in budget %}
+                    <p class="card-text">${{ budget.max_spend }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col 14">
+            <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+                <div class="card-header">Current Spending</div>
+                <div class="card-body">
+                    {% for budget in budget %}
+                    <p class="card-text">${{ budget.spent }} </p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col 14">
+            {% for budget in budget %}
+            {% if budget.spent > budget.max_spend %}
+            <div class="card text-white bg-danger mb-3" style="max-width: 18rem;">
+                <div class="card-header">Remaining Budget(!!OVER BUDGET!!)</div>
+                {% elif budget.spent > budget.spent_warning_amount %}
+                <div class="card text-dark bg-warning mb-3" style="max-width: 18rem;">
+                    <div class="card-header">Remaining Budget(!Budget Limit Nearing!)</div>
+                    {% else %}
+                    <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+                        <div class="card-header">Remaining Budget</div>
+                        {% endif %}
+                        {% endfor %}
+                        <div class="card-body">
+                            {% for budget in budget %}
+                            <p class="card-text">${{budget.calculate_spending_left}} </p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <title>Bootstrap</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
 </head>
 <body>
+<div class="container mb-3 mt-3">
+    <table class="table table-striped table-bordered mydatatable" style="width: 100%">
+        <thead>
+        <th>Name</th>
+        <th>Link</th>
+        <th>Price</th>
+        </thead>
+        <tbody>
+        {% for products in products %}
+        <tr>
+            <td>{{products.name}}</td>
+            <td>{{products.link}}</td>
+            <td>{{products.price}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <th>Name</th>
+        <th>Link</th>
+        <th>Price</th>
+        </tfoot>
+    </table>
+</div>
 
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https//stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $('.mydatatable').DataTable();
+
+
+
+</script>
 </body>
-</html>
+
+
+<h1>Enter New Product</h1>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_ul }}
+    <input type="submit">
+</form>
+
 
 {% endblock %}
