@@ -61,7 +61,6 @@ class Budget(models.Model):
         return warning_spending
 
 
-
 class Category(models.Model):
     name = models.CharField(max_length=20)
     max_spend = models.IntegerField()
