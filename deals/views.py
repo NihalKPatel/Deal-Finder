@@ -29,9 +29,9 @@ def dashboard(request):
 def budget(request):
     total_spent = 0
     index = 1
-    # if request.method['GET']:
-    #     if 'budget' in request.GET:
-    #         index=request.GET['budget']
+    if request.method == 'GET':
+        if 'budget' in request.GET:
+            index = int(request.GET['budget'])
     budgets = Budget.objects.filter(profile_id=request.user.id)
     if budgets.count() <= 0:
         return BudgetCreateView.as_view()

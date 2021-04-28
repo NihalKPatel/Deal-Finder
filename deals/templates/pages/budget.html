@@ -1,23 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Products</h1>
+<h1>{{ budget.name }}</h1>
 
 <div class="container">
 
     <div class="row justify-content-center">
+        <form method="GET" action="{% url 'budget' %}">
         <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button class="btn btn-secondary dropdown-toggle" type="button" name="budget" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Budgets
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 {% for budget in all_budgets %}
-                <a class="dropdown-item" href="#">{{ budget.name }}</a>
+                    <button class="dropdown-item" type="submit" name="budget" value="{{ forloop.counter }}">{{ budget.name }}</button>
                 {% endfor %}
             </div>
         </div>
+        </form>
         <a class="btn btn-secondary mx-4" href="{% url 'budget_create' %}">Create new budget</a>
-
     </div>
 
     <br>
