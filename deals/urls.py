@@ -2,6 +2,7 @@ from django.urls import path
 from django.conf.urls import url
 from . import views
 
+from .views import line_chart, line_chart_json
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -17,5 +18,6 @@ urlpatterns = [
     path('notification', views.notification, name='notification'),
     path('register/', views.register, name='register'),
     path('analytics/', views.analytics, name='analytics'),
+    path('chart', line_chart, name='line_chart'),
+    path('chartJSON', line_chart_json, name='line_chart_json'),
 ]
-

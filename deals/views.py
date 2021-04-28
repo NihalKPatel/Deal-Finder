@@ -5,6 +5,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from .forms import UserRegisterForm
+from django.views.generic import TemplateView
+from chartjs.views.lines import BaseLineChartView
 
 
 # HomePage
@@ -75,3 +77,25 @@ def register(request):
 
 def analytics(request):
     return render(request, 'pages/analytics.html')
+
+
+class LineChartJSONView(BaseLineChartView):
+    def get_labels(self):
+        """Return 6 labels for the x-axis."""
+        return ["Week 1", "Week 2", "Week 4", "Week 5", "Week 6", "Week 7"]
+
+    def get_providers(self):
+        """Return names of data to compare."""
+        return ["Budget", "Actual spending"]
+
+    def get_data(self):
+        """Return 2 datasets to plot."""
+
+        return [
+            [75, 80, 99, 44, 95, 35],
+            [41, 92, 70, 39, 73, 87]
+        ]
+
+
+line_chart = TemplateView.as_view(template_name='line_chart.html')
+line_chart_json = LineChartJSONView.as_view()

@@ -28,3 +28,4 @@ urllib3==1.26.4
 virtualenv==20.4.3
 wrapt==1.12.1
 pandas ==1.2.4
+chartjs=2.2.1

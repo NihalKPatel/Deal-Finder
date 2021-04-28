@@ -10,7 +10,7 @@ class Profile(models.Model):
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
     address = models.CharField(max_length=255, help_text="street address")  # street address
     # name = models.CharField(default=' ', max_length=100)
-    location = models.IntegerField(help_text="postcode")  # allowing to save the location by postCode
+    #location = models.IntegerField(help_text="postcode")  # allowing to save the location by postCode
 
     def __str__(self):
         return f'{self.user.username} Profile'
@@ -66,6 +66,8 @@ class Product(models.Model):
     # goal of this class: to provide functionality so that the budget can be compared against the spending
     # TOOL:
 class Analytics(models.Model):
-    number_of_budgets = 0
-    amount_per_budget = 0
+    name = models.CharField(max_length=100)
+    number_of_budgets = models.IntegerField()
+    amount_per_budget = models.IntegerField()
+
 
