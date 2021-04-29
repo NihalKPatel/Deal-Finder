@@ -41,9 +41,9 @@
 
     <br>
 
-    <form method="GET" action="{% url 'browse' %}">
+    <form method="GET" action="">
         <div class="form-row justify-content-center">
-            <input type="text" class="form-control col-9" id="search" name="search" placeholder="Search here!">
+            <input type="text" class="form-control col-9" id="search" name="search" placeholder="Search here!" value="{{ search }}">
             <button type="submit" class="btn btn-dark col-1">Search</button>
             <div class="container">
                 <div class="row">
@@ -74,8 +74,23 @@
         <div class="card-body">
             <h5 class="card-title">{{ product.name }}</h5>
             <p class="card-text">${{ product.price }}</p>
-            <a href="{{ product.link }}" class="btn btn-dark">Go to store</a>
-            <a href="{% url 'details' %}" class="btn btn-dark">Go to details</a>
+            <a href="{{ product.link }}" class="btn btn-dark">Store</a>
+            <a href="{% url 'details' %}" class="btn btn-dark">Details</a>
+
+            <form method="POST" action="{% url 'browse' %}">
+                {% csrf_token %}
+                <input type="hidden" name="product" value="{{ product.id }}" />
+                <div class="dropdown">
+                    <button class="btn btn-dark dropdown-toggle" type="button" name="submit" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Add to list
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        {% for list in all_lists %}
+                            <button class="dropdown-item" type="submit" name="list" value="{{ list.id }}">{{ list.name }}</button>
+                        {% endfor %}
+                    </div>
+                </div>
+            </form>
 
         </div>
     </div>

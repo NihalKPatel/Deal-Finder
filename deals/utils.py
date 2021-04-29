@@ -54,8 +54,9 @@ def get_item_search_data_nw(url):
 def scrape_all_products():
     Product.objects.all().delete()
     for i in range(1, 51):
+        print("Scraping page " + str(i) + " from new world")
         for item in get_item_search_data_nw(new_world_url + '&pg=' + str(i)):
-            Product.objects.create(name=item[0], price=item[1], link='https://www.newworld.com/', location='New World')
+            Product.objects.create(name=item[0], price=item[1], link='https://www.newworld.co.nz/', location='New World')
 
 
 

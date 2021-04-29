@@ -84,6 +84,16 @@ class Browse(LoginRequiredMixin, generic.ListView):
         else:
             return Product.objects.all()
 
+    def post(self, request, *args, **kwargs):
+            if 'product' in self.request.POST and 'list' in self.request.POST:
+                product_id = self.request.POST['product']
+                list_id = self.request.POST['list']
+                print('List: ' + list_id)
+                print('Product: ' + product_id)
+                List.objects.get(id=list_id).products.add(Product.objects.get(id=product_id))
+                print(self.extra_context)
+            return render(request, self.template_name)
+
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
@@ -93,7 +103,10 @@ class Browse(LoginRequiredMixin, generic.ListView):
             context['search'] = search
         else:
             context['search'] = ''
+
+        context['all_lists'] = List.objects.filter(profile_id=self.request.user.id)
         return context
+
 
 def categories(request):
     return render(request, 'pages/categories.html')
