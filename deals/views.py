@@ -1,3 +1,6 @@
+
+from django.http import HttpResponse
+
 from . import utils
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -10,6 +13,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
+from .forms import UserRegisterForm
+from chartjs.views.lines import BaseLineChartView
 
 
 # HomePage
@@ -238,3 +243,23 @@ def staff(request):
         utils.scrape_all_products()
 
     return render(request, 'pages/staff.html')
+
+def analytics(request):
+    return render(request, 'pages/analytics.html')
+
+
+class LineChartJSONView(BaseLineChartView):
+    def get_labels(self):
+        # labels
+        return ["Week 1", "Week 2", "Week 4", "Week 5", "Week 6", "Week 7"]
+
+    def get_providers(self):
+        # data to compare
+        return ["Budget", "Actual spending"]
+
+    def get_data(self):
+        # data to plot
+        return [
+            [75, 80, 99, 44, 95, 35],
+            [41, 92, 70, 39, 73, 87]
+        ]
