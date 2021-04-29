@@ -11,68 +11,19 @@ from django.contrib.auth.decorators import login_required
 
 # HomePage
 def index(request):
-    budgets = Budget.objects.filter(profile_id=request.user.id)
-    total_spent = 0
-    index = request.session['global_index']
-
-    current_budget = Budget.objects.filter(profile_id=request.user.id)[index - 1]
-    products = Product.objects.filter(list_id=current_budget.list_id)
-    for product in products:
-        total_spent += product.price
-
-    money_remaining = current_budget.max_spend - total_spent
-    return render(request, 'index.html',
-                  {'products': products, 'budget': current_budget, 'all_budgets': budgets, 'money_spent': total_spent,
-                   'money_remaining': money_remaining})
+    return render(request, 'index.html')
 
 
 def profile(request):
-    budgets = Budget.objects.filter(profile_id=request.user.id)
-    total_spent = 0
-
-    index = request.session['global_index']
-
-    current_budget = Budget.objects.filter(profile_id=request.user.id)[index - 1]
-    products = Product.objects.filter(list_id=current_budget.list_id)
-    for product in products:
-        total_spent += product.price
-
-    money_remaining = current_budget.max_spend - total_spent
-    return render(request, 'pages/profile.html',
-                  {'products': products, 'budget': current_budget, 'all_budgets': budgets, 'money_spent': total_spent,
-                   'money_remaining': money_remaining})
+    return render(request, 'pages/profile.html')
 
 
 def shop(request):
-    budgets = Budget.objects.filter(profile_id=request.user.id)
-    total_spent = 0
-    index = request.session['global_index']
-
-    current_budget = Budget.objects.filter(profile_id=request.user.id)[index - 1]
-    products = Product.objects.filter(list_id=current_budget.list_id)
-    for product in products:
-        total_spent += product.price
-
-    money_remaining = current_budget.max_spend - total_spent
-    return render(request, 'pages/shop.html',
-                  {'products': products, 'budget': current_budget, 'all_budgets': budgets, 'money_spent': total_spent,
-                   'money_remaining': money_remaining})
+    return render(request, 'pages/shop.html')
 
 
 def dashboard(request):
-    budgets = Budget.objects.filter(profile_id=request.user.id)
-    total_spent = 0
-    index = request.session['global_index']
-
-    current_budget = Budget.objects.filter(profile_id=request.user.id)[index - 1]
-    products = Product.objects.filter(list_id=current_budget.list_id)
-    for product in products:
-        total_spent += product.price
-
-    money_remaining = current_budget.max_spend - total_spent
-    return render(request, 'pages/dashboard.html',
-                  {'products': products, 'budget': current_budget, 'all_budgets': budgets, 'money_spent': total_spent,
-                   'money_remaining': money_remaining})
+    return render(request, 'pages/dashboard.html',)
 
 
 def budget(request):
@@ -111,54 +62,17 @@ def browse(request):
         if 'page' in request.GET:
             page = request.GET['page']
 
-    budgets = Budget.objects.filter(profile_id=request.user.id)
-    total_spent = 0
-    index = request.session['global_index']
-
-    current_budget = Budget.objects.filter(profile_id=request.user.id)[index - 1]
-    products = Product.objects.filter(list_id=current_budget.list_id)
-    for product in products:
-        total_spent += product.price
-
-    money_remaining = current_budget.max_spend - total_spent
-
     name_and_price = utils.get_item_search_data_nw(
         'https://www.newworld.co.nz/shop/Search?q=' + search + '&pg=' + str(page))
-    return render(request, 'pages/browse.html',
-                  {'search_results': name_and_price, 'products': products, 'budget': current_budget,
-                   'all_budgets': budgets, 'money_spent': total_spent, 'money_remaining': money_remaining})
+    return render(request, 'pages/browse.html', {'search_results': name_and_price})
 
 
 def categories(request):
-    budgets = Budget.objects.filter(profile_id=request.user.id)
-    total_spent = 0
-    index = request.session['global_index']
-
-    current_budget = Budget.objects.filter(profile_id=request.user.id)[index - 1]
-    products = Product.objects.filter(list_id=current_budget.list_id)
-    for product in products:
-        total_spent += product.price
-
-    money_remaining = current_budget.max_spend - total_spent
-    return render(request, 'pages/categories.html',
-                  {'products': products, 'budget': current_budget, 'all_budgets': budgets, 'money_spent': total_spent,
-                   'money_remaining': money_remaining})
+    return render(request, 'pages/categories.html')
 
 
 def compare_list(request):
-    budgets = Budget.objects.filter(profile_id=request.user.id)
-    total_spent = 0
-    index = request.session['global_index']
-
-    current_budget = Budget.objects.filter(profile_id=request.user.id)[index - 1]
-    products = Product.objects.filter(list_id=current_budget.list_id)
-    for product in products:
-        total_spent += product.price
-
-    money_remaining = current_budget.max_spend - total_spent
-    return render(request, 'pages/compare_list.html',
-                  {'products': products, 'budget': current_budget, 'all_budgets': budgets, 'money_spent': total_spent,
-                   'money_remaining': money_remaining})
+    return render(request, 'pages/compare_list.html')
 
 
 class ShoppingList(generic.ListView):
@@ -201,20 +115,7 @@ class BudgetCreateView(CreateView):
 
 
 def details(request):
-
-    budgets = Budget.objects.filter(profile_id=request.user.id)
-    total_spent = 0
-    index = request.session['global_index']
-
-    current_budget = Budget.objects.filter(profile_id=request.user.id)[index - 1]
-    products = Product.objects.filter(list_id=current_budget.list_id)
-    for product in products:
-        total_spent += product.price
-
-    money_remaining = current_budget.max_spend - total_spent
-    return render(request, 'pages/details.html',
-                  {'products': products, 'budget': current_budget, 'all_budgets': budgets, 'money_spent': total_spent,
-                   'money_remaining': money_remaining})
+    return render(request, 'pages/details.html')
 
 
 def notification(request):
@@ -255,18 +156,4 @@ def profile(request):
         'p_form': p_form
     }
 
-    budgets = Budget.objects.filter(profile_id=request.user.id)
-    total_spent = 0
-    index = request.session['global_index']
-
-    current_budget = Budget.objects.filter(profile_id=request.user.id)[index - 1]
-    products = Product.objects.filter(list_id=current_budget.list_id)
-    for product in products:
-        total_spent += product.price
-
-    money_remaining = current_budget.max_spend - total_spent
-
-    return render(request, 'pages/profile.html', {'u_form': u_form, 'p_form': p_form,
-                                                  'products': products, 'budget': current_budget,
-                                                  'all_budgets': budgets, 'money_spent': total_spent,
-                                                  'money_remaining': money_remaining})
+    return render(request, 'pages/profile.html', context)
