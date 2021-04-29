@@ -11,7 +11,6 @@ from django.contrib.auth.decorators import login_required
 
 # HomePage
 def index(request):
-
     budgets = Budget.objects.filter(profile_id=request.user.id)
     total_spent = 0
     index = request.session['global_index']
@@ -179,6 +178,17 @@ class ShoppingListCreate(CreateView):
         return super().form_valid(form)
 
 
+class AddProduct(CreateView):
+    model = Product
+    template_name = 'pages/product_create.html'
+    fields = ['name', 'link', 'price', 'location', 'list']
+    success_url = reverse_lazy('budget')
+
+    def form_valid(self, form):
+        form.instance.profile = Profile.objects.filter(user_id=self.request.user.id)[0]
+        return super().form_valid(form)
+
+
 class BudgetCreateView(CreateView):
     model = Budget
     template_name = 'pages/budget_create.html'
@@ -191,7 +201,20 @@ class BudgetCreateView(CreateView):
 
 
 def details(request):
-    return render(request, 'pages/details.html')
+
+    budgets = Budget.objects.filter(profile_id=request.user.id)
+    total_spent = 0
+    index = request.session['global_index']
+
+    current_budget = Budget.objects.filter(profile_id=request.user.id)[index - 1]
+    products = Product.objects.filter(list_id=current_budget.list_id)
+    for product in products:
+        total_spent += product.price
+
+    money_remaining = current_budget.max_spend - total_spent
+    return render(request, 'pages/details.html',
+                  {'products': products, 'budget': current_budget, 'all_budgets': budgets, 'money_spent': total_spent,
+                   'money_remaining': money_remaining})
 
 
 def notification(request):
@@ -232,4 +255,18 @@ def profile(request):
         'p_form': p_form
     }
 
-    return render(request, 'pages/profile.html', context)
+    budgets = Budget.objects.filter(profile_id=request.user.id)
+    total_spent = 0
+    index = request.session['global_index']
+
+    current_budget = Budget.objects.filter(profile_id=request.user.id)[index - 1]
+    products = Product.objects.filter(list_id=current_budget.list_id)
+    for product in products:
+        total_spent += product.price
+
+    money_remaining = current_budget.max_spend - total_spent
+
+    return render(request, 'pages/profile.html', {'u_form': u_form, 'p_form': p_form,
+                                                  'products': products, 'budget': current_budget,
+                                                  'all_budgets': budgets, 'money_spent': total_spent,
+                                                  'money_remaining': money_remaining})
