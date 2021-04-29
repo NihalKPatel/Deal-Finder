@@ -156,7 +156,18 @@ class ShoppingListDelete(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('shopping_list')
 
 
-class BudgetCreateView(LoginRequiredMixin, CreateView):
+class AddProduct(CreateView):
+    model = Product
+    template_name = 'pages/product_create.html'
+    fields = ['name', 'link', 'price', 'location']
+    success_url = reverse_lazy('budget')
+
+    def form_valid(self, form):
+        form.instance.profile = Profile.objects.filter(user_id=self.request.user.id)[0]
+        return super().form_valid(form)
+
+
+class BudgetCreateView(CreateView):
     model = Budget
     template_name = 'pages/budget_create.html'
     fields = ['name', 'max_spend', 'list']

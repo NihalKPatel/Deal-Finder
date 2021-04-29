@@ -43,9 +43,9 @@ class List(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=30)
-    link = models.CharField(max_length=255)
+    link = models.CharField(max_length=255, blank=True)
     price = models.FloatField()
-    location = models.CharField(max_length=255)
+    location = models.CharField(max_length=255, blank=True)
 
     @staticmethod
     def spending():
