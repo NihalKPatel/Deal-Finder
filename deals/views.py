@@ -93,7 +93,7 @@ class Browse(LoginRequiredMixin, generic.ListView):
                 print('Product: ' + product_id)
                 List.objects.get(id=list_id).products.add(Product.objects.get(id=product_id))
                 print(self.extra_context)
-            return render(request, self.template_name)
+            return redirect(reverse_lazy('shopping_list'))
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -121,6 +121,9 @@ class ShoppingList(LoginRequiredMixin, generic.ListView):
     model = List
     template_name = 'pages/shopping_list.html'
     context_object_name = 'shopping_lists'
+
+    def get_queryset(self):
+        return List.objects.filter(profile_id=self.request.user.id)
 
 
 class ShoppingListCreate(LoginRequiredMixin, CreateView):
@@ -158,12 +161,24 @@ class BudgetCreateView(LoginRequiredMixin, CreateView):
         form.instance.profile = Profile.objects.filter(user_id=self.request.user.id)[0]
         return super().form_valid(form)
 
+    #ensures you can only create a budget with your own shopping list
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'].fields['list'].queryset = List.objects.filter(profile_id=self.request.user.id)
+        return context
+
 
 class BudgetUpdate(LoginRequiredMixin, UpdateView):
     model = Budget
     template_name = 'pages/shopping_list_update.html'
     fields = ['name', 'max_spend', 'list']
     success_url = reverse_lazy('budget')
+
+    #ensures you can only create a budget with your own shopping list
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'].fields['list'].queryset = List.objects.filter(profile_id=self.request.user.id)
+        return context
 
 
 class BudgetDelete(LoginRequiredMixin, DeleteView):
