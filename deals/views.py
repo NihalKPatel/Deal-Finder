@@ -11,9 +11,10 @@ from django.contrib.auth.decorators import login_required
 
 # HomePage
 def index(request):
+
     budgets = Budget.objects.filter(profile_id=request.user.id)
     total_spent = 0
-    index = index_global()
+    index = request.session['global_index']
 
     current_budget = Budget.objects.filter(profile_id=request.user.id)[index - 1]
     products = Product.objects.filter(list_id=current_budget.list_id)
@@ -27,11 +28,10 @@ def index(request):
 
 
 def profile(request):
-
     budgets = Budget.objects.filter(profile_id=request.user.id)
     total_spent = 0
 
-    index = index_global()
+    index = request.session['global_index']
 
     current_budget = Budget.objects.filter(profile_id=request.user.id)[index - 1]
     products = Product.objects.filter(list_id=current_budget.list_id)
@@ -45,10 +45,9 @@ def profile(request):
 
 
 def shop(request):
-
     budgets = Budget.objects.filter(profile_id=request.user.id)
     total_spent = 0
-    index = index_global()
+    index = request.session['global_index']
 
     current_budget = Budget.objects.filter(profile_id=request.user.id)[index - 1]
     products = Product.objects.filter(list_id=current_budget.list_id)
@@ -62,10 +61,9 @@ def shop(request):
 
 
 def dashboard(request):
-
     budgets = Budget.objects.filter(profile_id=request.user.id)
     total_spent = 0
-    index = index_global()
+    index = request.session['global_index']
 
     current_budget = Budget.objects.filter(profile_id=request.user.id)[index - 1]
     products = Product.objects.filter(list_id=current_budget.list_id)
@@ -79,16 +77,13 @@ def dashboard(request):
 
 
 def budget(request):
-
     total_spent = 0
     index = 1
+
     if request.method == 'GET':
         if 'budget' in request.GET:
             index = int(request.GET['budget'])
-            global index_global
-
-            def index_global():
-                return index
+            request.session['global_index'] = index
     budgets = Budget.objects.filter(profile_id=request.user.id)
     if budgets.count() <= 0:
         return BudgetCreateView.as_view()
@@ -119,7 +114,7 @@ def browse(request):
 
     budgets = Budget.objects.filter(profile_id=request.user.id)
     total_spent = 0
-    index = index_global()
+    index = request.session['global_index']
 
     current_budget = Budget.objects.filter(profile_id=request.user.id)[index - 1]
     products = Product.objects.filter(list_id=current_budget.list_id)
@@ -136,10 +131,9 @@ def browse(request):
 
 
 def categories(request):
-
     budgets = Budget.objects.filter(profile_id=request.user.id)
     total_spent = 0
-    index = index_global()
+    index = request.session['global_index']
 
     current_budget = Budget.objects.filter(profile_id=request.user.id)[index - 1]
     products = Product.objects.filter(list_id=current_budget.list_id)
@@ -155,7 +149,7 @@ def categories(request):
 def compare_list(request):
     budgets = Budget.objects.filter(profile_id=request.user.id)
     total_spent = 0
-    index = index_global()
+    index = request.session['global_index']
 
     current_budget = Budget.objects.filter(profile_id=request.user.id)[index - 1]
     products = Product.objects.filter(list_id=current_budget.list_id)
