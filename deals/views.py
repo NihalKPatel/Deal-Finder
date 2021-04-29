@@ -9,6 +9,7 @@ from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 
 
 # HomePage
@@ -216,7 +217,7 @@ def profile(request):
     return render(request, 'pages/profile.html', context)
 
 
-@login_required(login_url='/accounts/login/')
+@staff_member_required(redirect_field_name='/accounts/login/')
 def staff(request):
     if request.method == 'POST' and 'scrape' in request.POST:
         utils.scrape_all_products()
