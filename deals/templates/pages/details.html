@@ -22,12 +22,7 @@
             }
         </style>
         <script>
-            // This sample uses the Places Autocomplete widget to:
 
-            // This sample requires the Places library, Maps JavaScript API.
-            // Include the libraries=places parameter when you first load the API.
-            // For example: <script
-            // src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
             let autocomplete;
             let address1Field;
             let address2Field;
@@ -57,8 +52,7 @@
 
                 // Get each component of the address from the place details,
                 // and then fill-in the corresponding field on the form.
-                // place.address_components are google.maps.GeocoderAddressComponent objects
-                // which are documented at http://goo.gle/3l5i5Mr
+
                 for (const component of place.address_components) {
                     const componentType = component.types[0];
 
@@ -110,7 +104,6 @@
     <form id="address-form" action="" method="get" autocomplete="off">
         <p class="title"></p>
         <label class="full-field">
-            <!-- Avoid the word "address" in id, name, or label text to avoid browser autofill from conflicting with Place Autocomplete. Star or comment bug https://crbug.com/587466 to request Chromium to honor autocomplete="off" attribute. -->
             <span class="form-label">Your Address</span>
             <input
                     id="address"
@@ -137,8 +130,7 @@
         </label>
         <button type="button" class="my-button">Save address</button>
 
-        <!-- Reset button provided for development testing convenience.
-    Not recommended for user-facing forms due to risk of mis-click when aiming for Submit button. -->
+        <!-- Reset button provided for development testing convenience. -->
         <input type="reset" value="Clear form" />
     </form>
 
