@@ -81,16 +81,15 @@ def analytics(request):
 
 class LineChartJSONView(BaseLineChartView):
     def get_labels(self):
-        """Return 6 labels for the x-axis."""
+        # labels
         return ["Week 1", "Week 2", "Week 4", "Week 5", "Week 6", "Week 7"]
 
     def get_providers(self):
-        """Return names of data to compare."""
+        # data to compare
         return ["Budget", "Actual spending"]
 
     def get_data(self):
-        """Return 2 datasets to plot."""
-
+        # data to plot
         return [
             [75, 80, 99, 44, 95, 35],
             [41, 92, 70, 39, 73, 87]
