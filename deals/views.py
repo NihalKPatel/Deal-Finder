@@ -3,12 +3,12 @@ from django.http import HttpResponse
 
 from . import utils
 from django.shortcuts import render, redirect
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from .models import List, Profile, Product, Budget
 from django.views import generic
 from django.urls import reverse, reverse_lazy
 from django.contrib import messages
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, ProductForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
@@ -156,15 +156,20 @@ class ShoppingListDelete(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('shopping_list')
 
 
-class AddProduct(CreateView):
-    model = Product
-    template_name = 'pages/product_create.html'
-    fields = ['name', 'link', 'price', 'location']
-    success_url = reverse_lazy('budget')
+class AddProductView(FormView):
+    template_name = "pages/product_create.html"
+    form_class = ProductForm
 
     def form_valid(self, form):
-        form.instance.profile = Profile.objects.filter(user_id=self.request.user.id)[0]
-        return super().form_valid(form)
+        name = form.cleaned_data['name']
+        link = form.cleaned_data['link']
+        price = form.cleaned_data['price']
+        location = form.cleaned_data['location']
+        list = form.cleaned_data['list']
+        product = Product(name=name, link=link, price=price, location=location)
+        product.save()
+        List.objects.get(name=list).products.add(Product.objects.get(id=product.id))
+        return redirect(reverse_lazy('budget'))
 
 
 class BudgetCreateView(CreateView):
