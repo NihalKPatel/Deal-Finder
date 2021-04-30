@@ -127,6 +127,12 @@ class ShoppingList(LoginRequiredMixin, generic.ListView):
     template_name = 'pages/shopping_list.html'
     context_object_name = 'shopping_lists'
 
+    def post(self, request, *args, **kwargs):
+        if 'list' in request.POST and 'product' in request.POST:
+            product = Product.objects.get(id=request.POST['product'])
+            List.objects.get(id=request.POST['list']).products.remove(product)
+        return redirect(reverse_lazy('shopping_list'))
+
     def get_queryset(self):
         return List.objects.filter(profile_id=self.request.user.id)
 
@@ -259,6 +265,7 @@ def staff(request):
         utils.scrape_all_products()
 
     return render(request, 'pages/staff.html')
+
 
 def analytics(request):
     return render(request, 'pages/analytics.html')
