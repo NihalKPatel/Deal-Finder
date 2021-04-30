@@ -15,7 +15,7 @@ Five enthusiastic software engineering students
 ### Development 
 In process - please see the developing branch [here](https://github.com/NihalKPatel/Deal-Finder/tree/developer). 
 
-##How to run from new environment
+### How to run from new environment
 1. python -m pip install -r requirements.txt - to install the dependencies required to run this project
 1. python manage.py migrate - migrates changed from django migrations to your local database
 2. python manage.py createsuperuser - program requires a superuser to access the staff page and scrape product records 
