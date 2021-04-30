@@ -12,5 +12,5 @@ As a webapp, dealFinder aims to help users to find the best possible food-relate
 ### The team :woman_technologist::man_technologist:
 Five enthusiastic software engineering students 
 
-### Developemnt 
+### Development 
 In process - please see the developing branch [here](https://github.com/NihalKPatel/Deal-Finder/tree/developer). 
