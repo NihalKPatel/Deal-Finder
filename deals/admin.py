@@ -6,4 +6,3 @@ admin.site.register(Budget)
 admin.site.register(Category)
 admin.site.register(List)
 admin.site.register(Product)
-
