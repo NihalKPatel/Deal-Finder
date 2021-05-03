@@ -176,7 +176,7 @@ class AddProductView(FormView):
         list = form.cleaned_data['list']
         product = Product(name=name, link=link, price=price, location=location)
         product.save()
-        List.objects.get(name=list).products.add(Product.objects.get(id=product.id))
+        List.objects.get(id=list.id).products.add(Product.objects.get(id=product.id))
         return redirect(reverse_lazy('budget'))
 
 # generic create view for creating a budget
