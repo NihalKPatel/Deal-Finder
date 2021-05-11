@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'background_task',
     'deals.apps.DealsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
