@@ -17,7 +17,7 @@ class Profile(models.Model):
     def __str__(self):
         return f'{self.user.username} Profile'
 
-    #save the image to a local directory
+    # save the image to a local directory
     def save(self, *args, **kwargs):
         super(Profile, self).save(*args, **kwargs)
 
@@ -28,6 +28,7 @@ class Profile(models.Model):
             img.thumbnail(output_size)
             img.save(self.image.path)
 
+
 # model for storing list names and list types
 # many to many relationship with products so many lists
 # can have many products
@@ -35,7 +36,7 @@ class List(models.Model):
     name = models.CharField(max_length=30, default="default name")
     # possible choices for types of lists
     TYPE = (
-        ('W', 'Wish List'),
+        ('W', 'Watch list'),
         ('S', 'Shopping List'),
     )
     type = models.CharField(
@@ -48,6 +49,7 @@ class List(models.Model):
     def __str__(self):
         return self.name
 
+
 # model for storing product information
 # many to many relationship with lists
 class Product(models.Model):
@@ -58,6 +60,7 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
 
 # model for storing budget information
 # one budget has one list
@@ -72,8 +75,13 @@ class Budget(models.Model):
         warning_spending = self.max_spend * 0.95
         return warning_spending
 
+
 # category model to divide spending in budget for future use
 class Category(models.Model):
     name = models.CharField(max_length=20)
     max_spend = models.IntegerField()
     budget = models.ForeignKey(Budget, on_delete=models.CASCADE, null=False)
+
+
+class WatchList(models.Model):
+    name = models.CharField(max_length=255, default='')
