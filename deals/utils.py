@@ -3,46 +3,10 @@ from bs4 import BeautifulSoup
 import lxml
 import json
 from .models import Product
-from enum import Enum
 
 single_item_url = 'https://www.amazon.com/PlayStation-5-DualSense-Wireless-Controller/dp/B08H99BPJN/'
 new_world_url = 'https://www.newworld.co.nz/shop/Search?q='
-paknsave_url = 'https://www.paknsaveonline.co.nz/Search?q='
-noel_leeming_url = 'https://www.noelleeming.co.nz/search.html?q='
-
-
-class StoreType(Enum):
-    FOOD = 'FOOD',
-    ELECTRONICS = 'ELECTRONICS',
-
-
-class Store:
-
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.128 Safari/537.36',
-        'Accept-Language': 'en',
-    }
-    url = None
-    data = {}
-    type = None
-
-    # returns a 2-tuple (name, price)
-    def scrape_product_data(self):
-        pass
-
-    # save product data as product models
-    def save_to_db(self):
-        pass
-
-
-class NewWorld(Store):
-    url = 'https://www.newworld.co.nz/shop/Search?q='
-    type = StoreType.FOOD
-
-
-class NoelLeeming(Store):
-    url = 'https://www.noelleeming.co.nz/search.html?q='
-    type = StoreType.ELECTRONICS
+pakinsave_url = 'https://www.paknsaveonline.co.nz/Search?q='
 
 
 def get_single_item_data_amazon(url):
@@ -95,3 +59,14 @@ def scrape_all_products():
             Product.objects.create(name=item[0], price=item[1], link='https://www.newworld.co.nz/', location='New World')
 
 
+
+# print(get_item_search_data_nw(new_world_url))
+# itemStringNw = ''
+# for item in get_item_search_data_nw(new_world_url):
+#     itemStringNw += (item['productName'] + " " + item['ProductDetails']['PricePerItem'] + ",")
+# print(itemStringNw)
+# print(get_item_search_data_nw(pakinsave_url))
+# itemStringPak = ''
+# for item in get_item_search_data_nw(pakinsave_url):
+#     itemStringPak += (item['productName'] + " " + item['ProductDetails']['PricePerItem'] + ",")
+# print(itemStringPak)
