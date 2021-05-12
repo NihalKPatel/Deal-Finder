@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 
-from . import utils
+from . import scraper
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from .models import List, Profile, Product, Budget
@@ -267,7 +267,7 @@ def profile(request):
 @staff_member_required(redirect_field_name='/accounts/login/')
 def staff(request):
     if request.method == 'POST' and 'scrape' in request.POST:
-        utils.scrape_all_products()
+        scraper.scrape_all_products()
 
     return render(request, 'pages/staff.html')
 
