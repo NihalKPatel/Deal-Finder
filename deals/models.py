@@ -17,7 +17,7 @@ class Profile(models.Model):
     def __str__(self):
         return f'{self.user.username} Profile'
 
-    #save the image to a local directory
+    # save the image to a local directory
     def save(self, *args, **kwargs):
         super(Profile, self).save(*args, **kwargs)
 
@@ -27,6 +27,7 @@ class Profile(models.Model):
             output_size = (300, 300)
             img.thumbnail(output_size)
             img.save(self.image.path)
+
 
 # model for storing list names and list types
 # many to many relationship with products so many lists
@@ -48,6 +49,7 @@ class List(models.Model):
     def __str__(self):
         return self.name
 
+
 # model for storing product information
 # many to many relationship with lists
 class Product(models.Model):
@@ -58,6 +60,7 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
 
 # model for storing budget information
 # one budget has one list
@@ -71,6 +74,7 @@ class Budget(models.Model):
     def spent_warning_amount(self):
         warning_spending = self.max_spend * 0.95
         return warning_spending
+
 
 # category model to divide spending in budget for future use
 class Category(models.Model):
