@@ -30,6 +30,8 @@ def shop(request):
 def dashboard(request):
     return render(request, 'pages/dashboard.html')
 
+def watchlist(request):
+    return render(request, 'pages/watchlist.html')
 
 # View to handle the budget template and process GET requests
 @login_required(login_url='/accounts/login/')
