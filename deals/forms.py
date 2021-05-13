@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import Form
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
 
 from .models import Profile, List
 
@@ -38,3 +40,10 @@ class ProductForm(Form):
     price = forms.FloatField()
     location = forms.CharField()
     list = forms.ModelChoiceField(List.objects.all())
+
+    def __init__(self, *args, **kwargs):
+        super(ProductForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.add_input(Submit('submit', 'Submit'))
+        self.helper.add_input(Submit('cancel', 'Cancel'))
