@@ -73,15 +73,37 @@ class Browse(LoginRequiredMixin, generic.ListView):
     template_name = 'pages/browse.html'
     paginate_by = 20
     login_url = '/accounts/login/'
+    store_codes = {
+        '': 'All',
+        'NW': 'New World',
+        'CL': 'Computer Lounge',
+
+    }
 
     # use GET requests to filter the product items for the listview
     # and pass the previous search into the current page so it isn't lost
     def get_queryset(self):
-        if self.request.method == 'GET' and 'search' in self.request.GET:
-            search = self.request.GET['search']
+        location = None
+        search = None
+        if self.request.method == 'GET':
+            if 'search' in self.request.GET:
+                search = self.request.GET['search']
+            if 'store' in self.request.GET:
+                code = self.request.GET['store']
+                if code in self.store_codes:
+                    location = self.store_codes[code]
+
+        # location and search values found
+        if location and search:
+            return Product.objects.filter(name__icontains=search, location=location)
+        # location value found
+        if location:
+            return Product.objects.filter(location=location)
+        # search value found
+        if search:
             return Product.objects.filter(name__icontains=search)
-        else:
-            return Product.objects.all()
+
+        return Product.objects.all()
 
     # use POST requests to handle adding products to lists
     def post(self, request, *args, **kwargs):
@@ -97,12 +119,26 @@ class Browse(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
+
+        context['stores'] = self.store_codes
+        print(context['stores'])
         # Add in a QuerySet of all the books
-        if self.request.method == 'GET' and 'search' in self.request.GET:
-            search = self.request.GET['search']
-            context['search'] = search
-        else:
-            context['search'] = ''
+        if self.request.method == 'GET':
+            if 'search' in self.request.GET:
+                context['search'] = self.request.GET['search']
+            else:
+                context['search'] = ''
+            if 'store' in self.request.GET:
+                store = self.request.GET['store']
+                if store in self.store_codes:
+                    first_entry = {store: self.store_codes[store]}
+                    remaining_entries = self.store_codes.copy()
+                    del remaining_entries[store]
+                    first_entry.update(remaining_entries)
+                    context['stores'] = first_entry
+                    print("GOT HERE")
+                    print(context['stores'])
+                    # print(remaining_entries)
 
         context['all_lists'] = List.objects.filter(profile_id=self.request.user.id)
         return context
