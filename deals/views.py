@@ -13,7 +13,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from .forms import UserRegisterForm
 from chartjs.views.lines import BaseLineChartView
-from .scraper import NewWorld
+from .scraper import NewWorld, ComputerLounge
 
 
 # View to handle the index template
@@ -282,6 +282,10 @@ def profile(request):
 def staff(request):
     if request.method == 'POST' and 'scrape' in request.POST:
         store = NewWorld()
+        store.save_to_db()
+
+    if request.method == 'POST' and 'test' in request.POST:
+        store = ComputerLounge()
         store.save_to_db()
 
     return render(request, 'pages/staff.html')
