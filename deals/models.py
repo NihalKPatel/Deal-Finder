@@ -53,7 +53,7 @@ class List(models.Model):
 # model for storing product information
 # many to many relationship with lists
 class Product(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=50)
     link = models.CharField(max_length=255, blank=True)
     price = models.FloatField()
     location = models.CharField(max_length=255, blank=True)

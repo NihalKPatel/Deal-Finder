@@ -8,13 +8,12 @@ from django.views import generic
 from django.urls import reverse, reverse_lazy
 from django.contrib import messages
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, ProductForm
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from .forms import UserRegisterForm
 from chartjs.views.lines import BaseLineChartView
-from .scraper import NewWorld, NoelLeeming
+from .scraper import NewWorld
 
 
 # View to handle the index template
@@ -284,10 +283,6 @@ def staff(request):
     if request.method == 'POST' and 'scrape' in request.POST:
         store = NewWorld()
         store.save_to_db()
-
-    if request.method == 'POST' and 'test' in request.POST:
-        store = NoelLeeming()
-        store.scrape_product_data()
 
     return render(request, 'pages/staff.html')
 

@@ -8,6 +8,8 @@ db.cnf
 media/*
 !media/default.jpg
 
+dealfinder/.env
+
 # Backup files #
 *.bak
 

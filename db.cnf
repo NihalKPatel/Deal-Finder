@@ -1,7 +1,0 @@
-[client]
-database = dealfinderdb
-user = deals
-password = cz3XU560%0$P
-default-character-set = utf8
-host = 139.99.133.173
-port = 3306

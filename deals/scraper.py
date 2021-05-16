@@ -67,7 +67,10 @@ class NewWorld(Store):
             name_price_tuples = self.scrape_product_data(i)
             print(len(name_price_tuples))
             for item in name_price_tuples:
-                Product.objects.create(name=item[0], price=item[1], link='https://www.newworld.co.nz/', location=self.name)
+                name = item[0]
+                if len(name) > 50:
+                    name = name[:50]
+                Product.objects.create(name=name, price=item[1], link='https://www.newworld.co.nz/', location=self.name)
 
 
 class NoelLeeming(Store):
