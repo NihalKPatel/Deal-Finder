@@ -1,6 +1,5 @@
 from django.http import HttpResponse
 
-from . import scraper
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from .models import List, Profile, Product, Budget
