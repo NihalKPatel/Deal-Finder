@@ -70,11 +70,6 @@ class Budget(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, null=False)
     list = models.ForeignKey(List, on_delete=models.SET_NULL, null=True)
 
-    # TYPE = (
-    #     ('C', 'Custom'),
-    #     ('G', 'Generated'),
-    # )
-
     # calculate amount at which to warn the user of their spending
     def spent_warning_amount(self):
         warning_spending = self.max_spend * 0.95
@@ -86,3 +81,6 @@ class Category(models.Model):
     name = models.CharField(max_length=20)
     max_spend = models.IntegerField()
     budget = models.ForeignKey(Budget, on_delete=models.CASCADE, null=False)
+
+class Watchlist(models.Model):
+    name = models.CharField(max_length=20)
