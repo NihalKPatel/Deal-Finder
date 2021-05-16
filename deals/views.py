@@ -94,10 +94,10 @@ class Browse(LoginRequiredMixin, generic.ListView):
                     location = self.store_codes[code]
 
         # location and search values found
-        if location and search:
+        if location and search and location != 'All':
             return Product.objects.filter(name__icontains=search, location=location)
         # location value found
-        if location:
+        if location and location != 'All':
             return Product.objects.filter(location=location)
         # search value found
         if search:
@@ -136,9 +136,6 @@ class Browse(LoginRequiredMixin, generic.ListView):
                     del remaining_entries[store]
                     first_entry.update(remaining_entries)
                     context['stores'] = first_entry
-                    print("GOT HERE")
-                    print(context['stores'])
-                    # print(remaining_entries)
 
         context['all_lists'] = List.objects.filter(profile_id=self.request.user.id)
         return context
