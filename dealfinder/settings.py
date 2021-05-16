@@ -25,11 +25,12 @@ SECRET_KEY = '$q-buk*u(+%(f^p7k7rv%75zylaenm82hapfab=)22e-f1kw7k'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['139.99.133.173']
+ALLOWED_HOSTS = []
 
 # Application definition
 
 INSTALLED_APPS = [
+    'background_task',
     'deals.apps.DealsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
