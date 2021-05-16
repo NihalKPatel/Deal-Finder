@@ -25,12 +25,11 @@ SECRET_KEY = '$q-buk*u(+%(f^p7k7rv%75zylaenm82hapfab=)22e-f1kw7k'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['139.99.133.173']
 
 # Application definition
 
 INSTALLED_APPS = [
-    'background_task',
     'deals.apps.DealsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -75,21 +74,21 @@ WSGI_APPLICATION = 'dealfinder.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'OPTIONS': {
-#             'read_default_file': str(BASE_DIR / 'db.cnf'),
-#         },
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'OPTIONS': {
+            'read_default_file': str(BASE_DIR / 'db.cnf'),
+        },
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

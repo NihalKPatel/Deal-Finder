@@ -10,7 +10,6 @@ chardet==4.0.0
 colorama==0.4.4
 distlib==0.3.1
 Django==3.1.7
-django-background-tasks==1.2.5
 django-chartjs==2.2.1
 django-compat==1.0.15
 django-crispy-forms==1.11.2
