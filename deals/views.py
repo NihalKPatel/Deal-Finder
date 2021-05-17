@@ -31,6 +31,11 @@ def dashboard(request):
     return render(request, 'pages/dashboard.html')
 
 
+# View to handle the about page
+def about(request):
+    return render(request, 'pages/about.html')
+
+
 # View to handle the budget template and process GET requests
 @login_required(login_url='/accounts/login/')
 def budget(request):
@@ -148,12 +153,14 @@ class ShoppingListCreate(LoginRequiredMixin, CreateView):
         form.instance.type = 'S'
         return super().form_valid(form)
 
+
 # generic update view for updating lists
 class ShoppingListUpdate(LoginRequiredMixin, UpdateView):
     model = List
     template_name = 'pages/shopping_list_update.html'
     fields = ['name']
     success_url = reverse_lazy('shopping_list')
+
 
 # generic delete view for deleting lists
 class ShoppingListDelete(LoginRequiredMixin, DeleteView):
@@ -167,7 +174,7 @@ class AddProductView(FormView):
     template_name = "pages/product_create.html"
     form_class = ProductForm
 
-    #if the form is valid create the new product and add it to a list
+    # if the form is valid create the new product and add it to a list
     def form_valid(self, form):
         name = form.cleaned_data['name']
         link = form.cleaned_data['link']
@@ -178,6 +185,7 @@ class AddProductView(FormView):
         product.save()
         List.objects.get(id=list.id).products.add(Product.objects.get(id=product.id))
         return redirect(reverse_lazy('budget'))
+
 
 # generic create view for creating a budget
 class BudgetCreateView(CreateView):
@@ -197,6 +205,7 @@ class BudgetCreateView(CreateView):
         context['form'].fields['list'].queryset = List.objects.filter(profile_id=self.request.user.id)
         return context
 
+
 # generic update view for updating budgets
 class BudgetUpdate(LoginRequiredMixin, UpdateView):
     model = Budget
@@ -210,19 +219,23 @@ class BudgetUpdate(LoginRequiredMixin, UpdateView):
         context['form'].fields['list'].queryset = List.objects.filter(profile_id=self.request.user.id)
         return context
 
+
 # generic delete view for deleting budgets
 class BudgetDelete(LoginRequiredMixin, DeleteView):
     model = Budget
     template_name = 'pages/shopping_list_delete.html'
     success_url = reverse_lazy('budget')
 
+
 # view to handle the details template
 def details(request):
     return render(request, 'pages/details.html')
 
+
 # view to handle the notifications template
 def notification(request):
     return render(request, 'pages/notification.html')
+
 
 # view to handle the register form, using POST http requests for security
 def register(request):
@@ -236,6 +249,7 @@ def register(request):
     else:
         form = UserRegisterForm()
     return render(request, 'registration/register.html', {'form': form})
+
 
 # view to handle viewing of the profile
 # also acting as an updateview for the profile on the same page
@@ -262,6 +276,7 @@ def profile(request):
 
     return render(request, 'pages/profile.html', context)
 
+
 # view only accessible to staff members (currently the superuser) allowing you to scrape data
 # from your chosen store in one click and storing it in the database
 @staff_member_required(redirect_field_name='/accounts/login/')
@@ -271,9 +286,11 @@ def staff(request):
 
     return render(request, 'pages/staff.html')
 
+
 # view to handle the analytics template
 def analytics(request):
     return render(request, 'pages/analytics.html')
+
 
 # view to handle the chart
 class LineChartJSONView(BaseLineChartView):
