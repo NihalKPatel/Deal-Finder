@@ -1,166 +1,399 @@
 {% extends "base.html" %}
 
 {% block content %}
+{%  load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Google Maps Project</title>
+    <script src="store-data.js"></script>
+    <script src="js/index.js"></script>
+      <style>
+          body {
+              font-family: Arial, Helvetica, sans-serif;
+              height: 100vh;
+              margin: 0;
+              padding: 0;
+          }
+
+          #map {
+              width: 100%;
+              height: 100%;
+          }
+
+          .title {
+              position: absolute;
+              z-index: 100;
+              font-size: 30px;
+              font-weight: bold;
+              color: #333;
+              text-transform: uppercase;
+              top: 120px;
+              left: 100px;
+          }
+
+          .search-container{
+              border-radius: 30px;
+              position: absolute;
+              z-index: 100;
+              top: 100px;
+              left: 15px;
+              width: 400px;
+              height: 60px;
+              background-color: #454E53;
+              display: flex;
+              box-shadow: 0 2px 7px 1px rgba(0, 0, 0, 0.507);
+          }
+
+          .stores-list-container {
+              width: 400px;
+              position: absolute;
+              z-index: 100;
+              background-color: white;
+              left: 15px;
+              top: 175px;
+              border-radius: 30px;
+              bottom: 20px;
+              display: flex;
+              overflow-y: hidden;
+              box-shadow: 0 2px 7px 1px rgba(0, 0, 0, 0.308);
+          }
+
+          .search-container .search{
+              flex-grow: 1;
+              display: flex;
+              align-items: center;
+              padding-left: 20px;
+              padding-right: 20px;
+          }
+
+          .search-container input {
+              width: 100%;
+              font-size: 25px;
+              background-color: transparent;
+              border: none;
+              color: white;
+          }
+
+          .search-container input:focus {
+              outline: none;
+          }
+
+          .search i {
+              font-size: 25px;
+              color: white;
+          }
 
 
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <style>
-            .map-container-4{
-                overflow:hidden;
-                padding-bottom:56.25%;
-                position:relative;
-                height:0;
-            }
-            .map-container iframe{
-                position: absolute;
-                width: 100%;
-                left: 0;
-                height: 400px;
 
-            }
-        </style>
-        <script>
+          .store-container {
+              border-bottom: 1px solid #979797;
+              display: flex;
+              cursor: pointer;
+          }
 
-            let autocomplete;
-            let address1Field;
-            let address2Field;
-            let postalField;
+          .store-address {
+              font-size: 21px;
+              color: #514C4C;
+              margin-top: 30px;
+          }
 
-            function initAutocomplete() {
-                address1Field = document.querySelector("#address");
-                address2Field = document.querySelector("#address2");
-                postalField = document.querySelector("#postcode");
-                // Create the autocomplete object, restricting the search predictions to
-                autocomplete = new google.maps.places.Autocomplete(address1Field, {
-                    componentRestrictions: { country: ["nz"] },
-                    fields: ["address_components", "geometry"],
-                    types: ["address"],
-                });
-                address1Field.focus();
-                // When the user selects an address from the drop-down, populate the
-                // address fields in the form.
-                autocomplete.addListener("place_changed", fillInAddress);
-            }
+          .store-phone-number {
+              color: #B5ADAD;
+              margin-top: 15px;
+              margin-bottom: 15px;
+          }
 
-            function fillInAddress() {
-                // Get the place details from the autocomplete object.
-                const place = autocomplete.getPlace();
-                let address1 = "";
-                let postcode = "";
+          .store-address span {
+              display: block;
+          }
 
-                // Get each component of the address from the place details,
-                // and then fill-in the corresponding field on the form.
+          .store-number {
+              width: 30px;
+              height: 30px;
+              background-color: #454E53;
+              color: #B5ADAD;
+              border-radius: 50%;
+              font-size: 12px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+          }
 
-                for (const component of place.address_components) {
-                    const componentType = component.types[0];
+          .store-info-container {
+              flex-grow: 1;
+          }
 
-                    switch (componentType) {
-                        case "street_number": {
-                            address1 = `${component.long_name} ${address1}`;
-                            break;
-                        }
+          .store-number-container {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+          }
 
-                        case "route": {
-                            address1 += component.short_name;
-                            break;
-                        }
+          .stores-list {
+              flex-grow: 1;
+              overflow-y: scroll;
+              padding-left: 20px;
+              padding-right: 20px;
+          }
 
-                        case "postal_code": {
-                            postcode = `${component.long_name}${postcode}`;
-                            break;
-                        }
+          .store-info-window {
+              min-width: 300px;
+              font-size: 18px;
+              padding: 8px;
+          }
 
-                        case "postal_code_suffix": {
-                            postcode = `${postcode}-${component.long_name}`;
-                            break;
-                        }
-                        case "locality":
-                            document.querySelector("#locality").value = component.long_name;
-                            break;
+          .store-info-name {
+              font-size: 24px;
+              font-weight: bold;
+              color: rgba(0, 0, 0, .87);
+          }
 
-                        case "administrative_area_level_1": {
-                            document.querySelector("#state").value = component.short_name;
-                            break;
-                        }
-                        case "country":
-                            document.querySelector("#country").value = component.long_name;
-                            break;
+          .store-info-status {
+              margin-top: 6px;
+              border-bottom: 1px solid #00000029;
+              padding-bottom: 6px;
+          }
+
+          .store-info-address , .store-info-phone {
+              margin-top: 8px;
+              display: flex;
+              align-items: center;
+          }
+
+          .circle {
+              background-color: #1985A1;
+              width: 30px;
+              height: 30px;
+              color: white;
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin-right: 8px;
+          }
+
+          .search i {
+              cursor: pointer;
+          }
+
+          .store-container-background{
+              display: flex;
+              flex-grow: 1;
+              padding-left: 8px;
+              padding-right: 8px;
+              margin-top: 12px;
+              margin-bottom: 12px;
+              transition: all 0.2s ease-in-out;
+          }
+
+          .store-container-background:hover {
+              background-color: #ccc;
+              border-radius: 18px;
+
+          }
+
+          ::-webkit-scrollbar {
+              width: 10px;
+          }
+
+          ::-webkit-scrollbar-track {
+              box-shadow: inset 0 0 5px grey;
+          }
+
+          ::-webkit-scrollbar-thumb {
+              background: #454E53;
+              border-radius: 30px;
+              height: 30px;
+          }
+      </style>
+    <script>
+        let stores = [{
+
+
+        }]
+        window.onload = function() {
+
+        }
+
+        var map;
+        var markers = [];
+        var infoWindow;
+
+
+        function initMap() {
+            var newzealand = {
+                lat: 34.063380,
+                lng: -118.358080
+            };
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: newzealand,
+                zoom: 11,
+                mapTypeId: "roadmap",
+            });
+            infoWindow = new google.maps.InfoWindow();
+            searchStores();
+        }
+
+        function searchStores() {
+            var foundStores = [];
+            var zipCode = document.getElementById('zip-code-input').value;
+            if(zipCode){
+                for (var store of stores){
+                    var postal = store['address']['postalCode'].substring(0,5);
+                    if(postal == zipCode){
+                        foundStores.push(store);
                     }
                 }
-                address1Field.value = address1;
-                postalField.value = postcode;
-                // After filling the form with address components from the Autocomplete
-                // prediction, set cursor focus on the second address line to encourage
-                // entry of subpremise information such as apartment, unit, or floor number.
-                address2Field.focus();
+
+            }else {
+                foundStores = stores;
             }
-        </script>
+            clearLocations();
+            displayStores(foundStores);
+            showStoresMarkers(foundStores);
+            setOnClickListener();
+        }
 
+        function clearLocations() {
+            infoWindow.close();
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(null);
+            }
+            markers.length = 0;
+        }
 
-    </head>
-    <body>
-    <form id="address-form" action="" method="get" autocomplete="off">
-        <p class="title"></p>
-        <label class="full-field">
-            <span class="form-label">Your Address</span>
-            <input
-                    id="address"
-                    name="address"
-                    required
-                    autocomplete="off"
-            />
-        </label>
-        <label class="full-field">
-            <span class="form-label">City*</span>
-            <input id="locality" name="locality" required />
-        </label>
-        <label class="slim-field-left">
-            <span class="form-label">State/Province*</span>
-            <input id="state" name="state" required />
-        </label>
-        <label class="slim-field-right" for="postal_code">
-            <span class="form-label">Postal code*</span>
-            <input id="postcode" name="postcode" required />
-        </label>
-        <label class="full-field">
-            <span class="form-label">Country/Region*</span>
-            <input id="country" name="country" required />
-        </label>
-        <button type="button" class="my-button">Save address</button>
+        function setOnClickListener() {
+            var storeElements = document.querySelectorAll('.store-container');
+            storeElements.forEach(function(element, index){
+                element.addEventListener('click', function(){
+                    new google.maps.event.trigger(markers[index], "click");
+                })
+            })
+        }
 
-        <!-- Reset button provided for development testing convenience. -->
-        <input type="reset" value="Clear form" />
-    </form>
-
-    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
-    <script
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtRbNrJLwvsLHEWG5SGBjXTjW4--gC4Xw
-&callback=initAutocomplete&libraries=places&v=weekly"
-            async
-    ></script>
-
-        <!--Main layout-->
-
-        <main class=" m-0 p-0">
-            <div class="container-fluid m-0 p-0">
-
-                <!--Google map-->
-                <div id="map-container-google-4" class="z-depth-1-half map-container-4" style="height: 1000px">
-                    <p> Click on the store and then direction</p>
-                    <iframe src="https://maps.google.com/maps?q=newworld&t=&z=13&ie=UTF8&iwloc=&output=embed" width="900" height="550" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+        function displayStores() {
+            var storesHtml ='';
+            for(var [index, store] of stores.entries()){
+                var address = store['addressLines'];
+                var phone = store['phoneNumber'];
+                storesHtml += `
+            <div class="store-container">
+              <div class="store-container-background">
+                <div class="store-info-container">
+                  <div class="store-address">
+                    <span>${address[0]}</span>
+                    <span>${address[1]}</span>
+                  </div>
+                  <div class="store-phone-number">${phone}</div>
                 </div>
-
+                <div class="store-number-container">
+                  <div class="store-number">
+                    ${index+1}
+                  </div>
+                </div>
+              </div>
             </div>
-        </main>
-        <!--Main layout-->
-    </body>
-    </html>
+    `
+                document.querySelector('.stores-list').innerHTML = storesHtml;
+
+            }
+        }
+
+        function showStoresMarkers(stores){
+            var bounds = new google.maps.LatLngBounds();
+            for(var [index, store] of stores.entries()){
+                var latlng = new google.maps.LatLng(
+                    store["coordinates"]["latitude"],
+                    store["coordinates"]["longitude"]);
+                var name = store["name"];
+                var address = store["addressLines"][0];
+                var openStatusText = store["openStatusText"];
+                var phoneNumber = store["phoneNumber"];
+                bounds.extend(latlng);
+                createMarker(latlng, name, address, openStatusText, phoneNumber, index+1)
+            }
+            map.fitBounds(bounds);
+
+        }
+
+        function createMarker(latlng, name, address, openStatusText, phoneNumber, index) {
+            var html = `
+      <div class="store-info-window">
+        <div class="store-info-name">
+          ${name}
+        </div>
+        <div class="store-info-status">
+          ${openStatusText}
+        </div>
+        <div class="store-info-address">
+          <div class="circle">
+            <i class="fas fa-location-arrow"></i>
+          </div>
+          ${address}
+        </div>
+        <div class="store-info-phone">
+          <div class="circle">
+            <i class="fas fa-phone-alt"></i>
+          </div>
+          ${phoneNumber}
+        </div>
+      </div>
+  `
+            var marker = new google.maps.Marker({
+                map: map,
+                position: latlng,
+                label: index.toString(),
+            });
+            google.maps.event.addListener(marker, 'click', function() {
+                infoWindow.setContent(html);
+                infoWindow.open(map, marker);
+            });
+            markers.push(marker);
+        }
+    </script>
+    <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
+    <link
+      rel="shortcut icon"
+      href="img/google-maps-icon.png"
+      type="image/x-icon"
+    />
+  </head>
+  <body>
+    <div class="title">Store Locator</div>
+    <div class="search-container">
+      <div class="search">
+        <input type="text" id="zip-code-input" placeholder="Enter Zip" />
+        <i class="fas fa-search" onclick="searchStores()"></i>
+      </div>
+    </div>
+    <div class="stores-list-container">
+      <div class="stores-list">
+        <div class="store-container">
+          <div class="store-info-container">
+            <div class="store-address">
+              <span>New World</span>
+              <span>Auckland, 1041</span>
+            </div>
+            <div class="store-phone-number">+92 308 1334342</div>
+          </div>
+          <div class="store-number-container">
+            <div class="store-number">
+              1
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="map"></div>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtRbNrJLwvsLHEWG5SGBjXTjW4--gC4Xw
+&callback=initMap">
+        </script>
+  </body>
+</html>
+
 
 {% endblock %}
-
-
-
-
-

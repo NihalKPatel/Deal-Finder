@@ -1,8 +1,0 @@
-[client]
-database = deal-finder-db
-user = admin
-password = passwordtest
-default-character-set = utf8
-host = deal-finder-db.c9hmgmctjnmw.ap-southeast-2.rds.amazonaws.com
-port = 3306
-ssl_ca=C:\Users\charl\Documents\dev\rds-ca-2019-ap-southeast-2.pem
