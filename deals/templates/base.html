@@ -10,6 +10,11 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- FontAwesome
+    <script src="{% static 'fontawesome_free/js/all.min.js' %}"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css">
+    --->
     <!-- CSS -->
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
@@ -32,7 +37,7 @@
     </div>
     <div class="mx-auto order-0">
         <!-- Links to "Deal Finder" to index page. Works like homepage button -->
-        <a class="navbar-brand mx-auto" href="{% url 'index' %}">| DEAL FINDER |</a>
+        <a class="navbar-brand mx-auto" href="{% url 'index' %}">DealFinder</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -40,6 +45,10 @@
 
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <!--Links to about page-->
+                <a class="nav-item nav-link" href="{% url 'about' %}">About</a>
+            </li>
             <li class="nav-item">
                 <!-- Links to budget app and also shows the "used budget/max budget" -->
                 <a class="nav-link" href="#">$$$ / $$$</a>
@@ -102,6 +111,7 @@
     </ul>
 
 </nav>
+
 
 
 

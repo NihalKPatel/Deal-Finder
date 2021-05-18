@@ -1,26 +1,23 @@
 from django.http import HttpResponse
 
-from . import utils
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from .models import List, Profile, Product, Budget
 from django.views import generic
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.contrib import messages
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, ProductForm
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
+from .forms import UserRegisterForm
 from chartjs.views.lines import BaseLineChartView
+from .scraper import NewWorld, ComputerLounge
 
 
 # View to handle the index template
 def index(request):
     return render(request, 'index.html')
-
-
-def watchlist(request):
-    return render(request, 'pages/watchlist.html')
 
 
 # View to handle the shop template
@@ -32,8 +29,11 @@ def shop(request):
 def dashboard(request):
     return render(request, 'pages/dashboard.html')
 
-def watchlist(request):
-    return render(request, 'pages/watchlist.html')
+
+# View to handle the about page
+def about(request):
+    return render(request, 'pages/about.html')
+
 
 # View to handle the budget template and process GET requests
 @login_required(login_url='/accounts/login/')
@@ -78,15 +78,37 @@ class Browse(LoginRequiredMixin, generic.ListView):
     template_name = 'pages/browse.html'
     paginate_by = 20
     login_url = '/accounts/login/'
+    store_codes = {
+        '': 'All',
+        'NW': 'New World',
+        'CL': 'Computer Lounge',
+
+    }
 
     # use GET requests to filter the product items for the listview
     # and pass the previous search into the current page so it isn't lost
     def get_queryset(self):
-        if self.request.method == 'GET' and 'search' in self.request.GET:
-            search = self.request.GET['search']
+        location = None
+        search = None
+        if self.request.method == 'GET':
+            if 'search' in self.request.GET:
+                search = self.request.GET['search']
+            if 'store' in self.request.GET:
+                code = self.request.GET['store']
+                if code in self.store_codes:
+                    location = self.store_codes[code]
+
+        # location and search values found
+        if location and search and location != 'All':
+            return Product.objects.filter(name__icontains=search, location=location)
+        # location value found
+        if location and location != 'All':
+            return Product.objects.filter(location=location)
+        # search value found
+        if search:
             return Product.objects.filter(name__icontains=search)
-        else:
-            return Product.objects.all()
+
+        return Product.objects.all()
 
     # use POST requests to handle adding products to lists
     def post(self, request, *args, **kwargs):
@@ -102,12 +124,23 @@ class Browse(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
+
+        context['stores'] = self.store_codes
+        print(context['stores'])
         # Add in a QuerySet of all the books
-        if self.request.method == 'GET' and 'search' in self.request.GET:
-            search = self.request.GET['search']
-            context['search'] = search
-        else:
-            context['search'] = ''
+        if self.request.method == 'GET':
+            if 'search' in self.request.GET:
+                context['search'] = self.request.GET['search']
+            else:
+                context['search'] = ''
+            if 'store' in self.request.GET:
+                store = self.request.GET['store']
+                if store in self.store_codes:
+                    first_entry = {store: self.store_codes[store]}
+                    remaining_entries = self.store_codes.copy()
+                    del remaining_entries[store]
+                    first_entry.update(remaining_entries)
+                    context['stores'] = first_entry
 
         context['all_lists'] = List.objects.filter(profile_id=self.request.user.id)
         return context
@@ -168,10 +201,14 @@ class ShoppingListDelete(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('shopping_list')
 
 
-# form view for adding products to lists
 class AddProductView(FormView):
     template_name = "pages/product_create.html"
     form_class = ProductForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'].fields['list'].queryset = List.objects.filter(profile_id=self.request.user.id)
+        return context
 
     # if the form is valid create the new product and add it to a list
     def form_valid(self, form):
@@ -182,7 +219,7 @@ class AddProductView(FormView):
         list = form.cleaned_data['list']
         product = Product(name=name, link=link, price=price, location=location)
         product.save()
-        List.objects.get(name=list).products.add(Product.objects.get(id=product.id))
+        List.objects.get(id=list.id).products.add(Product.objects.get(id=product.id))
         return redirect(reverse_lazy('budget'))
 
 
@@ -281,7 +318,12 @@ def profile(request):
 @staff_member_required(redirect_field_name='/accounts/login/')
 def staff(request):
     if request.method == 'POST' and 'scrape' in request.POST:
-        utils.scrape_all_products()
+        store = NewWorld()
+        store.save_to_db()
+
+    if request.method == 'POST' and 'test' in request.POST:
+        store = ComputerLounge()
+        store.save_to_db()
 
     return render(request, 'pages/staff.html')
 
