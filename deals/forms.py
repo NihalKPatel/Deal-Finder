@@ -2,8 +2,11 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import Form
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
 
 from .models import Profile, List
+
 
 # form for creating a user
 class UserRegisterForm(UserCreationForm):
@@ -13,6 +16,7 @@ class UserRegisterForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1', 'password2']
 
+
 # form for updating a user
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()
@@ -21,16 +25,25 @@ class UserUpdateForm(forms.ModelForm):
         model = User
         fields = ['username', 'email']
 
+
 # form for updating a profile
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['image']
 
-#form for creating a new product
+
+# form for creating a new product
 class ProductForm(Form):
     name = forms.CharField()
     link = forms.CharField()
     price = forms.FloatField()
     location = forms.CharField()
     list = forms.ModelChoiceField(List.objects.all())
+
+    def __init__(self, *args, **kwargs):
+        super(ProductForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.add_input(Submit('submit', 'Submit'))
+        self.helper.add_input(Submit('cancel', 'Cancel'))

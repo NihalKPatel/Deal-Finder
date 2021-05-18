@@ -4,8 +4,11 @@
 *.pyc
 __pycache__
 db.sqlite3
+db.cnf
 media/*
 !media/default.jpg
+
+dealfinder/.env
 
 # Backup files #
 *.bak

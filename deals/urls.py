@@ -10,6 +10,7 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('', views.index, name='index'),
     path('profile', views.profile, name='profile'),
+    path('about/', views.about, name='about'),
     path('shop', views.shop, name='shop'),
     path('budget', views.budget, name='budget'),
     path('budget/<int:pk>/update/', views.BudgetUpdate.as_view(), name='budget_update'),
