@@ -11,6 +11,7 @@ Django==3.1.7
 django-chartjs==2.2.1
 django-crispy-forms==1.11.2
 filelock==3.0.12
+fontawesome-free==5.15.3
 idna==2.10
 isort==5.8.0
 lazy-object-proxy==1.6.0
@@ -28,3 +29,4 @@ toml==0.10.2
 urllib3==1.26.4
 virtualenv==20.4.3
 wrapt==1.12.1
+environ~=1.0
