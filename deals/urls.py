@@ -31,7 +31,6 @@ urlpatterns = [
     path('analytics/', views.analytics, name='analytics'),
     path('chart', TemplateView.as_view(template_name='line_chart.html'), name='line_chart'),
     path('chartJSON', views.LineChartJSONView.as_view(), name='line_chart_json'),
-    path('watchlist', views.watchlist, name='watchlist'),
 
 ]
 
