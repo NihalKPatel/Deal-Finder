@@ -2,11 +2,11 @@ from django.http import HttpResponse
 
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
-from .models import List, Profile, Product, Budget
+from .models import List, Profile, Product, Budget, userSuggestions
 from django.views import generic
 from django.urls import reverse, reverse_lazy
 from django.contrib import messages
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, ProductForm
+from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, ProductForm, userSuggestionsForm
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
@@ -16,8 +16,20 @@ from .scraper import NewWorld, ComputerLounge
 
 
 # View to handle the index template
+# def index(request):
+#
+#
+#     return render(request, 'index.html')
 def index(request):
-    return render(request, 'index.html')
+    form = userSuggestionsForm()
+    if request.method == 'POST':
+        form = userSuggestionsForm(request.POST)
+        if form.is_valid():
+            form.save()
+
+    context ={'form':form}
+
+    return render(request, 'index.html',context)
 
 
 # View to handle the shop template
@@ -349,3 +361,5 @@ class LineChartJSONView(BaseLineChartView):
             [75, 80, 99, 44, 95, 35],
             [41, 92, 70, 39, 73, 87]
         ]
+
+
