@@ -82,9 +82,6 @@ class Category(models.Model):
     max_spend = models.IntegerField()
     budget = models.ForeignKey(Budget, on_delete=models.CASCADE, null=False)
 
-class Watchlist(models.Model):
-    name = models.CharField(max_length=20)
-
 
 class userSuggestions(models.Model):
     name = models.CharField(max_length=50)
