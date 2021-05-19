@@ -83,7 +83,7 @@ celerybeat-schedule.*
 *.sage.py
 
 # Environments
-.env
+dealfinder/.env
 .venv
 env/
 venv/
