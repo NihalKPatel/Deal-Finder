@@ -1,5 +1,64 @@
 {% extends "base.html" %}
 
+
 {% block content %}
-<h2 class="display-4">HOMEPAGE - INDEX</h2>
+
+<head>
+    <meta charset="utf-8">
+    <!-- Font Awesome-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css">
+    <style>
+        .row
+        {
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+        .btn
+        {
+            margin-top: 50px;
+            margin-bottom: 50px;
+
+        }
+        .about-content
+        {
+            padding-top: 50px;
+        }
+        .icon
+        {
+            font-size: 40px;
+            margin: 20px auto;
+            padding: 20px;
+            height: 80px;
+            width: 80px;
+            border: 1px solid #fff;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <!----- About----->
+    <section id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <!--- font awesome
+                    <div class="icon">
+                        <i class="fas fa-piggy-bank"></i>
+                    </div>
+                    --->
+
+                    <h1>Welcome to DealFinder!</h1>
+                    <div class="about-content">
+                        Our goal is to help you find the best deals nearby
+                        all in one browser!
+                    </div>
+                    <a href="{% url 'about' %}" class="btn btn-info">Click here to read more!</a>
+                </div>
+                <div class="col-md-6"></div>
+
+            </div>
+        </div>
+    </section>
+</body>
+
 {% endblock %}

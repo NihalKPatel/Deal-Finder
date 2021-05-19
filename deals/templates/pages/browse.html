@@ -43,21 +43,17 @@
 
     <form method="GET" action="">
         <div class="form-row justify-content-center">
-            <input type="text" class="form-control col-9" id="search" name="search" placeholder="Search here!" value="{{ search }}">
+            <input type="text" class="form-control col-9" id="search" name="search" placeholder="Search here!"
+                   value="{{ search }}">
             <button type="submit" class="btn btn-dark col-1">Search</button>
             <div class="container">
                 <div class="row">
-                    <form class="col-md-4">
-                        <label>Categories</label>
-                        <select class="form-control select2">
-                            <option>All</option>
-                            <option>Dairy</option>
-                            <option>Fruit</option>
-                            <option>Vegetables</option>
-                            <option>Meat</option>
-                            <option>Bakery</option>
-                        </select>
-                    </form>
+                    <label>Stores</label>
+                    <select class="form-control select2" name="store">
+                        {% for code, name in stores.items %}
+                            <option value="{{ code }}">{{ name }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
             <script>
@@ -79,14 +75,16 @@
 
             <form method="POST" action="{% url 'browse' %}">
                 {% csrf_token %}
-                <input type="hidden" name="product" value="{{ product.id }}" />
+                <input type="hidden" name="product" value="{{ product.id }}"/>
                 <div class="dropdown">
-                    <button class="btn btn-dark dropdown-toggle" type="button" name="submit" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn btn-dark dropdown-toggle" type="button" name="submit" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Add to list
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         {% for list in all_lists %}
-                            <button class="dropdown-item" type="submit" name="list" value="{{ list.id }}">{{ list.name }}</button>
+                            <button class="dropdown-item" type="submit" name="list"
+                                    value="{{ list.id }}">{{ list.name }}</button>
                         {% endfor %}
                     </div>
                 </div>
@@ -99,7 +97,7 @@
     {% endfor %}
 
 
-        <div class="pagination">
+    <div class="pagination">
             <span class="page-links">
                 {% if page_obj.has_previous %}
                     <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}&search={{ search }}">previous</a>
@@ -108,9 +106,10 @@
                     Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
                 </span>
                 {% if page_obj.has_next %}
-                    <a class="page-item" href="{{ request.path }}?page={{ page_obj.next_page_number }}&search={{ search }}">next</a>
+                    <a class="page-item"
+                       href="{{ request.path }}?page={{ page_obj.next_page_number }}&search={{ search }}">next</a>
                 {% endif %}
             </span>
-        </div>
+    </div>
 
 {% endblock %}

@@ -9,6 +9,7 @@
 
         <input type="submit" class="btn btn-dark" value="Submit">
         <a class="btn btn-dark" href="{% url 'budget_delete' request.resolver_match.kwargs.pk %}">Delete</a>
+        <button type="button" class="btn btn-dark" onclick="javascript:history.back();">Cancel</button>
     </form>
 
 {% endblock %}
