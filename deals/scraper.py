@@ -19,7 +19,6 @@ class Store:
         'Accept-Language': 'en',
     }
     url = None
-    data = {}
     type = None
 
     # returns a 2-tuple (name, price)
@@ -38,13 +37,8 @@ class NewWorld(Store):
 
     def scrape_product_data(self, page=1):
         name_and_price = []
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.128 Safari/537.36',
-            'Accept-Language': 'en',
-        }
 
-        r = requests.get(f'{self.url}&pg={page}', headers=headers)
-        print(f'{self.url}&pg={page}')
+        r = requests.get(f'{self.url}&pg={page}', headers=self.headers)
 
         soup = BeautifulSoup(r.text, "lxml")
 
@@ -63,7 +57,6 @@ class NewWorld(Store):
     def save_to_db(self):
         Product.objects.filter(location=self.name).delete()
         for i in range(1, 21):
-            print("Scraping page " + str(i) + " from new world")
             name_price_tuples = self.scrape_product_data(i)
             print(len(name_price_tuples))
             for item in name_price_tuples:
@@ -80,12 +73,8 @@ class ComputerLounge(Store):
 
     def scrape_product_data(self, page=1):
         name_and_price = []
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.128 Safari/537.36',
-            'Accept-Language': 'en',
-        }
 
-        r = requests.get(self.url, headers=headers)
+        r = requests.get(self.url, headers=self.headers)
 
         soup = BeautifulSoup(r.text, "lxml")
 
@@ -105,7 +94,6 @@ class ComputerLounge(Store):
 
 
 all_stores = [NewWorld(), ComputerLounge()]
-
 
 def main():
     pass

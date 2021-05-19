@@ -10,6 +10,7 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('', views.index, name='index'),
     path('profile', views.profile, name='profile'),
+    path('about/', views.about, name='about'),
     path('shop', views.shop, name='shop'),
     path('budget', views.budget, name='budget'),
     path('budget/<int:pk>/update/', views.BudgetUpdate.as_view(), name='budget_update'),
@@ -31,6 +32,7 @@ urlpatterns = [
     path('analytics/', views.analytics, name='analytics'),
     path('chart', TemplateView.as_view(template_name='line_chart.html'), name='line_chart'),
     path('chartJSON', views.LineChartJSONView.as_view(), name='line_chart_json'),
+
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
