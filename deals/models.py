@@ -81,3 +81,12 @@ class Category(models.Model):
     name = models.CharField(max_length=20)
     max_spend = models.IntegerField()
     budget = models.ForeignKey(Budget, on_delete=models.CASCADE, null=False)
+
+
+class userSuggestions(models.Model):
+    name = models.CharField(max_length=50)
+    contact_email = models.EmailField()
+    comment_suggestion = models.TextField(max_length=600)
+
+    def __str__(self):
+        return self.name + " " + self.contact_email + " " + self.comment_suggestion
