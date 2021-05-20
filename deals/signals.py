@@ -11,7 +11,6 @@ from deals.models import Profile, List
 def create_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
-        List.objects.create(user=instance)
 
 
 @receiver(post_save, sender=User)
