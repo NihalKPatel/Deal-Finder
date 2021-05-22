@@ -49,7 +49,6 @@ class List(models.Model):
     def __str__(self):
         return self.name
 
-
 # model for storing product information
 # many to many relationship with lists
 class Product(models.Model):
