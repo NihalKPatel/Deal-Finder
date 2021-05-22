@@ -58,7 +58,16 @@
 
             </div>
         </div>
+        <h3>Suggestion Form</h3>
+        <hr>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit">
+        </form>
+
     </section>
+
 </body>
 
 {% endblock %}
