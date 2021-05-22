@@ -48,7 +48,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'chartjs',
+    'djcelery',
+    'kombu.transport.django',
 ]
+
+import djcelery
+djcelery.setup_loader()
+BROKER_URL = "django://"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
