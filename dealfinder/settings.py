@@ -13,6 +13,9 @@ import os
 from pathlib import Path
 import environ
 
+# CELERY_RESULT_BACKEND = 'django-db'
+# CELERY_BROKER_URL = 'django-db'
+
 root = environ.Path(__file__) - 3  # get root of the project
 env = environ.Env()
 environ.Env.read_env()  # reading .env file
@@ -39,7 +42,7 @@ ALLOWED_HOSTS = ['139.99.133.173',
 # Application definition
 
 INSTALLED_APPS = [
-    'deals.apps.DealsConfig',
+    'deals',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,13 +51,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'chartjs',
-    'djcelery',
-    'kombu.transport.django',
+    'django_celery_results',
 ]
-
-import djcelery
-djcelery.setup_loader()
-BROKER_URL = "django://"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
