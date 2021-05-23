@@ -48,6 +48,7 @@ class ProductForm(Form):
         self.helper.add_input(Submit('submit', 'Submit'))
         self.helper.add_input(Submit('cancel', 'Cancel'))
 
+
 class ProductForm(Form):
     name = forms.CharField()
     link = forms.CharField()
@@ -55,8 +56,9 @@ class ProductForm(Form):
     location = forms.CharField()
     list = forms.ModelChoiceField(List.objects.all())
 
-
     """This class helps the user to upload any suggestions/comments"""""
+
+
 class userSuggestionsForm(ModelForm):
     class Meta:
         model = userSuggestions

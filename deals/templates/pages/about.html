@@ -4,6 +4,8 @@
 
 <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css">
+
     <style>
         .row
         {
@@ -22,33 +24,22 @@
         {
             padding-top: 50px;
         }
+        a:hover {
+            color: white;
+            background-color: rgba(45, 103, 96, 0.78);
+        }
     </style>
 </head>
 <body>
 <!--- Information --->
     <section id="information">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <h2>Our Goal</h2>
-                    <div class="info-content">
-                        It's simple - we want to help you browse through the best deals that
-                        are around you all in one browser. We know how annoying it is to surf through multiple
-                        web pages for deals. So at DealFinder, we want to make your life easy!
-                    </div>
-                    <div class="info-content1">
-                        Let's get you started! Simply register an account with us. Once you're logged in,
-                        you have the power to create shopping lists and customize it with any budget amount
-                        and add cool items to it too!
-                    </div>
-                    <div class="info-content2">
-                       So go on, get surfin' with DealFinder!
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
+        <h3>Suggestion Form</h3>
+        <hr>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit">
+        </form>
 
     </section>
 

@@ -1,34 +1,56 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <div class="container">
+        <style>
+            a{
+                border: 0;
+                border-radius: 15px;
+                background-color: #2d6760;
+                color: white;
+                font-weight: 500;
+                font-size: 1rem;
+                padding: 5px 16px;
 
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
+            }
+            a:hover {
+                color: white;
+                background-color: rgba(45, 103, 96, 0.78);
+            }
 
-        <!-- Links -->
+            .card-body button{
+                border: 0;
+                border-radius: 15px;
+                background: #2d6760;
+                color: #fff;
+                font-weight: 500;
+                font-size: 1rem;
+                padding: 5px 16px;
+                margin-top: 5px;
+                margin-bottom: 5px;
+            }
+            .card{
+                flex: 0 50%;
+                background: #fff;
+                box-shadow: 0 2px 4px 0 rgba(136, 144, 195, 0.2),
+                0 5px 15px 0 rgba(37, 44, 97, 0.15);
+                border-radius: 15px;
+                margin: 8px;
+                padding: 10px 15px;
+                position: relative;
+                z-index: 1;
+                overflow: hidden;
+                transition: 0.7s;
+            }
 
-        <ul class="navbar-nav">
-            <div class="d-flex justify-content-between">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'browse' %}">BROWSE</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'categories' %}">CATEGORIES</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'shopping_list' %}">SHOPPING LIST</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'compare_list' %}">COMPARE LIST</a>
-                </li>
-            </div>
-        </ul>
+        </style>
 
-    </nav>
+        <br>
+    <a class="card-body button" href="{% url 'shopping_list_create' %}">Create new list</a>
 
-    <br>
-    <a class="btn btn-dark" href="{% url 'shopping_list_create' %}">Create new list</a>
-
-
+        <br>
+        <br>
+        <br>
     {% for list in shopping_lists %}
         <div class="card">
             <div class="card-body">
@@ -48,6 +70,7 @@
                 </div>
                 </p>
             </div>
+        </div>
         </div>
     {% endfor %}
 
