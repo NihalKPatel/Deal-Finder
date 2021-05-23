@@ -13,8 +13,7 @@ import os
 from pathlib import Path
 import environ
 
-# CELERY_RESULT_BACKEND = 'django-db'
-# CELERY_BROKER_URL = 'django-db'
+
 
 root = environ.Path(__file__) - 3  # get root of the project
 env = environ.Env()
@@ -51,8 +50,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'chartjs',
-    'django_celery_results',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -151,3 +150,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
