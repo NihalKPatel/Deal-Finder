@@ -58,7 +58,6 @@ class NewWorld(Store):
         Product.objects.filter(location=self.name).delete()
         for i in range(1, 21):
             name_price_tuples = self.scrape_product_data(i)
-            print(len(name_price_tuples))
             for item in name_price_tuples:
                 name = item[0]
                 if len(name) > 50:
@@ -68,13 +67,13 @@ class NewWorld(Store):
 
 class ComputerLounge(Store):
     name = 'Computer Lounge'
-    url = 'https://www.computerlounge.co.nz/ProductCatList.aspx?q=rtx&lastPage=6'
+    url = 'https://www.computerlounge.co.nz/ProductCatList.aspx?q='
     type = StoreType.ELECTRONICS
 
     def scrape_product_data(self, page=1):
         name_and_price = []
 
-        r = requests.get(self.url, headers=self.headers)
+        r = requests.get(f'{self.url}&page={page}', headers=self.headers)
 
         soup = BeautifulSoup(r.text, "lxml")
 
@@ -82,15 +81,18 @@ class ComputerLounge(Store):
 
         for product in products:
             if "data-name" in product.attrs and "data-price" in product.attrs:
-                print(product['data-name'] + ', ' + product['data-price'])
                 name_and_price.append((product['data-name'], product['data-price']))
+        print(name_and_price)
         return name_and_price
 
     def save_to_db(self):
         Product.objects.filter(location=self.name).delete()
-        name_price_tuples = self.scrape_product_data()
-        for item in name_price_tuples:
-            Product.objects.create(name=item[0], price=item[1], link='https://www.computerlounge.co.nz/', location=self.name)
+        for i in range(1, 98):
+            print(f'Attempting to scrape page {i}')
+            print(f'{self.url}&page={i}')
+            name_price_tuples = self.scrape_product_data(i)
+            for item in name_price_tuples:
+                Product.objects.create(name=item[0], price=item[1], link='https://www.computerlounge.co.nz/', location=self.name)
 
 
 all_stores = [NewWorld(), ComputerLounge()]

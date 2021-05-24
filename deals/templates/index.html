@@ -13,12 +13,7 @@
             margin-top: 50px;
             margin-bottom: 50px;
         }
-        .btn
-        {
-            margin-top: 50px;
-            margin-bottom: 50px;
 
-        }
         .about-content
         {
             padding-top: 50px;
@@ -30,8 +25,24 @@
             padding: 20px;
             height: 80px;
             width: 80px;
-            border: 1px solid #fff;
             border-radius: 50%;
+        }
+        .btn-get-started {
+            margin-top: 50px;
+            margin-bottom: 50px;
+            font-family: "Lato", sans-serif;
+            font-weight: 400;
+            font-size: 16px;
+            letter-spacing: 1px;
+            display: inline-block;
+            padding: 8px 28px 10px 28px;
+            border-radius: 50px;
+            transition: 0.5s;
+            border: 1px solid #000000;
+            color: #000000;
+        }
+        body{
+            background-color: #ffffff;
         }
     </style>
 </head>
@@ -49,23 +60,36 @@
 
                     <h1>Welcome to DealFinder!</h1>
                     <div class="about-content">
-                        Our goal is to help you find the best deals nearby
+                        Place to help you find the best deals nearby
                         all in one browser!
                     </div>
-                    <a href="{% url 'about' %}" class="btn btn-info">Click here to read more!</a>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <h2>Our Goal</h2>
+                                <div class="info-content">
+                                    It's simple - we want to help you browse through the best deals that
+                                    are around you all in one browser. We know how annoying it is to surf through multiple
+                                    web pages for deals. So at DealFinder, we want to make your life easy!
+                                </div>
+                                <div class="info-content1">
+                                    Let's get you started! Simply register an account with us. Once you're logged in,
+                                    you have the power to create shopping lists and customize it with any budget amount
+                                    and add cool items to it too!
+                                </div>
+                                <div class="info-content2">
+                                    So go on, get surfin' with DealFinder!
+                                </div>
+                                <a href="{% url 'about' %}" class="btn-get-started scrollto">Contact Us!</a>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
                 <div class="col-md-6"></div>
 
             </div>
         </div>
-        <h3>Suggestion Form</h3>
-        <hr>
-        <form action="" method="post">
-            {% csrf_token %}
-            {{ form }}
-            <input type="submit">
-        </form>
-
     </section>
 
 </body>
