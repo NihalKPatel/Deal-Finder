@@ -49,7 +49,6 @@ class List(models.Model):
     def __str__(self):
         return self.name
 
-
 # model for storing product information
 # many to many relationship with lists
 class Product(models.Model):
@@ -69,11 +68,15 @@ class Budget(models.Model):
     max_spend = models.FloatField(default=400)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, null=False)
     list = models.ForeignKey(List, on_delete=models.SET_NULL, null=True)
-
+    # whether this is the users chosen weekly budget
+    weekly = models.BooleanField(default=False)
     # calculate amount at which to warn the user of their spending
     def spent_warning_amount(self):
         warning_spending = self.max_spend * 0.95
         return warning_spending
+
+    def __str__(self):
+        return self.name
 
 
 # category model to divide spending in budget for future use
