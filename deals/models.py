@@ -36,7 +36,7 @@ class List(models.Model):
     name = models.CharField(max_length=30, default="default name")
     # possible choices for types of lists
     TYPE = (
-        ('W', 'Wish List'),
+        ('W', 'Watch List'),
         ('S', 'Shopping List'),
     )
     type = models.CharField(

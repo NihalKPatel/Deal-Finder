@@ -14,6 +14,8 @@ def create_profile(sender, instance, created, **kwargs):
         profile.save()
         first_list = List.objects.create(name='My First List', type='S', profile=profile)
         first_list.save()
+        watch_list = List.objects.create(name='WatchList', type='W', profile=profile)
+        watch_list.save()
         first_budget = Budget.objects.create(name='My Weekly Budget',
                                              max_spend=500,
                                              profile=profile,
