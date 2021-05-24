@@ -359,20 +359,15 @@ def staff(request):
     return render(request, 'pages/staff.html')
 
 
-# view to handle the analytics template
-def analytics(request):
-    return render(request, 'pages/analytics.html')
-
-
 # view to handle the chart
-class LineChartJSONView(BaseLineChartView):
+class WeeklyBudgetChartJSON(BaseLineChartView):
     def get_labels(self):
         # labels
         return ["Week 1", "Week 2", "Week 4", "Week 5", "Week 6", "Week 7"]
 
     def get_providers(self):
         # data to compare
-        return ["Budget", "Actual spending"]
+        return ["Budget spending limit", "Actual spending"]
 
     def get_data(self):
         # data to plot
