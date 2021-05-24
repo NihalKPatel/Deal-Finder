@@ -45,27 +45,18 @@
                     <div class="icon">
                         <i class="fas fa-piggy-bank"></i>
                     </div>
-
-
                     <h1>Welcome to DealFinder!</h1>
                     <div class="about-content">
                         Our goal is to help you find the best deals nearby
                         all in one browser!
                     </div>
                     <a href="{% url 'about' %}" class="btn btn-info">Click here to read more!</a>
+                    <a href="{% url 'contactUs' %}" class="btn btn-info">Click here to contact us</a>
                 </div>
                 <div class="col-md-6"></div>
 
             </div>
         </div>
-        <h3>Suggestion Form</h3>
-        <hr>
-        <form action="" method="post">
-            {% csrf_token %}
-            {{ form }}
-            <input type="submit">
-        </form>
-
     </section>
 
 </body>

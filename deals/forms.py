@@ -56,7 +56,7 @@ class ProductForm(Form):
     list = forms.ModelChoiceField(List.objects.all())
 
 
-    """This class helps the user to upload any suggestions/comments"""""
+#This class helps the user to upload any suggestions/comments
 class userSuggestionsForm(ModelForm):
     class Meta:
         model = userSuggestions

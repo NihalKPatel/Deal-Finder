@@ -100,18 +100,15 @@
             <a class="nav-link" href="{% url 'budget' %}">BUDGET</a>
         </li>
         <li class="nav-item">
-            <!-- links to dashboard page -->
-            <a class="nav-link" href="{% url 'dashboard' %}">DASHBOARD</a>
+            <!-- links to FAQ page -->
+            <a class="nav-link" href="{% url 'faq' %}">FAQ</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{% url 'analytics' %}">My Analytics</a>
+            <a class="nav-link" href="{% url 'contactUs' %}">CONTACT US</a>
         </li>
     </ul>
 
 </nav>
-
-
-
 
     {% if messages %}
         {% for message in messages %}
