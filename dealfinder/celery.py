@@ -10,6 +10,13 @@ app = Celery('dealfinder')
 # Using a string here means the worker will not have to
 # pickle the object when using Windows.
 app.config_from_object('django.conf:settings', namespace='CELERY')
-app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
+app.autodiscover_tasks()
+
+app.conf.beat_schedule = {
+    'weekly-budget': {
+        'task': 'deals.tasks.create_weekly_budgets',
+        'schedule': 30.0,
+    }
+}
 
 

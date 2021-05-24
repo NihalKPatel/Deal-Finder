@@ -75,6 +75,9 @@ class Budget(models.Model):
         warning_spending = self.max_spend * 0.95
         return warning_spending
 
+    def __str__(self):
+        return self.name
+
 
 # category model to divide spending in budget for future use
 class Category(models.Model):
