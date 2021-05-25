@@ -118,15 +118,15 @@ class Browse(LoginRequiredMixin, generic.ListView):
 
         # location and search values found
         if location and search and location != 'All':
-            return Product.objects.filter(name__icontains=search, location=location)
+            return Product.objects.filter(name__icontains=search, location=location, product_type=1)
         # location value found
         if location and location != 'All':
-            return Product.objects.filter(location=location)
+            return Product.objects.filter(location=location, product_type=1)
         # search value found
         if search:
-            return Product.objects.filter(name__icontains=search)
+            return Product.objects.filter(name__icontains=search, product_type=1)
 
-        return Product.objects.all()
+        return Product.objects.filter(product_type=1)
 
     # use POST requests to handle adding products to lists
     def post(self, request, *args, **kwargs):
@@ -235,7 +235,7 @@ class AddProductView(FormView):
         price = form.cleaned_data['price']
         location = form.cleaned_data['location']
         list = form.cleaned_data['list']
-        product = Product(name=name, link=link, price=price, location=location)
+        product = Product(name=name, link=link, price=price, location=location, product_type=2)
         product.save()
         List.objects.get(id=list.id).products.add(Product.objects.get(id=product.id))
         return redirect(reverse_lazy('budget'))
