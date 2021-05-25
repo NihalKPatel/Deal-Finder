@@ -49,6 +49,11 @@ class List(models.Model):
     def __str__(self):
         return self.name
 
+    def total(self):
+        queryset = self.products.all().aggregate(total_price=models.Sum('price'))['total_price']
+        return queryset
+
+
 # model for storing product information
 # many to many relationship with lists
 class Product(models.Model):
@@ -70,6 +75,7 @@ class Budget(models.Model):
     list = models.ForeignKey(List, on_delete=models.SET_NULL, null=True)
     # whether this is the users chosen weekly budget
     weekly = models.BooleanField(default=False)
+
     # calculate amount at which to warn the user of their spending
     def spent_warning_amount(self):
         warning_spending = self.max_spend * 0.95

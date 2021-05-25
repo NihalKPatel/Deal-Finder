@@ -7,7 +7,7 @@
 
     <p>Are you sure you want to delete the budget: {{ budget.name }}?</p>
 
-    <form action="" method="POST">
+    <form action="{% url 'budget_product_delete' item.id %}" method="POST">
         {% csrf_token %}
         <input type="submit" class="btn btn-dark" value="Yes, delete.">
         <button type="button" class="btn btn-dark" onclick="javascript:history.back();">Cancel</button>
