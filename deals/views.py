@@ -6,8 +6,7 @@ from .models import List, Profile, Product, Budget, userSuggestions
 from django.views import generic
 from django.urls import reverse, reverse_lazy
 from django.contrib import messages
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, ProductForm, userSuggestionsForm, \
-    ProfileAdditionalSettings
+from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, ProductForm, userSuggestionsForm, ProfileAdditionalSettings
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
@@ -20,7 +19,6 @@ from .scraper import NewWorld, ComputerLounge
 #
 #
 #     return render(request, 'index.html')
-
 def index(request):
     form = userSuggestionsForm()
     if request.method == 'POST':
@@ -28,9 +26,9 @@ def index(request):
         if form.is_valid():
             form.save()
 
-    context = {'form': form}
+    context ={'form':form}
 
-    return render(request, 'index.html', context)
+    return render(request, 'index.html',context)
 
 
 # View to handle the shop template
@@ -53,17 +51,12 @@ def about(request):
 def budget(request):
     total_spent = 0
     # use first budget by default
-    budget_index = 1
-
-    global global_budget_index
-
-    def global_budget_index():
-        return budget_index
+    index = 1
 
     # if the http request specifies which budget to view
     if request.method == 'GET':
         if 'budget' in request.GET:
-            budget_index = int(request.GET['budget'])
+            index = int(request.GET['budget'])
     budgets = Budget.objects.filter(profile_id=request.user.id)
 
     # if the user has no budgets redirect to the create budget page
@@ -71,7 +64,7 @@ def budget(request):
         return redirect('budget_create')
 
     # Find the budget for that particular user with the index specified
-    current_budget = Budget.objects.filter(profile_id=request.user.id)[budget_index - 1]
+    current_budget = Budget.objects.filter(profile_id=request.user.id)[index - 1]
     # find the single list that belongs to that budget
     budget_list = List.objects.get(budget=current_budget.id)
 
@@ -118,15 +111,15 @@ class Browse(LoginRequiredMixin, generic.ListView):
 
         # location and search values found
         if location and search and location != 'All':
-            return Product.objects.filter(name__icontains=search, location=location, product_type=1)
+            return Product.objects.filter(name__icontains=search, location=location)
         # location value found
         if location and location != 'All':
-            return Product.objects.filter(location=location, product_type=1)
+            return Product.objects.filter(location=location)
         # search value found
         if search:
-            return Product.objects.filter(name__icontains=search, product_type=1)
+            return Product.objects.filter(name__icontains=search)
 
-        return Product.objects.filter(product_type=1)
+        return Product.objects.all()
 
     # use POST requests to handle adding products to lists
     def post(self, request, *args, **kwargs):
@@ -135,7 +128,7 @@ class Browse(LoginRequiredMixin, generic.ListView):
             list_id = self.request.POST['list']
             List.objects.get(id=list_id).products.add(Product.objects.get(id=product_id))
             print(self.extra_context)
-        return redirect(reverse_lazy('browse'))
+        return redirect(reverse_lazy('shopping_list'))
 
     # add previous search text into the current page so u maintain ur
     # search in the search bar when the page refreshes
@@ -235,7 +228,7 @@ class AddProductView(FormView):
         price = form.cleaned_data['price']
         location = form.cleaned_data['location']
         list = form.cleaned_data['list']
-        product = Product(name=name, link=link, price=price, location=location, product_type=2)
+        product = Product(name=name, link=link, price=price, location=location)
         product.save()
         List.objects.get(id=list.id).products.add(Product.objects.get(id=product.id))
         return redirect(reverse_lazy('budget'))
@@ -319,6 +312,7 @@ def profile(request):
             u_form.save()
             p_form.save()
 
+
             chosen_budget = additional_form.cleaned_data['weekly_budget']
             current_weekly_budget = Budget.objects.get(profile__user_id=request.user.id, weekly=True)
 
@@ -388,13 +382,3 @@ class LineChartJSONView(BaseLineChartView):
         ]
 
 
-def deleteFromBudget(request, pk):
-    product = Product.objects.get(id=pk)
-    current_budget = Budget.objects.filter(profile_id=request.user.id)[global_budget_index() - 1]
-    budget_list = List.objects.get(budget=current_budget.id)
-    if request.method == "POST":
-        budget_list.products.remove(product)
-        return redirect('budget')
-
-    context = {'item': product}
-    return render(request, 'pages/budget_product_delete.html', context)

@@ -49,6 +49,9 @@ class ProductForm(Form):
         self.helper.add_input(Submit('cancel', 'Cancel'))
 
 
+
+#This class helps the user to upload any suggestions/comments
+
 class userSuggestionsForm(ModelForm):
     class Meta:
         model = userSuggestions
