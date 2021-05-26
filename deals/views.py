@@ -31,9 +31,11 @@ def index(request):
 
     return render(request, 'index.html', context)
 
+
 # View to handle the dashboard template
 def faq(request):
     return render(request, 'pages/faq.html')
+
 
 # View to handle the shop template
 def shop(request):
@@ -373,14 +375,14 @@ def analytics(request):
 
 
 # view to handle the chart
-class LineChartJSONView(BaseLineChartView):
+class WeeklyBudgetChartJSON(BaseLineChartView):
     def get_labels(self):
         # labels
         return ["Week 1", "Week 2", "Week 4", "Week 5", "Week 6", "Week 7"]
 
     def get_providers(self):
         # data to compare
-        return ["Budget", "Actual spending"]
+        return ["Budget spending limit", "Actual spending"]
 
     def get_data(self):
         # data to plot
