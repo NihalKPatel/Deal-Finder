@@ -369,4 +369,4 @@ def suggestionView(request):
             form.save()
             messages.success(request, 'We have received your suggestions, thank you!')
     context = {'form': form}
-    return render(request, 'pages/contactUs.html', context)
+    return render(request, 'pages/about.html', context)
