@@ -3,10 +3,13 @@
 {% block content %}
 
 {% load crispy_forms_tags %}
-<form action="" method="post">
+    <div class="container">
+
+    <form action="" method="post">
     {% csrf_token %}
     {{ form|crispy }}
     <input type="submit" class="btn btn-dark" value="Submit">
     <button type="button" class="btn btn-dark" onclick="javascript:history.back();">Cancel</button>
 </form>
+    </div>
 {% endblock %}

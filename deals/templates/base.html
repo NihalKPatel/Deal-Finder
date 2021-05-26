@@ -15,41 +15,35 @@
     <script src="{% static 'fontawesome_free/js/all.min.js' %}"></script>
     <!-- CSS -->
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
 
     <title>Deal Finder</title>
-</head>
-<body>
-<!-- The main Navbar which goes on every page. -->
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
-        <ul class="navbar-nav mr-auto">
-            <!-- search bar allows you to search for every item -->
-            <form method="GET" action="{% url 'browse' %}" class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
-            </form>
 
-            </li>
-        </ul>
-    </div>
-    <div class="mx-auto order-0">
-        <!-- Links to "Deal Finder" to index page. Works like homepage button -->
-        <a class="navbar-brand mx-auto" href="{% url 'index' %}">DealFinder</a>
+
+<!-- The main Navbar which goes on every page. -->
+<nav class="navbar navbar-expand-md">
+
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <i class="fas fa-piggy-bank whiteiconcolor"></i>
+        <a class="nav-link mr-auto" href="{% url 'index' %}">DealFinder</a>
+
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
             <span class="navbar-toggler-icon"></span>
         </button>
-    </div>
 
-    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
+
             <li class="nav-item">
-                <!--Links to about page-->
-                <a class="nav-item nav-link" href="{% url 'about' %}">About</a>
+                <a class="nav-link" href="{% url 'browse' %}">Browse</a>
             </li>
             <li class="nav-item">
-                <!-- Links to budget app and also shows the "used budget/max budget" -->
-                <a class="nav-link" href="#">$$$ / $$$</a>
+                <a class="nav-link" href="{% url 'shopping_list' %}">Shopping List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'budget' %}">Budget</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'about' %}">About</a>
             </li>
             <!-- once the user is logged in it shows new links -->
             {% if user.is_authenticated %}
@@ -61,6 +55,11 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <!-- links to profile page -->
                 <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
+                <div class="dropdown-divider"></div>
+                    <!-- links to dashboard page -->
+                <a class="dropdown-item" href="{% url 'dashboard' %}">My Dashboard</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'analytics' %}">My Analytics</a>
 
                 <div class="dropdown-divider"></div>
                 <!-- Logout page -->
@@ -87,28 +86,6 @@
         </ul>
     </div>
 </nav>
-<nav class="navbar navbar-expand-sm bg-light navbar-light justify-content-center">
-
-    <!-- Second NavBar which goes on every page -->
-    <ul class="navbar-nav">
-        <li class="nav-item">
-            <!-- links to shop page -->
-            <a class="nav-link" href="{% url 'shop' %}">SHOP</a>
-        </li>
-        <li class="nav-item">
-            <!-- links to budget page -->
-            <a class="nav-link" href="{% url 'budget' %}">BUDGET</a>
-        </li>
-        <li class="nav-item">
-            <!-- links to FAQ page -->
-            <a class="nav-link" href="{% url 'faq' %}">FAQ</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'contactUs' %}">CONTACT US</a>
-        </li>
-    </ul>
-
-</nav>
 
     {% if messages %}
         {% for message in messages %}
@@ -120,6 +97,7 @@
     {% block content %}
 
     {% endblock %}
+</body>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
