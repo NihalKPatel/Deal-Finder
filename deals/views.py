@@ -360,6 +360,24 @@ def staff(request):
     return render(request, 'pages/staff.html')
 
 
+# view to handle the chart
+class WeeklyBudgetChartJSON(BaseLineChartView):
+    def get_labels(self):
+        # labels
+        return ["Week 1", "Week 2", "Week 4", "Week 5", "Week 6", "Week 7"]
+
+    def get_providers(self):
+        # data to compare
+        return ["Budget spending limit", "Actual spending"]
+
+    def get_data(self):
+        # data to plot
+        return [
+            [75, 80, 99, 44, 95, 35],
+            [41, 92, 70, 39, 73, 87]
+        ]
+
+
 # view to handle the suggestionView template
 def suggestionView(request):
     form = userSuggestionsForm()
