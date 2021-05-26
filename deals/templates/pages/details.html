@@ -1,284 +1,462 @@
 {% extends "base.html" %}
 
 {% block content %}
-{%  load static %}
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Google Maps Project</title>
-    <script src="store-data.js"></script>
-    <script src="js/index.js"></script>
-      <style>
-          body {
-              font-family: Arial, Helvetica, sans-serif;
-              height: 100vh;
-              margin: 0;
-              padding: 0;
-          }
+    {%  load static %}
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Google Maps Project</title>
+        <script src="store-data.js"></script>
+        <script src="js/index.js"></script>
+        <style>
+            body {
+                font-family: Arial, Helvetica, sans-serif;
+                height: 100vh;
+                margin: 0;
+                padding: 0;
+            }
 
-          #map {
-              width: 100%;
-              height: 100%;
-          }
+            #map {
+                width: 100%;
+                height: 100%;
+            }
 
-          .title {
-              position: absolute;
-              z-index: 100;
-              font-size: 30px;
-              font-weight: bold;
-              color: #333;
-              text-transform: uppercase;
-              top: 120px;
-              left: 100px;
-          }
+            .title {
+                position: absolute;
+                z-index: 100;
+                font-size: 30px;
+                font-weight: bold;
+                color: #333;
+                text-transform: uppercase;
+                top: 120px;
+                left: 100px;
+            }
 
-          .search-container{
-              border-radius: 30px;
-              position: absolute;
-              z-index: 100;
-              top: 100px;
-              left: 15px;
-              width: 400px;
-              height: 60px;
-              background-color: #454E53;
-              display: flex;
-              box-shadow: 0 2px 7px 1px rgba(0, 0, 0, 0.507);
-          }
+            .search-container{
+                border-radius: 30px;
+                position: absolute;
+                z-index: 100;
+                top: 180px;
+                left: 15px;
+                width: 350px;
+                height: 30px;
+                background-color: #454E53;
+                display: flex;
+                box-shadow: 0 2px 7px 1px rgba(0, 0, 0, 0.507);
+            }
 
-          .stores-list-container {
-              width: 400px;
-              position: absolute;
-              z-index: 100;
-              background-color: white;
-              left: 15px;
-              top: 175px;
-              border-radius: 30px;
-              bottom: 20px;
-              display: flex;
-              overflow-y: hidden;
-              box-shadow: 0 2px 7px 1px rgba(0, 0, 0, 0.308);
-          }
+            .stores-list-container {
+                width: 350px;
+                position: absolute;
+                z-index: 100;
+                background-color: white;
+                left: 15px;
+                top: 240px;
+                border-radius: 30px;
+                bottom: 20px;
+                display: flex;
+                overflow-y: hidden;
+                box-shadow: 0 2px 7px 1px rgba(0, 0, 0, 0.308);
+            }
 
-          .search-container .search{
-              flex-grow: 1;
-              display: flex;
-              align-items: center;
-              padding-left: 20px;
-              padding-right: 20px;
-          }
+            .search-container .search{
+                flex-grow: 1;
+                display: flex;
+                align-items: center;
+                padding-left: 20px;
+                padding-right: 20px;
+            }
 
-          .search-container input {
-              width: 100%;
-              font-size: 25px;
-              background-color: transparent;
-              border: none;
-              color: white;
-          }
+            .search-container input {
+                width: 100%;
+                font-size: 15px;
+                background-color: transparent;
+                border: none;
+                color: white;
+            }
 
-          .search-container input:focus {
-              outline: none;
-          }
+            .search-container input:focus {
+                outline: none;
+            }
 
-          .search i {
-              font-size: 25px;
-              color: white;
-          }
-
-
-
-          .store-container {
-              border-bottom: 1px solid #979797;
-              display: flex;
-              cursor: pointer;
-          }
-
-          .store-address {
-              font-size: 21px;
-              color: #514C4C;
-              margin-top: 30px;
-          }
-
-          .store-phone-number {
-              color: #B5ADAD;
-              margin-top: 15px;
-              margin-bottom: 15px;
-          }
-
-          .store-address span {
-              display: block;
-          }
-
-          .store-number {
-              width: 30px;
-              height: 30px;
-              background-color: #454E53;
-              color: #B5ADAD;
-              border-radius: 50%;
-              font-size: 12px;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-          }
-
-          .store-info-container {
-              flex-grow: 1;
-          }
-
-          .store-number-container {
-              display: flex;
-              justify-content: center;
-              align-items: center;
-          }
-
-          .stores-list {
-              flex-grow: 1;
-              overflow-y: scroll;
-              padding-left: 20px;
-              padding-right: 20px;
-          }
-
-          .store-info-window {
-              min-width: 300px;
-              font-size: 18px;
-              padding: 8px;
-          }
-
-          .store-info-name {
-              font-size: 24px;
-              font-weight: bold;
-              color: rgba(0, 0, 0, .87);
-          }
-
-          .store-info-status {
-              margin-top: 6px;
-              border-bottom: 1px solid #00000029;
-              padding-bottom: 6px;
-          }
-
-          .store-info-address , .store-info-phone {
-              margin-top: 8px;
-              display: flex;
-              align-items: center;
-          }
-
-          .circle {
-              background-color: #1985A1;
-              width: 30px;
-              height: 30px;
-              color: white;
-              border-radius: 50%;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              margin-right: 8px;
-          }
-
-          .search i {
-              cursor: pointer;
-          }
-
-          .store-container-background{
-              display: flex;
-              flex-grow: 1;
-              padding-left: 8px;
-              padding-right: 8px;
-              margin-top: 12px;
-              margin-bottom: 12px;
-              transition: all 0.2s ease-in-out;
-          }
-
-          .store-container-background:hover {
-              background-color: #ccc;
-              border-radius: 18px;
-
-          }
-
-          ::-webkit-scrollbar {
-              width: 10px;
-          }
-
-          ::-webkit-scrollbar-track {
-              box-shadow: inset 0 0 5px grey;
-          }
-
-          ::-webkit-scrollbar-thumb {
-              background: #454E53;
-              border-radius: 30px;
-              height: 30px;
-          }
-      </style>
-    <script>
-        let stores = [{
+            .search i {
+                font-size: 25px;
+                color: white;
+            }
 
 
-        }]
-        window.onload = function() {
 
-        }
+            .store-container {
+                border-bottom: 1px solid #979797;
+                display: flex;
+                cursor: pointer;
+            }
 
-        var map;
-        var markers = [];
-        var infoWindow;
+            .store-address {
+                font-size: 21px;
+                color: #514C4C;
+                margin-top: 30px;
+            }
+
+            .store-phone-number {
+                color: #B5ADAD;
+                margin-top: 15px;
+                margin-bottom: 15px;
+            }
+
+            .store-address span {
+                display: block;
+            }
+
+            .store-number {
+                width: 30px;
+                height: 30px;
+                background-color: #454E53;
+                color: #B5ADAD;
+                border-radius: 50%;
+                font-size: 12px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .store-info-container {
+                flex-grow: 1;
+            }
+
+            .store-number-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .stores-list {
+                flex-grow: 1;
+                overflow-y: scroll;
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .store-info-window {
+                min-width: 300px;
+                font-size: 18px;
+                padding: 8px;
+            }
+
+            .store-info-name {
+                font-size: 24px;
+                font-weight: bold;
+                color: rgba(0, 0, 0, .87);
+            }
+
+            .store-info-status {
+                margin-top: 6px;
+                border-bottom: 1px solid #00000029;
+                padding-bottom: 6px;
+            }
+
+            .store-info-address , .store-info-phone {
+                margin-top: 8px;
+                display: flex;
+                align-items: center;
+            }
+
+            .circle {
+                background-color: #1985A1;
+                width: 30px;
+                height: 30px;
+                color: white;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: 8px;
+            }
+
+            .search i {
+                cursor: pointer;
+            }
+
+            .store-container-background{
+                display: flex;
+                flex-grow: 1;
+                padding-left: 8px;
+                padding-right: 8px;
+                margin-top: 12px;
+                margin-bottom: 12px;
+                transition: all 0.2s ease-in-out;
+            }
+
+            .store-container-background:hover {
+                background-color: #ccc;
+                border-radius: 18px;
+
+            }
+
+            ::-webkit-scrollbar {
+                width: 10px;
+            }
+
+            ::-webkit-scrollbar-track {
+                box-shadow: inset 0 0 5px grey;
+            }
+
+            ::-webkit-scrollbar-thumb {
+                background: #454E53;
+                border-radius: 30px;
+                height: 30px;
+            }
+        </style>
+        <script>
+            let stores = [{
+                "recommendation": {},
+                "storeNumber": "09-621 2050",
+                "id": "15051",
+                "name": "New World Mt Roskill",
+                "phoneNumber": "09-621 2050",
+                "coordinates": {
+                    "latitude": -36.90861,
+                    "longitude": 174.73444
+                },
+                "address": {
+                    "streetAddressLine1": "53 May Road",
+                    "streetAddressLine2": "Mount Roskill",
+                    "streetAddressLine3": "Auckland 1041",
+                    "city": "Auckland",
+                    "countrySubdivisionCode": "NZ",
+                    "countryCode": "NZ",
+                    "postalCode": "1041"
+                },
+                "openStatusText": "Open until 10:00 PM",
+                "addressLines": ["53 May Road, Mount Roskill", "Auckland 1041"],
+                "mop": {
+                    "ready": false,
+                    "wait": null
+                },
+
+            }, {
+                "recommendation": {},
+                "storeNumber": "+64 9-825 1110",
+                "id": "15051",
+                "name": "New World New Lynn",
+                "phoneNumber": "+64 9-825 1110",
+                "coordinates": {
+                    "latitude": -36.91082,
+                    "longitude": 174.6855
+                },
+                "address": {
+                    "streetAddressLine1": "2/6 Crown Lynn Place",
+                    "streetAddressLine2": "New Lynn,",
+                    "streetAddressLine3": "Auckland 0600",
+                    "city": "Auckland",
+                    "countrySubdivisionCode": "NZ",
+                    "countryCode": "NZ",
+                    "postalCode": "0600"
+                },
+                "openStatusText": "Open until 10:00 PM",
+                "addressLines": ["2/6 Crown Lynn Place, New Lynn", "Auckland 0600"],
+                "mop": {
+                    "ready": false,
+                    "wait": null
+                },
+            },{
+                "recommendation": {},
+                "storeNumber": "+64 9-825 1110",
+                "id": "15051",
+                "name": "New World Green Bay",
+                "phoneNumber": "+64 9-825 1110",
+                "coordinates": {
+                    "latitude": -36.9308,
+                    "longitude":  174.67898
+                },
+                "address": {
+                    "streetAddressLine1": "64 Godley Road, Green Bay, Auckland 0604",
+                    "streetAddressLine2": null,
+                    "streetAddressLine3": null,
+                    "city": "Auckland",
+                    "countrySubdivisionCode": "NZ",
+                    "countryCode": "NZ",
+                    "postalCode": "0604"
+                },
+                "openStatusText": "Open until 10:00 PM",
+                "addressLines": ["64 Godley Road, Green Bay", "Auckland 0604"],
+                "mop": {
+                    "ready": false,
+                    "wait": null
+                },
+            },{
+                "recommendation": {},
+                "storeNumber": "+64 9-849 4311",
+                "id": "15051",
+                "name": "New World Fresh Collective Alberton",
+                "phoneNumber": "+64 9-849 4311",
+                "coordinates": {
+                    "latitude": -36.88032,
+                    "longitude":  174.72597
+                },
+                "address": {
+                    "streetAddressLine1": "1 Alberton Avenue, Mount Albert, Auckland 1025",
+                    "streetAddressLine2": null,
+                    "streetAddressLine3": null,
+                    "city": "Auckland",
+                    "countrySubdivisionCode": "NZ",
+                    "countryCode": "NZ",
+                    "postalCode": "1025"
+                },
+                "openStatusText": "Open until 10:00 PM",
+                "addressLines": ["1 Alberton Avenue, Mount Albert", "Auckland 1025"],
+                "mop": {
+                    "ready": false,
+                    "wait": null
+                },
+            },{
+                "recommendation": {},
+                "storeNumber": "+64 9-520 3559",
+                "id": "15051",
+                "name": "New World Remuera",
+                "phoneNumber": "+64 9-520 3559",
+                "coordinates": {
+                    "latitude": -36.8819,
+                    "longitude":  174.79765
+                },
+                "address": {
+                    "streetAddressLine1": "10 Clonbern Road, Remuera, Auckland 1050",
+                    "streetAddressLine2": null,
+                    "streetAddressLine3": null,
+                    "city": "Auckland",
+                    "countrySubdivisionCode": "NZ",
+                    "countryCode": "NZ",
+                    "postalCode": "1050"
+                },
+                "openStatusText": "Open until 10:00 PM",
+                "addressLines": ["10 Clonbern Road, Remuera", "Auckland 1050"],
+                "mop": {
+                    "ready": false,
+                    "wait": null
+                },
+
+            },{
+                "recommendation": {},
+                "storeNumber": "+64 9-307 8400",
+                "id": "15051",
+                "name": "New World Remuera",
+                "phoneNumber": "+64 9-307 8400",
+                "coordinates": {
+                    "latitude": -36.84864,
+                    "longitude":  174.75129
+                },
+                "address": {
+                    "streetAddressLine1": "2 College Hill, Freemans Bay, Auckland 1011",
+                    "streetAddressLine2": null,
+                    "streetAddressLine3": null,
+                    "city": "Auckland",
+                    "countrySubdivisionCode": "NZ",
+                    "countryCode": "NZ",
+                    "postalCode": "1011"
+                },
+                "openStatusText": "Open until 10:00 PM",
+                "addressLines": ["2 College Hill, Freemans Bay", "Auckland 1011"],
+                "mop": {
+                    "ready": false,
+                    "wait": null
+                },
+
+            },{
+                "recommendation": {},
+                "storeNumber": "+64 9-300 5390",
+                "id": "15051",
+                "name": "New World Remuera",
+                "phoneNumber": "+64 9-300 5390",
+                "coordinates": {
+                    "latitude": -36.84647,
+                    "longitude": 174.76578
+                },
+                "address": {
+                    "streetAddressLine1": "125 Queen Street, Auckland CBD, Auckland 0620",
+                    "streetAddressLine2": null,
+                    "streetAddressLine3": null,
+                    "city": "Auckland",
+                    "countrySubdivisionCode": "NZ",
+                    "countryCode": "NZ",
+                    "postalCode": "0620"
+                },
+                "openStatusText": "Open until 10:00 PM",
+                "addressLines": ["125 Queen Street, Auckland CBD", "Auckland 0620"],
+                "mop": {
+                    "ready": false,
+                    "wait": null
+                },
+
+            },]
+        </script>
+        <script>
+            window.onload = function() {
+
+            }
+
+            var map;
+            var markers = [];
+            var infoWindow;
 
 
-        function initMap() {
-            var newzealand = {
-                lat: 34.063380,
-                lng: -118.358080
-            };
-            map = new google.maps.Map(document.getElementById("map"), {
-                center: newzealand,
-                zoom: 11,
-                mapTypeId: "roadmap",
-            });
-            infoWindow = new google.maps.InfoWindow();
-            searchStores();
-        }
+            function initMap() {
+                var newzealand = {
+                    lat: -36.8505076,
+                    lng: 174.7614931
+                };
+                map = new google.maps.Map(document.getElementById("map"), {
+                    center: newzealand,
+                    zoom: 11,
+                    mapTypeId: "roadmap",
+                });
+                infoWindow = new google.maps.InfoWindow();
+                searchStores();
+            }
 
-        function searchStores() {
-            var foundStores = [];
-            var zipCode = document.getElementById('zip-code-input').value;
-            if(zipCode){
-                for (var store of stores){
-                    var postal = store['address']['postalCode'].substring(0,5);
-                    if(postal == zipCode){
-                        foundStores.push(store);
+            function searchStores() {
+                var foundStores = [];
+                var zipCode = document.getElementById('zip-code-input').value;
+                if(zipCode){
+                    for (var store of stores){
+                        var postal = store['address']['postalCode'].substring(0,5);
+                        if(postal == zipCode){
+                            foundStores.push(store);
+                        }
                     }
+
+                }else {
+                    foundStores = stores;
                 }
-
-            }else {
-                foundStores = stores;
+                clearLocations();
+                displayStores(foundStores);
+                showStoresMarkers(foundStores);
+                setOnClickListener();
             }
-            clearLocations();
-            displayStores(foundStores);
-            showStoresMarkers(foundStores);
-            setOnClickListener();
-        }
 
-        function clearLocations() {
-            infoWindow.close();
-            for (var i = 0; i < markers.length; i++) {
-                markers[i].setMap(null);
+            function clearLocations() {
+                infoWindow.close();
+                for (var i = 0; i < markers.length; i++) {
+                    markers[i].setMap(null);
+                }
+                markers.length = 0;
             }
-            markers.length = 0;
-        }
 
-        function setOnClickListener() {
-            var storeElements = document.querySelectorAll('.store-container');
-            storeElements.forEach(function(element, index){
-                element.addEventListener('click', function(){
-                    new google.maps.event.trigger(markers[index], "click");
+            function setOnClickListener() {
+                var storeElements = document.querySelectorAll('.store-container');
+                storeElements.forEach(function(element, index){
+                    element.addEventListener('click', function(){
+                        new google.maps.event.trigger(markers[index], "click");
+                    })
                 })
-            })
-        }
+            }
 
-        function displayStores() {
-            var storesHtml ='';
-            for(var [index, store] of stores.entries()){
-                var address = store['addressLines'];
-                var phone = store['phoneNumber'];
-                storesHtml += `
+            function displayStores() {
+                var storesHtml ='';
+                for(var [index, store] of stores.entries()){
+                    var address = store['addressLines'];
+                    var phone = store['phoneNumber'];
+                    storesHtml += `
             <div class="store-container">
               <div class="store-container-background">
                 <div class="store-info-container">
@@ -296,30 +474,30 @@
               </div>
             </div>
     `
-                document.querySelector('.stores-list').innerHTML = storesHtml;
+                    document.querySelector('.stores-list').innerHTML = storesHtml;
+
+                }
+            }
+
+            function showStoresMarkers(stores){
+                var bounds = new google.maps.LatLngBounds();
+                for(var [index, store] of stores.entries()){
+                    var latlng = new google.maps.LatLng(
+                        store["coordinates"]["latitude"],
+                        store["coordinates"]["longitude"]);
+                    var name = store["name"];
+                    var address = store["addressLines"][0];
+                    var openStatusText = store["openStatusText"];
+                    var phoneNumber = store["phoneNumber"];
+                    bounds.extend(latlng);
+                    createMarker(latlng, name, address, openStatusText, phoneNumber, index+1)
+                }
+                map.fitBounds(bounds);
 
             }
-        }
 
-        function showStoresMarkers(stores){
-            var bounds = new google.maps.LatLngBounds();
-            for(var [index, store] of stores.entries()){
-                var latlng = new google.maps.LatLng(
-                    store["coordinates"]["latitude"],
-                    store["coordinates"]["longitude"]);
-                var name = store["name"];
-                var address = store["addressLines"][0];
-                var openStatusText = store["openStatusText"];
-                var phoneNumber = store["phoneNumber"];
-                bounds.extend(latlng);
-                createMarker(latlng, name, address, openStatusText, phoneNumber, index+1)
-            }
-            map.fitBounds(bounds);
-
-        }
-
-        function createMarker(latlng, name, address, openStatusText, phoneNumber, index) {
-            var html = `
+            function createMarker(latlng, name, address, openStatusText, phoneNumber, index) {
+                var html = `
       <div class="store-info-window">
         <div class="store-info-name">
           ${name}
@@ -341,59 +519,58 @@
         </div>
       </div>
   `
-            var marker = new google.maps.Marker({
-                map: map,
-                position: latlng,
-                label: index.toString(),
-            });
-            google.maps.event.addListener(marker, 'click', function() {
-                infoWindow.setContent(html);
-                infoWindow.open(map, marker);
-            });
-            markers.push(marker);
-        }
-    </script>
-    <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
-    <link
-      rel="shortcut icon"
-      href="img/google-maps-icon.png"
-      type="image/x-icon"
-    />
-  </head>
-  <body>
-    <div class="title">Store Locator</div>
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: latlng,
+                    label: index.toString(),
+                });
+                google.maps.event.addListener(marker, 'click', function() {
+                    infoWindow.setContent(html);
+                    infoWindow.open(map, marker);
+                });
+                markers.push(marker);
+            }
+        </script>
+        <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
+        <link
+                rel="shortcut icon"
+                href="img/google-maps-icon.png"
+                type="image/x-icon"
+        />
+    </head>
+    <body>
     <div class="search-container">
-      <div class="search">
-        <input type="text" id="zip-code-input" placeholder="Enter Zip" />
-        <i class="fas fa-search" onclick="searchStores()"></i>
-      </div>
+        <div class="search">
+            <input type="text" id="zip-code-input" placeholder="Enter Zip" />
+            <i class="fas fa-search" onclick="searchStores()"></i>
+        </div>
     </div>
     <div class="stores-list-container">
-      <div class="stores-list">
-        <div class="store-container">
-          <div class="store-info-container">
-            <div class="store-address">
-              <span>New World</span>
-              <span>Auckland, 1041</span>
+        <div class="stores-list">
+            <div class="store-container">
+                <div class="store-info-container">
+                    <div class="store-address">
+                        <span>New World</span>
+                        <span>Auckland, 1041</span>
+                    </div>
+                    <div class="store-phone-number">+92 308 1334342</div>
+                </div>
+                <div class="store-number-container">
+                    <div class="store-number">
+                        1
+                    </div>
+                </div>
             </div>
-            <div class="store-phone-number">+92 308 1334342</div>
-          </div>
-          <div class="store-number-container">
-            <div class="store-number">
-              1
-            </div>
-          </div>
         </div>
-      </div>
     </div>
 
     <div id="map"></div>
     <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtRbNrJLwvsLHEWG5SGBjXTjW4--gC4Xw
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtRbNrJLwvsLHEWG5SGBjXTjW4--gC4Xw
 &callback=initMap">
-        </script>
-  </body>
-</html>
+    </script>
+    </body>
+    </html>
 
 
 {% endblock %}

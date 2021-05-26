@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'fontawesome-free',
     'crispy_forms',
     'chartjs',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [

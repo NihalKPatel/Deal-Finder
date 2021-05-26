@@ -2,22 +2,34 @@ from django.http import HttpResponse
 
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
-from .models import List, Profile, Product, Budget
+from .models import List, Profile, Product, Budget, userSuggestions
 from django.views import generic
 from django.urls import reverse, reverse_lazy
 from django.contrib import messages
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, ProductForm
+from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, ProductForm, userSuggestionsForm, ProfileAdditionalSettings
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from .forms import UserRegisterForm
+#from chartjs.views.lines import BaseLineChartView
 from chartjs.views.lines import BaseLineChartView
 from .scraper import NewWorld, ComputerLounge
 
 
 # View to handle the index template
+# def index(request):
+#
+#
+#     return render(request, 'index.html')
 def index(request):
-    return render(request, 'index.html')
+    # form = userSuggestionsForm()
+    # if request.method == 'POST':
+    #     form = userSuggestionsForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #         messages.success(request,'We have received your suggestions, thank you!')
+    # context ={'form':form}
+    return render(request, 'index.html')#context)
 
 
 # View to handle the shop template
@@ -26,8 +38,8 @@ def shop(request):
 
 
 # View to handle the dashboard template
-def dashboard(request):
-    return render(request, 'pages/dashboard.html')
+def faq(request):
+    return render(request, 'pages/faq.html')
 
 
 # View to handle the about page
@@ -296,18 +308,38 @@ def profile(request):
         p_form = ProfileUpdateForm(request.POST,
                                    request.FILES,
                                    instance=request.user.profile)
-        if u_form.is_valid() and p_form.is_valid():
+        additional_form = ProfileAdditionalSettings(request.POST)
+        if u_form.is_valid() and p_form.is_valid() and additional_form.is_valid():
             u_form.save()
             p_form.save()
+
+
+            chosen_budget = additional_form.cleaned_data['weekly_budget']
+            current_weekly_budget = Budget.objects.get(profile__user_id=request.user.id, weekly=True)
+
+            # if selected weekly budget is different to the current weekly budget
+            # remove weekly budget boolean flag from the old one and assign it
+            # to the new one
+            if chosen_budget.id != current_weekly_budget.id:
+                current_weekly_budget.weekly = False
+                current_weekly_budget.save()
+                chosen_budget.weekly = True
+                chosen_budget.save()
+
             messages.success(request, f'Your account has been updated!!')
             return redirect('profile')
     else:
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
+        additional_form = ProfileAdditionalSettings(initial={'weekly_budget': Budget.objects.get(
+            profile__user_id=request.user.id,
+            weekly=True)})
+        additional_form.fields['weekly_budget'].queryset = Budget.objects.filter(profile__user_id=request.user.id)
 
     context = {
         'u_form': u_form,
-        'p_form': p_form
+        'p_form': p_form,
+        'additional_form': additional_form,
     }
 
     return render(request, 'pages/profile.html', context)
@@ -328,24 +360,13 @@ def staff(request):
     return render(request, 'pages/staff.html')
 
 
-# view to handle the analytics template
-def analytics(request):
-    return render(request, 'pages/analytics.html')
-
-
-# view to handle the chart
-class LineChartJSONView(BaseLineChartView):
-    def get_labels(self):
-        # labels
-        return ["Week 1", "Week 2", "Week 4", "Week 5", "Week 6", "Week 7"]
-
-    def get_providers(self):
-        # data to compare
-        return ["Budget", "Actual spending"]
-
-    def get_data(self):
-        # data to plot
-        return [
-            [75, 80, 99, 44, 95, 35],
-            [41, 92, 70, 39, 73, 87]
-        ]
+# view to handle the suggestionView template
+def suggestionView(request):
+    form = userSuggestionsForm()
+    if request.method == 'POST':
+        form = userSuggestionsForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'We have received your suggestions, thank you!')
+    context = {'form': form}
+    return render(request, 'pages/about.html', context)

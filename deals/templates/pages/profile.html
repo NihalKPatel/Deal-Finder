@@ -1,22 +1,10 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
+    <div class="container">
 
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
-
-    <!-- Links -->
-
-    <ul class="navbar-nav">
-        <div class="d-flex justify-content-between">
-            <li class="nav-item">
-                <a class="nav-link" href="#">Profile</a>
-            </li>
-            </li>
-        </div>
-    </ul>
-
-</nav>
-
+<br>
+        <br>
 <div class="content-section">
     <div class="media">
         <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
@@ -32,11 +20,12 @@
             <legend class="border-bottom mb-4">Profile Information</legend>
             {{ u_form|crispy }}
             {{ p_form|crispy }}
+            {{ additional_form|crispy }}
         </fieldset>
         <div class="form-group">
             <button class="btn btn-outline-info" type="submit">Update</button>
         </div>
     </form>
 </div>
-
+    </div>
 {% endblock %}

@@ -1,3 +1,22 @@
-#map {
-    height: 100%;
+
+
+.navbar{
+    background-color: #2d6760;
 }
+
+.nav-link{
+    font-family: "Lato", Arial;
+    color: white;
+}
+
+.nav-link a.hover {
+    color: #32673f;
+}
+a:hover {
+    color: white;
+    background-color: rgba(45, 103, 96, 0.78);
+}
+.whiteiconcolor {color:white;}
+
+
+.whiteiconcolor {color:white;}

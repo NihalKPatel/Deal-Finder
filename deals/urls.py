@@ -11,14 +11,13 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('', views.index, name='index'),
     path('profile', views.profile, name='profile'),
-    path('about/', views.about, name='about'),
     path('shop', views.shop, name='shop'),
     path('budget', views.budget, name='budget'),
     path('budget/<int:pk>/update/', views.BudgetUpdate.as_view(), name='budget_update'),
     path('budget/<int:pk>/delete/', views.BudgetDelete.as_view(), name='budget_delete'),
     path('budget/create', views.BudgetCreateView.as_view(), name='budget_create'),
     path('budget/addproduct', views.AddProductView.as_view(), name='product_create'),
-    path('dashboard', views.dashboard, name='dashboard'),
+    path('faq', views.faq, name='faq'),
     path('shopping_list', views.ShoppingList.as_view(), name='shopping_list'),
     path('shopping_list/create', views.ShoppingListCreate.as_view(), name='shopping_list_create'),
     path('shopping_list/<int:pk>/update/', views.ShoppingListUpdate.as_view(), name='shopping_list_update'),
@@ -42,9 +41,7 @@ urlpatterns = [
              template_name='registration/password_reset_complete.html'), name='password_reset_complete'),
     path('register/', views.register, name='register'),
     path('staff/', views.staff, name='staff'),
-    path('analytics/', views.analytics, name='analytics'),
-    path('chart', TemplateView.as_view(template_name='line_chart.html'), name='line_chart'),
-    path('chartJSON', views.LineChartJSONView.as_view(), name='line_chart_json'),
+    path('about/', views.suggestionView, name='about'),
 
 ]
 

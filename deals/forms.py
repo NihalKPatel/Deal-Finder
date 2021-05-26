@@ -4,8 +4,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.forms import Form
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
-
-from .models import Profile, List
+from django.forms import ModelForm
+from .models import Profile, List, userSuggestions, Budget
 
 
 # form for creating a user
@@ -47,3 +47,16 @@ class ProductForm(Form):
         self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'Submit'))
         self.helper.add_input(Submit('cancel', 'Cancel'))
+
+
+
+#This class helps the user to upload any suggestions/comments
+
+class userSuggestionsForm(ModelForm):
+    class Meta:
+        model = userSuggestions
+        fields = '__all__'
+
+
+class ProfileAdditionalSettings(Form):
+    weekly_budget = forms.ModelChoiceField(Budget.objects.all())
