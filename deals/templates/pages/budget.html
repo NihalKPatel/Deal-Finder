@@ -1,26 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <head xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 
     <style>
-        a:link, a:visited {
-            border: 0;
-            border-radius: 15px;
-            background: #2d6760;
-            color: #fff;
-            font-weight: 500;
-            font-size: 1rem;
-            padding: 5px 16px;
-            margin-bottom: 5px;
-            margin-left: 6px;
-        }
-        a:hover {
+        a{
             color: white;
             background-color: rgba(45, 103, 96, 0.78);
         }
 
-        .card-body button {
+        #custom-button {
             border: 0;
             border-radius: 15px;
             background: #2d6760;
@@ -88,7 +76,7 @@
         <div class="row justify-content-center">
             <form method="GET" action="{% url 'budget' %}">
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" name="budget"
+                    <button id="custom-button" class="btn btn-secondary dropdown-toggle" type="button" name="budget"
                             id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Budgets
                     </button>
@@ -100,9 +88,9 @@
                     </div>
                 </div>
             </form>
-            <a href="{% url 'budget_update' budget.id %}">Edit budget</a>
-            <a href="{% url 'budget_create' %}">Create new budget</a>
-            <a href="{% url 'product_create' %}">Add Product</a>
+            <a id="custom-button" href="{% url 'budget_update' budget.id %}">Edit budget</a>
+            <a id="custom-button" href="{% url 'budget_create' %}">Create new budget</a>
+            <a id="custom-button" href="{% url 'product_create' %}">Add Product</a>
         </div>
         </div>
 
