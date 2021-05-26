@@ -11,7 +11,6 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('', views.index, name='index'),
     path('profile', views.profile, name='profile'),
-    path('about/', views.about, name='about'),
     path('shop', views.shop, name='shop'),
     path('budget', views.budget, name='budget'),
     path('budget/<int:pk>/update/', views.BudgetUpdate.as_view(), name='budget_update'),
@@ -42,7 +41,7 @@ urlpatterns = [
              template_name='registration/password_reset_complete.html'), name='password_reset_complete'),
     path('register/', views.register, name='register'),
     path('staff/', views.staff, name='staff'),
-    path('contactUs/', views.suggestionView, name='contactUs'),
+    path('about/', views.suggestionView, name='about'),
 
 ]
 
