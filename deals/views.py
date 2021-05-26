@@ -10,6 +10,8 @@ from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, ProductF
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
+from .forms import UserRegisterForm
+#from chartjs.views.lines import BaseLineChartView
 from chartjs.views.lines import BaseLineChartView
 from .scraper import NewWorld, ComputerLounge
 
@@ -20,15 +22,14 @@ from .scraper import NewWorld, ComputerLounge
 #
 #     return render(request, 'index.html')
 def index(request):
-    form = userSuggestionsForm()
-    if request.method == 'POST':
-        form = userSuggestionsForm(request.POST)
-        if form.is_valid():
-            form.save()
-
-    context ={'form':form}
-
-    return render(request, 'index.html',context)
+    # form = userSuggestionsForm()
+    # if request.method == 'POST':
+    #     form = userSuggestionsForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #         messages.success(request,'We have received your suggestions, thank you!')
+    # context ={'form':form}
+    return render(request, 'index.html')#context)
 
 
 # View to handle the shop template
@@ -37,8 +38,8 @@ def shop(request):
 
 
 # View to handle the dashboard template
-def dashboard(request):
-    return render(request, 'pages/dashboard.html')
+def faq(request):
+    return render(request, 'pages/faq.html')
 
 
 # View to handle the about page
@@ -359,26 +360,13 @@ def staff(request):
     return render(request, 'pages/staff.html')
 
 
-# view to handle the analytics template
-def analytics(request):
-    return render(request, 'pages/analytics.html')
-
-
-# view to handle the chart
-class LineChartJSONView(BaseLineChartView):
-    def get_labels(self):
-        # labels
-        return ["Week 1", "Week 2", "Week 4", "Week 5", "Week 6", "Week 7"]
-
-    def get_providers(self):
-        # data to compare
-        return ["Budget", "Actual spending"]
-
-    def get_data(self):
-        # data to plot
-        return [
-            [75, 80, 99, 44, 95, 35],
-            [41, 92, 70, 39, 73, 87]
-        ]
-
-
+# view to handle the suggestionView template
+def suggestionView(request):
+    form = userSuggestionsForm()
+    if request.method == 'POST':
+        form = userSuggestionsForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'We have received your suggestions, thank you!')
+    context = {'form': form}
+    return render(request, 'pages/contactUs.html', context)

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width", initial-scale="1">
+{#        <link rel="stylesheet" href="styles.css">#}
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        {#        /** sucess box**/#}
+        <style>
+            {#*{#}
+            {#    box-sizing: border-box;#}
+            {#}#}
+            .column {
+                {#float: contour;#}
+                {#align-self: center;#}
+                {#align-content: center;#}
+                width: 80%;
+                padding: 10px;
+                height: 300px;
+            }
+            .row:after{
+                content: "";
+                display: table;
+                clear: both;
+            }
+            h3{
+                text-align: center;
+            }
+            {#.success{#}
+            {#    list-style: none;#}
+            {#    background-color: lightskyblue;#}
+            {#    color: #333333;#}
+            {#    box-shadow: 12px 12px 12px darkturquoise;#}
+            {#    text-align: center;#}
+            {#}#}
+        </style>
+    </head>
+    <body>
+        <div class="column" align="center" style="background-color: whitesmoke">
+            <h3 >Suggestion and contact form</h3>
+            <p> If you have any suggestions or would like to contact us please fill up this form with your details </p>
+            <hr>
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form|crispy}}
+                <input type="submit">
+                {#            displays a notification to let the user know we have got their notification"""#}
+{#                {% if messages %}#}
+{#                    <ul class="messages">#}
+{#                        {% for message in messages %}#}
+{#                            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>#}
+{#                        {% endfor %}#}
+{#                    </ul>#}
+{#                {% endif %}#}
+            </form>
+        </div>
+
+    </body>
+</html>
+
+{% endblock %}
