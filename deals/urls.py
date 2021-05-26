@@ -42,6 +42,7 @@ urlpatterns = [
              template_name='registration/password_reset_complete.html'), name='password_reset_complete'),
     path('register/', views.register, name='register'),
     path('staff/', views.staff, name='staff'),
+    path('chartJSON', views.WeeklyBudgetChartJSON.as_view(), name='line_chart_json'),
     path('about/', views.suggestionView, name='about'),
 
 ]
