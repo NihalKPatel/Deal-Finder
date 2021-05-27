@@ -85,25 +85,25 @@
 
     <div class="container">
         <div class="card-body">
-        <div class="row justify-content-center">
-            <form method="GET" action="{% url 'budget' %}">
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" name="budget"
-                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Budgets
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        {% for budget in all_budgets %}
-                            <button class="dropdown-item" type="submit" name="budget"
-                                    value="{{ forloop.counter }}">{{ budget.name }}</button>
-                        {% endfor %}
+            <div class="row justify-content-center">
+                <form method="GET" action="{% url 'budget' %}">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" name="budget"
+                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Budgets
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            {% for budget in all_budgets %}
+                                <button class="dropdown-item" type="submit" name="budget"
+                                        value="{{ forloop.counter }}">{{ budget.name }}</button>
+                            {% endfor %}
+                        </div>
                     </div>
-                </div>
-            </form>
-            <a href="{% url 'budget_update' budget.id %}">Edit budget</a>
-            <a href="{% url 'budget_create' %}">Create new budget</a>
-            <a href="{% url 'product_create' %}">Add Product</a>
-        </div>
+                </form>
+                <a href="{% url 'budget_update' budget.id %}">Edit budget</a>
+                <a href="{% url 'budget_create' %}">Create new budget</a>
+                <a href="{% url 'product_create' %}">Add Product</a>
+            </div>
         </div>
 
         <span style="display:block; height: 20px;"></span>
@@ -114,7 +114,7 @@
                 <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                     <div class="card-header"> Budget</div>
                     <div class="card-body">
-                        <p class="card-text">${{ budget.max_spend }}</p>
+                        <p class="card-text">${{ budget.max_spend|floatformat:2 }}</p>
                     </div>
                 </div>
             </div>
@@ -123,7 +123,7 @@
                 <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                     <div class="card-header">Current Spending</div>
                     <div class="card-body">
-                        <p class="card-text">${{ money_spent }} </p>
+                        <p class="card-text">${{ money_spent|floatformat:2 }} </p>
                     </div>
                 </div>
             </div>
@@ -140,7 +140,7 @@
                     <div class="card-header">Remaining Budget</div>
                 {% endif %}
                 <div class="card-body">
-                    <p class="card-text">${{ money_remaining }} </p>
+                    <p class="card-text">${{ money_remaining|floatformat:2 }} </p>
                 </div>
                 </div>
                 </div>
@@ -153,13 +153,13 @@
     <div class="container">
         <div class="progress-bar">
             <progress value="{{ money_spent }}" max="{{ budget.max_spend }}"></progress>
-            <span class="progress__text">${{ money_spent }}/${{ budget.max_spend }}</span>
+            <span class="progress__text">${{ money_spent|floatformat:2 }}/${{ budget.max_spend|floatformat:2 }}</span>
         </div>
     </div>
 
-        <meta charset="utf-8">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
 
     <div class="container mb-3 mt-3">
         <table class="table table-striped table-bordered mydatatable" style="width: 100%">
@@ -167,13 +167,16 @@
             <th>Name</th>
             <th>Link</th>
             <th>Price</th>
+            <th>Action</th>
             </thead>
             <tbody>
             {% for product in products %}
+                <input type="hidden" name="product" value="{{ product.id }}"/>
                 <tr>
-                    <td>{{ product.name }}</td>
-                    <td>{{ product.link }}</td>
-                    <td>{{ product.price }}</td>
+                    <td class="align-middle">{{ product.name }}</td>
+                    <td class="align-middle">{{ product.link }}</td>
+                    <td class="align-middle">{{ product.price|floatformat:2 }}</td>
+                    <td class="align-middle"><a href="{% url 'budget_product_delete' product.id %}">Delete</a></td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -181,6 +184,7 @@
             <th>Name</th>
             <th>Link</th>
             <th>Price</th>
+            <th>Action</th>
             </tfoot>
         </table>
     </div>

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="container">
+
+    <h1 class="display-2 text-center">Weekly Budgets</h1>
+    <canvas id="myChart" width="200" height="100"></canvas>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+    <script type="text/javascript">
+        $.get('{% url "line_chart_json" %}', function (data) {
+            var ctx = $("#myChart").get(0).getContext("2d");
+            new Chart(ctx, {
+                type: 'line', data: data
+            });
+        });
+    </script>
+
+</div>
+
+{% endblock %}
