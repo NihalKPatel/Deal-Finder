@@ -137,7 +137,12 @@ class Browse(LoginRequiredMixin, generic.ListView):
         if 'product' in self.request.POST and 'list' in self.request.POST:
             product_id = self.request.POST['product']
             list_id = self.request.POST['list']
-            List.objects.get(id=list_id).products.add(Product.objects.get(id=product_id))
+            new_product = Product.objects.get(id=product_id)
+            new_product.pk = None
+            new_product.id = None
+            new_product.product_type = 3
+            new_product.save()
+            List.objects.get(id=list_id).products.add(Product.objects.get(id=new_product.id))
             print(self.extra_context)
         return redirect(reverse_lazy('browse'))
 
