@@ -49,6 +49,9 @@ class List(models.Model):
     def __str__(self):
         return self.name
 
+    def total(self):
+        queryset = self.products.all().aggregate(total_price=models.Sum('price'))['total_price']
+        return queryset
 
 # model for storing product information
 # many to many relationship with lists
@@ -57,6 +60,7 @@ class Product(models.Model):
     link = models.CharField(max_length=255, blank=True)
     price = models.FloatField()
     location = models.CharField(max_length=255, blank=True)
+    product_type = models.IntegerField(blank=True, default=1)
 
     def __str__(self):
         return self.name
