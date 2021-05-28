@@ -24,5 +24,6 @@ def create_weekly_budgets():
         weekly_budget.pk = None
         weekly_budget.name = f'{weekly_budget_template.name} {datetime.now()}'
         weekly_budget.weekly = False
+        weekly_budget.date = datetime.now()
         weekly_budget.save()
 
