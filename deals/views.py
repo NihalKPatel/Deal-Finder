@@ -192,7 +192,8 @@ class ShoppingList(LoginRequiredMixin, generic.ListView):
     def post(self, request, *args, **kwargs):
         if 'list' in request.POST and 'product' in request.POST:
             product = Product.objects.get(id=request.POST['product'])
-            List.objects.get(id=request.POST['list']).products.remove(product)
+            if product.product_type == 2 or product.product_type == 3:
+                product.delete()
         return redirect(reverse_lazy('shopping_list'))
 
     def get_queryset(self):
@@ -411,9 +412,9 @@ def suggestionView(request):
 def deleteFromBudget(request, pk):
     product = Product.objects.get(id=pk)
     current_budget = Budget.objects.filter(profile_id=request.user.id)[global_budget_index() - 1]
-    budget_list = List.objects.get(budget=current_budget.id)
     if request.method == "POST":
-        budget_list.products.remove(product)
+        if product.product_type == 2 or product.product_type == 3:
+            product.delete()
         return redirect('budget')
 
     context = {'item': product}
