@@ -44,6 +44,7 @@ urlpatterns = [
     path('staff/', views.staff, name='staff'),
     path('chartJSON', views.WeeklyBudgetChartJSON.as_view(), name='line_chart_json'),
     path('about/', views.suggestionView, name='about'),
+    path('dashboard', views.dashboard, name='dashboard'),
 
 ]
 

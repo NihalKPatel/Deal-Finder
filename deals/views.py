@@ -43,6 +43,7 @@ def shop(request):
 
 
 # View to handle the dashboard template
+@login_required(login_url='/accounts/login/')
 def dashboard(request):
     return render(request, 'pages/dashboard.html')
 
