@@ -8,7 +8,7 @@
         <meta charset="UTF-8">
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"
               id="bootstrap-css">
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+{#        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>#}
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
@@ -80,20 +80,6 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="row">
-                    <label>Categories</label>
-                    <select class="form-control js-example-basic-multiple" name="states[]" multiple="multiple">
-                        <optgroup label="Food">
-                            <option value="apple">apple</option>
-                            <option value="orange">orange</option>
-                        </optgroup>
-                        <optgroup label="Tech">
-                            <option value="gpu">GPU</option>
-                            <option value="cpu">CPU</option>
-                        </optgroup>
-
-                    </select>
-                </div>
             </div>
             <script>
                 $('.select2').select2({
@@ -153,4 +139,5 @@
             </span>
     </div>
 
+    <span style="display:block; height: 40px;"></span>
 {% endblock %}

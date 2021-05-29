@@ -7,6 +7,7 @@ db.sqlite3
 db.cnf
 media/*
 !media/default.jpg
+deals/migrations/*
 
 dealfinder/.env
 
@@ -121,3 +122,5 @@ GitHub.sublime-settings
 !.vscode/launch.json
 !.vscode/extensions.json
 .history
+deals/migrations/0017_merge_20210526_1311.py
+deals/migrations/0018_auto_20210526_1312.py
