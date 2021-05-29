@@ -43,8 +43,9 @@ def shop(request):
 
 
 # View to handle the dashboard template
-def dashboard(request):
-    return render(request, 'pages/dashboard.html')
+# @login_required(login_url='/accounts/login/')
+# def dashboard(request):
+#     return render(request, 'pages/dashboard.html')
 
 
 # View to handle the about page
@@ -80,7 +81,6 @@ def budget(request):
     budget_list = List.objects.get(budget=current_budget.id)
 
     products = budget_list.products.all()
-    print(products)
     # increment total money spent for the price of each item
     for product in products:
         total_spent += product.price
@@ -389,21 +389,28 @@ def analytics(request):
 class WeeklyBudgetChartJSON(BaseLineChartView):
     def get_labels(self):
         # labels
-        return ["Week 1", "Week 2", "Week 4", "Week 5", "Week 6", "Week 7"]
+        budgets = Budget.objects.filter(date__isnull=False)
+        # return ["Week 1", "Week 2", "Week 4", "Week 5", "Week 6", "Week 7"]
+        return [b.name for b in budgets]
 
     def get_providers(self):
         # data to compare
         return ["Budget spending limit", "Actual spending"]
 
     def get_data(self):
+        budgets = Budget.objects.filter(date__isnull=False)
         # data to plot
+        # return [
+        #     [75, 80, 99, 44, 95, 35],
+        #     [41, 92, 70, 39, 73, 87]
+        # ]
         return [
-            [75, 80, 99, 44, 95, 35],
-            [41, 92, 70, 39, 73, 87]
+            [b.max_spend for b in budgets],
+            [b.spent() for b in budgets],
         ]
 
 
-def suggestionView(request):
+def suggestion_view(request):
     form = userSuggestionsForm()
     if request.method == 'POST':
         form = userSuggestionsForm(request.POST)
@@ -414,7 +421,7 @@ def suggestionView(request):
     return render(request, 'pages/about.html', context)
 
 
-def deleteFromBudget(request, pk):
+def delete_from_budget(request, pk):
     product = Product.objects.get(id=pk)
     current_budget = Budget.objects.filter(profile_id=request.user.id)[global_budget_index() - 1]
     if request.method == "POST":
@@ -424,3 +431,10 @@ def deleteFromBudget(request, pk):
 
     context = {'item': product}
     return render(request, 'pages/budget_product_delete.html', context)
+
+
+# list view to display all of the users lists
+class DashboardView(LoginRequiredMixin, generic.ListView):
+    model = Budget
+    template_name = 'pages/dashboard.html'
+    context_object_name = 'budgets'
