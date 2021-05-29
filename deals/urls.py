@@ -18,6 +18,7 @@ urlpatterns = [
     path('budget/create', views.BudgetCreateView.as_view(), name='budget_create'),
     path('budget_product_delete/<int:pk>', views.deleteFromBudget, name='budget_product_delete'),
     path('budget/addproduct', views.AddProductView.as_view(), name='product_create'),
+    path('budget_calculator', views.budget_calculator, name='budget_calculator'),
     path('faq', views.faq, name='faq'),
     path('shopping_list', views.ShoppingList.as_view(), name='shopping_list'),
     path('shopping_list/create', views.ShoppingListCreate.as_view(), name='shopping_list_create'),
