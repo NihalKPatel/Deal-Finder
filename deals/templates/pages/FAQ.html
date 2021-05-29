@@ -4,53 +4,91 @@
     <!DOCTYPE html>
     <html>
     <head>
-        </head>
-        <body>
-            <div class="container">
-                <h2 align="center">Our FAQ and what DealFinder can do</h2>
-                <p align="Center">Click on each button to see the answer.</p>
+    </head>
+    <body>
+    <div class="container">
+        <span style="display:block; height: 20px;"></span>
+        <h2 align="center">Our FAQ and what DealFinder can do</h2>
+        <p align="Center">Click on each button to see the answer.</p>
+
+        <ul class="list-group">
+            <li class="list-group-item">
                 <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#q1">
                     How do I create my own profile?
                 </button>
                 <div id="q1" class="collapse">
-                    <br>
+                    <span style="display:block; height: 8px;"></span>
                     Navigate to the right hand-side of the page and click on register
                 </div>
-
+            </li>
+            <li class="list-group-item">
                 <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#q2">
-                    How can I create a budget?
+                    How can I create a Budget?
                 </button>
                 <div id="q2" class="collapse">
-                    <br>
-                    Click on ......xxxxxxxxxxxx
+                    <span style="display:block; height: 8px;"></span>
+                    By clicking on the "Budget" Tab, you will then be able to click on the "Create New Budget" button.
+                    From there you can follow the form to create a new Budget.
                 </div>
-
-
+            </li>
+            <li class="list-group-item">
                 <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#q3">
-                    How many shopping lists can I create?
+                    How can I create a Shopping List?
                 </button>
                 <div id="q3" class="collapse">
-                    <br>
-                    As many as you like
+                    <span style="display:block; height: 8px;"></span>
+                    By clicking on the "Shopping List" Tab, you will then be able to click on the "Create New List" button.
+                    From there you can follow the form to create a new Shopping List.
                 </div>
-
+            </li>
+            <li class="list-group-item">
                 <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#q4">
-                    How many shops near by can I see?
+                    How do Shopping Lists and Budgets Work?
                 </button>
                 <div id="q4" class="collapse">
+                    <span style="display:block; height: 8px;"></span>
+                    - A Shopping List is where you add all the products that you want in that list.
                     <br>
-                    So far dealFinder is capable of..
+                    - A Budget has certain parameters such as maximum spending, current spending and spending remaining.
+                    <br>
+                    <br>
+                    The Budget will use a single Shopping List to give context to those parameters.
+                    Also, A single Budget can only link to one Shopping List however, A single Shopping List can be
+                    linked to multiple Budgets.
                 </div>
-
+            </li>
+            <li class="list-group-item">
                 <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#q5">
-                        What happens if I go over budget?
+                    How many shopping lists can I create?
                 </button>
                 <div id="q5" class="collapse">
-                    <br>
-                    Don't worry, you can keep the same budget or create a new one
+                    <span style="display:block; height: 8px;"></span>
+                    As many as you like
                 </div>
-            </div>
-        </body>
+            </li>
+            <li class="list-group-item">
+                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#q6">
+                    How many shops near by can I see?
+                </button>
+                <div id="q6" class="collapse">
+                    <span style="display:block; height: 8px;"></span>
+                    So far dealFinder is capable of..
+                </div>
+            </li>
+            <li class="list-group-item">
+                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#q7">
+                    What happens if I go over budget?
+                </button>
+                <div id="q7" class="collapse">
+                    <span style="display:block; height: 8px;"></span>
+                    When a Budget's max has been exceeded you can still add products, however the warnings will remain
+                    there until the spending has been placed back to safe levels.
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    </body>
     </html>
 
 {% endblock %}
