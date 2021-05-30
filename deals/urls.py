@@ -16,7 +16,7 @@ urlpatterns = [
     path('budget/<int:pk>/update/', views.BudgetUpdate.as_view(), name='budget_update'),
     path('budget/<int:pk>/delete/', views.BudgetDelete.as_view(), name='budget_delete'),
     path('budget/create', views.BudgetCreateView.as_view(), name='budget_create'),
-    path('budget_product_delete/<int:pk>', views.deleteFromBudget, name='budget_product_delete'),
+    path('budget_product_delete/<int:pk>', views.delete_from_budget, name='budget_product_delete'),
     path('budget/addproduct', views.AddProductView.as_view(), name='product_create'),
     path('budget_calculator', views.budget_calculator, name='budget_calculator'),
     path('faq', views.faq, name='faq'),
@@ -44,7 +44,8 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('staff/', views.staff, name='staff'),
     path('chartJSON', views.WeeklyBudgetChartJSON.as_view(), name='line_chart_json'),
-    path('about/', views.suggestionView, name='about'),
+    path('about/', views.suggestion_view, name='about'),
+    path('dashboard', views.DashboardView.as_view(), name='dashboard'),
 
 ]
 
