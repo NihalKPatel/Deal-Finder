@@ -7,6 +7,7 @@ db.sqlite3
 db.cnf
 media/*
 !media/default.jpg
+!media/pig.png
 deals/migrations/*
 
 dealfinder/.env
