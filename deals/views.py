@@ -86,6 +86,7 @@ def budget(request):
         total_spent += product.price
 
     money_remaining = current_budget.max_spend - total_spent
+    money_remaining = current_budget.max_spend - total_spent
     return render(request, 'pages/budget.html', {'products': products,
                                                  'budget': current_budget,
                                                  'all_budgets': budgets,
@@ -278,7 +279,7 @@ class BudgetCreateView(CreateView):
 # generic update view for updating budgets
 class BudgetUpdate(LoginRequiredMixin, UpdateView):
     model = Budget
-    template_name = 'pages/shopping_list_update.html'
+    template_name = 'pages/budget_update.html'
     fields = ['name', 'max_spend', 'list']
     success_url = reverse_lazy('budget')
 
@@ -292,7 +293,7 @@ class BudgetUpdate(LoginRequiredMixin, UpdateView):
 # generic delete view for deleting budgets
 class BudgetDelete(LoginRequiredMixin, DeleteView):
     model = Budget
-    template_name = 'pages/shopping_list_delete.html'
+    template_name = 'pages/budget_delete.html'
     success_url = reverse_lazy('budget')
 
 
@@ -438,3 +439,6 @@ class DashboardView(LoginRequiredMixin, generic.ListView):
     model = Budget
     template_name = 'pages/dashboard.html'
     context_object_name = 'budgets'
+
+    def get_queryset(self):
+        return Budget.objects.filter(profile_id=self.request.user.id)
