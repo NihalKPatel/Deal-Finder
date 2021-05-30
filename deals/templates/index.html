@@ -23,6 +23,30 @@
     </script>
 
     <style>
+        .box {
+            width: 300px;
+            height: 200px;
+            margin: 30px;
+            speech-rate: x-slow;
+            background: url("/media/img.png") no-repeat;
+            position: relative;
+            /* Chrome, Safari, Opera */
+            -webkit-animation: moveit 2s linear 0s infinite alternate;
+            /* Standard syntax */
+            animation: moveit 2s linear 0s infinite alternate;
+        }
+
+        /* Chrome, Safari, Opera */
+        @-webkit-keyframes moveit {
+            from {left: 0;}
+            to {left: 90%;}
+        }
+
+        /* Standard syntax */
+        @keyframes moveit {
+            from {left: 0;}
+            to {left: 80%;}
+        }
 
         .guidingUser{
             margin: 150px 50px;
@@ -81,6 +105,7 @@
                         Place to help you find the best deals nearby
                         all in one browser!
                     </div>
+                    <div class="box"></div>
                     <div class="container">
                         <div class="row" class="guidingUser">
                             <div class="col-md-12 text-center">
