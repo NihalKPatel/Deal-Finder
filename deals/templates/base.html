@@ -21,6 +21,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="popover"]').popover({
+                placement : 'bottom',
+                trigger : 'hover'
+            });
+        });
+    </script>
+
+
     <title>Deal Finder</title>
 </head>
 <body>
@@ -38,16 +48,17 @@
         <ul class="navbar-nav ml-auto">
 
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'browse' %}">Browse</a>
+{#               data-toggle="popover" title="More information" data-content="Click here for more information"#}
+                <a class="nav-link" href="{% url 'browse' %}" data-toggle="popover" title="Look for items here">Browse</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'shopping_list' %}">Shopping List</a>
+                <a class="nav-link" href="{% url 'shopping_list' %}" data-toggle="popover" title="Create, and view current shopping lists">Shopping List</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'budget' %}">Budget</a>
+                <a class="nav-link" href="{% url 'budget' %}" data-toggle="popover" title="Create, edit and update your budgets here">Budget</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'about' %}">About</a>
+            <li class="nav-item" >
+                <a class="nav-link" href="{% url 'about' %}" data-toggle="popover" title="You can contact us too!" >About us</a>
             </li>
             <!-- once the user is logged in it shows new links -->
             {% if user.is_authenticated %}
