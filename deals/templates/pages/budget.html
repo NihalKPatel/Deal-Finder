@@ -142,6 +142,15 @@
         <h1 style="text-align:center">Budget: {{ budget.name }}</h1>
         <h2 style="text-align:center">List: {{ budget_list.name }}</h2>
 
+        <div class="container">
+            <div class="card-body">
+                <div class="row justify-content-center">
+                    <a align="center" href="{% url 'budget_calculator' %}">Budget Calculator</a>
+                </div>
+            </div>
+        </div>
+
+
         <div class="row">
             <div class="col 14" align="left">
                 <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">

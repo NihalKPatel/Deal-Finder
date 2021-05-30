@@ -423,7 +423,6 @@ def suggestionView(request):
 
 def deleteFromBudget(request, pk):
     product = Product.objects.get(id=pk)
-    current_budget = Budget.objects.filter(profile_id=request.user.id)[global_budget_index() - 1]
     if request.method == "POST":
         if product.product_type == 2 or product.product_type == 3:
             product.delete()
