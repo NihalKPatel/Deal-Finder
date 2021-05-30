@@ -94,6 +94,11 @@ def budget(request):
                                                  })
 
 
+# View to handle the budget calculator
+def budget_calculator(request):
+    return render(request, 'pages/budget_calculator.html')
+
+
 # View to handle the browse template and process GET and POST requests
 class Browse(LoginRequiredMixin, generic.ListView):
     model = Product

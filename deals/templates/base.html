@@ -65,6 +65,9 @@
                     <!-- links to dashboard page -->
                 <a class="dropdown-item" href="{% url 'dashboard' %}">My Dashboard</a>
                 <div class="dropdown-divider"></div>
+                    <!-- links to budget calculator -->
+                <a class="dropdown-item" href="{% url 'budget_calculator' %}">My Budget Calc</a>
+                <div class="dropdown-divider"></div>
                     <!-- Logout page -->
                 <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
                 {% if user.is_staff %}

@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block content %}
+
+<head>
+    <style>
+        input
+        {
+            display: block;
+            padding: 5px;
+            margin: 12px auto;
+            width: 100%;
+        }
+
+        .results
+        {
+            min-height: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #e3e3e3;
+            border-radius: 4px;
+        }
+
+        .results-data
+        {
+            margin: 1.5rem 0;
+        }
+
+        .box
+        {
+            margin: 20px;
+        }
+
+    </style>
+
+</head>
+<body>
+<span style="display:block; height: 20px;"></span>
+    <div class="container">
+        <h1 align="center">My Budget Calculator</h1>
+        <p align="center">A budget calculator designed to help you calculate your expenses.</p>
+        <div class="container-fluid center-box">
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-1">
+                    <div class="box">
+                        <form>
+                            <input class="form-control input-lg" type="text" id="income" placeholder="Weekly Income"/>
+                            <input class="form-control input-lg" type="text" id="rent" placeholder="Rent"/>
+                            <input class="form-control input-lg" type="text" id="food" placeholder="Food"/>
+                            <input class="form-control input-lg" type="text" id="utilities" placeholder="Utilities"/>
+                            <input class="form-control input-lg" type="text" id="transport" placeholder="Transport"/>
+                        </form>
+                        <button type="button" class="btn btn-primary btn-lg btn-block">Calculate!</button>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="results">
+                        <h2>Results</h2>
+                        <div class="results-data">
+                            <p>Submit button will calculate your results!</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <script>
+        $("button").click(gather)
+        $(document).ready(centerme);
+        $(window).resize(centerme);
+
+        function gather(){
+            var income = document.getElementById("income").value;
+            income = income.replace(/\D/g,'');
+            var rent = document.getElementById("rent").value;
+            rent = rent.replace(/\D/g,'');
+            var food = document.getElementById("food").value;
+            food = food.replace(/\D/g,'');
+            var utilities = document.getElementById('utilities').value;
+            utilities = utilities.replace(/\D/g,'');
+            var transport = document.getElementById("transport").value;
+            transport = transport.replace(/\D/g,'');
+            var result = income - rent - food - utilities - transport;
+
+            $(".results-data").empty();
+            if (result === 0){
+                $(".results-data").append('<p>You did not enter anything. Please try again.</p>');
+            }
+            else if (result < 0){
+                $(".results-data").append('<p>After your expenses you have $' + result + ' left. ' +
+                    'You might want to reduce your spending this month</p>');
+            }
+            else{
+                $(".results-data").append('<p>After your expenses you have $' + result + ' left in your budget.</p>');
+            }
+        }
+        function centerme(){
+            boxheight = $(".center-box").height();
+            middle = boxheight / 2;
+            console.log(boxheight);
+
+        }
+
+    </script>
+</body>
+
+{% endblock %}
