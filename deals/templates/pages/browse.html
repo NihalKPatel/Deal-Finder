@@ -21,7 +21,6 @@
                 font-weight: 500;
                 font-size: 1rem;
                 padding: 5px 16px;
-
             }
             a:hover {
                 color: white;
@@ -38,7 +37,6 @@
                 padding: 5px 16px;
                 margin-top: 5px;
                 margin-bottom: 5px;
-
             }
             .card{
                 flex: 0 50%;
@@ -49,10 +47,7 @@
                 margin: 8px;
                 padding: 10px 15px;
                 position: relative;
-                z-index: 1;
-                overflow: hidden;
                 transition: 0.7s;
-                overflow: visible;
             }
 
         </style>
@@ -105,6 +100,7 @@
             <form method="POST" action="{% url 'browse' %}">
                 {% csrf_token %}
                 <input type="hidden" name="product" value="{{ product.id }}"/>
+
                     <button class="btn btn-dark dropdown-toggle" type="button" name="submit" id="dropdownMenuButton"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Add to list

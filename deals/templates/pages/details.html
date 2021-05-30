@@ -37,9 +37,9 @@
                 border-radius: 30px;
                 position: absolute;
                 z-index: 100;
-                top: 180px;
+                top: 140px;
                 left: 15px;
-                width: 350px;
+                width: 300px;
                 height: 30px;
                 background-color: #454E53;
                 display: flex;
@@ -47,12 +47,12 @@
             }
 
             .stores-list-container {
-                width: 350px;
+                width: 300px;
                 position: absolute;
                 z-index: 100;
                 background-color: white;
                 left: 15px;
-                top: 240px;
+                top: 180px;
                 border-radius: 30px;
                 bottom: 20px;
                 display: flex;
@@ -386,6 +386,31 @@
                 "mop": {
                     "ready": false,
                     "wait": null
+                }
+            },{
+                "recommendation": {},
+                "storeNumber": "+64 9-572 8840",
+                "id": "15051",
+                "name": "New World Remuera",
+                "phoneNumber": "+64 9-572 8840",
+                "coordinates": {
+                    "latitude": -36.89027,
+                    "longitude": 174.83197
+                },
+                "address": {
+                    "streetAddressLine1": "100 Lunn Avenue, Mount Wellington, Auckland 1072",
+                    "streetAddressLine2": null,
+                    "streetAddressLine3": null,
+                    "city": "Auckland",
+                    "countrySubdivisionCode": "NZ",
+                    "countryCode": "NZ",
+                    "postalCode": "1072"
+                },
+                "openStatusText": "Open until 10:00 PM",
+                "addressLines": ["100 Lunn Avenue, Mount Wellington,", "Auckland 1072"],
+                "mop": {
+                    "ready": false,
+                    "wait": null
                 },
 
             },]
@@ -541,7 +566,7 @@
     <body>
     <div class="search-container">
         <div class="search">
-            <input type="text" id="zip-code-input" placeholder="Enter Zip" />
+            <input type="text" id="zip-code-input" placeholder="Enter Store Zip" />
             <i class="fas fa-search" onclick="searchStores()"></i>
         </div>
     </div>
