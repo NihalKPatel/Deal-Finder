@@ -87,7 +87,7 @@ class Budget(models.Model):
     # sum of values of all products in this budgets list
     def spent(self):
         spent = 0
-        if self.list == None:
+        if self.list is None:
             return 0
         products = self.list.products.all()
         for product in products:
