@@ -429,7 +429,7 @@ def suggestion_view(request):
     return render(request, 'pages/about.html', context)
 
 
-def deleteFromBudget(request, pk):
+def delete_from_budget(request, pk):
     product = Product.objects.get(id=pk)
     if request.method == "POST":
         if product.product_type == 2 or product.product_type == 3:
