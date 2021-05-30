@@ -43,9 +43,8 @@ def shop(request):
 
 
 # View to handle the dashboard template
-# @login_required(login_url='/accounts/login/')
-# def dashboard(request):
-#     return render(request, 'pages/dashboard.html')
+def dashboard(request):
+    return render(request, 'pages/dashboard.html')
 
 
 # View to handle the about page
@@ -77,20 +76,28 @@ def budget(request):
 
     # Find the budget for that particular user with the index specified
     current_budget = Budget.objects.filter(profile_id=request.user.id)[budget_index - 1]
+    products = None
+    money_remaining = None
+    budget_list = None
     # find the single list that belongs to that budget
-    budget_list = List.objects.get(budget=current_budget.id)
+    if current_budget.list is None:
+        pass
+    else:
+        budget_list = List.objects.get(budget=current_budget.id)
+        products = budget_list.products.all()
+        print(products)
+        # increment total money spent for the price of each item
+        for product in products:
+            total_spent += product.price
 
-    products = budget_list.products.all()
-    # increment total money spent for the price of each item
-    for product in products:
-        total_spent += product.price
+        money_remaining = current_budget.max_spend - total_spent
 
-    money_remaining = current_budget.max_spend - total_spent
     return render(request, 'pages/budget.html', {'products': products,
                                                  'budget': current_budget,
                                                  'all_budgets': budgets,
                                                  'money_spent': total_spent,
-                                                 'money_remaining': money_remaining
+                                                 'money_remaining': money_remaining,
+                                                 'budget_list': budget_list,
                                                  })
 
 
@@ -389,28 +396,21 @@ def analytics(request):
 class WeeklyBudgetChartJSON(BaseLineChartView):
     def get_labels(self):
         # labels
-        budgets = Budget.objects.filter(date__isnull=False)
-        # return ["Week 1", "Week 2", "Week 4", "Week 5", "Week 6", "Week 7"]
-        return [b.name for b in budgets]
+        return ["Week 1", "Week 2", "Week 4", "Week 5", "Week 6", "Week 7"]
 
     def get_providers(self):
         # data to compare
         return ["Budget spending limit", "Actual spending"]
 
     def get_data(self):
-        budgets = Budget.objects.filter(date__isnull=False)
         # data to plot
-        # return [
-        #     [75, 80, 99, 44, 95, 35],
-        #     [41, 92, 70, 39, 73, 87]
-        # ]
         return [
-            [b.max_spend for b in budgets],
-            [b.spent() for b in budgets],
+            [75, 80, 99, 44, 95, 35],
+            [41, 92, 70, 39, 73, 87]
         ]
 
 
-def suggestion_view(request):
+def suggestionView(request):
     form = userSuggestionsForm()
     if request.method == 'POST':
         form = userSuggestionsForm(request.POST)
@@ -421,9 +421,8 @@ def suggestion_view(request):
     return render(request, 'pages/about.html', context)
 
 
-def delete_from_budget(request, pk):
+def deleteFromBudget(request, pk):
     product = Product.objects.get(id=pk)
-    current_budget = Budget.objects.filter(profile_id=request.user.id)[global_budget_index() - 1]
     if request.method == "POST":
         if product.product_type == 2 or product.product_type == 3:
             product.delete()
@@ -431,10 +430,3 @@ def delete_from_budget(request, pk):
 
     context = {'item': product}
     return render(request, 'pages/budget_product_delete.html', context)
-
-
-# list view to display all of the users lists
-class DashboardView(LoginRequiredMixin, generic.ListView):
-    model = Budget
-    template_name = 'pages/dashboard.html'
-    context_object_name = 'budgets'

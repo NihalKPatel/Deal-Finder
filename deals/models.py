@@ -73,7 +73,7 @@ class Budget(models.Model):
     name = models.CharField(max_length=255, default='')
     max_spend = models.FloatField(default=400)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, null=False)
-    list = models.ForeignKey(List, on_delete=models.SET_NULL, null=True)
+    list = models.ForeignKey(List, on_delete=models.SET_NULL, null=True, blank=True)
     # whether this is the users chosen weekly budget
     weekly = models.BooleanField(default=False)
     # blank if you don't want this budget to appear on analytics
