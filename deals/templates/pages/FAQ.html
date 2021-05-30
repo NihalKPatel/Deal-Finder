@@ -27,8 +27,7 @@
                 </button>
                 <div id="q2" class="collapse">
                     <span style="display:block; height: 8px;"></span>
-                    By clicking on the "Budget" Tab, you will then be able to click on the "Create New Budget" button.
-                    From there you can follow the form to create a new Budget.
+                    By clicking <a href="{% url 'budget_create' %}"> here </a>
                 </div>
             </li>
             <li class="list-group-item">
@@ -63,7 +62,7 @@
                 </button>
                 <div id="q5" class="collapse">
                     <span style="display:block; height: 8px;"></span>
-                    As many as you like
+                    As many as you like! <a href="{% url 'shopping_list' %}"> click here to create a new one  </a>
                 </div>
             </li>
             <li class="list-group-item">
@@ -72,7 +71,7 @@
                 </button>
                 <div id="q6" class="collapse">
                     <span style="display:block; height: 8px;"></span>
-                    So far dealFinder is capable of..
+                    There are many shops options available <a href="{% url 'browse' %}"> click here to enter your location </a> and look for stores - keep in mind that you might need to login
                 </div>
             </li>
             <li class="list-group-item">
@@ -85,6 +84,17 @@
                     there until the spending has been placed back to safe levels.
                 </div>
             </li>
+            <li class="list-group-item">
+                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#q8">
+                    Do you have no idea on how much you should budget for? ?
+                </button>
+                <a ></a>
+                <div id="q8" class="collapse">
+                    <span style="display:block; height: 8px;"></span>
+                    <a href="{% url 'budget_calculator' %}"> Click here to use our amazing budget calculator </a>
+                </div>
+            </li>
+
         </ul>
     </div>
 
