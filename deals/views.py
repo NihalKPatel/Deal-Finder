@@ -285,7 +285,7 @@ class BudgetCreateView(CreateView):
 # generic update view for updating budgets
 class BudgetUpdate(LoginRequiredMixin, UpdateView):
     model = Budget
-    template_name = 'pages/shopping_list_update.html'
+    template_name = 'pages/budget_update.html'
     fields = ['name', 'max_spend', 'list']
     success_url = reverse_lazy('budget')
 
@@ -299,7 +299,7 @@ class BudgetUpdate(LoginRequiredMixin, UpdateView):
 # generic delete view for deleting budgets
 class BudgetDelete(LoginRequiredMixin, DeleteView):
     model = Budget
-    template_name = 'pages/shopping_list_delete.html'
+    template_name = 'pages/budget_delete.html'
     success_url = reverse_lazy('budget')
 
 
