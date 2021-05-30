@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Sum
 from PIL import Image
+from datetime import datetime
 
 
 # Create your models here.
@@ -53,7 +54,6 @@ class List(models.Model):
         queryset = self.products.all().aggregate(total_price=models.Sum('price'))['total_price']
         return queryset
 
-
 # model for storing product information
 # many to many relationship with lists
 class Product(models.Model):
@@ -76,12 +76,23 @@ class Budget(models.Model):
     list = models.ForeignKey(List, on_delete=models.SET_NULL, null=True, blank=True)
     # whether this is the users chosen weekly budget
     weekly = models.BooleanField(default=False)
-    date = models.DateField(auto_now_add=True)
+    # blank if you don't want this budget to appear on analytics
+    date = models.DateField(default=None, null=True, blank=True)
 
     # calculate amount at which to warn the user of their spending
     def spent_warning_amount(self):
         warning_spending = self.max_spend * 0.95
         return warning_spending
+
+    # sum of values of all products in this budgets list
+    def spent(self):
+        spent = 0
+        if self.list == None:
+            return 0
+        products = self.list.products.all()
+        for product in products:
+            spent += product.price
+        return spent
 
     def __str__(self):
         return self.name

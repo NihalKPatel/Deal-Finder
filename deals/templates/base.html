@@ -14,7 +14,6 @@
     <!-- FontAwesome--->
     <script src="{% static 'fontawesome_free/js/all.min.js' %}"></script>
     <!-- CSS -->
-    {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -49,6 +48,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'about' %}">About</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'faq' %}">FAQ</a>
+            </li>
             <!-- once the user is logged in it shows new links -->
             {% if user.is_authenticated %}
 
@@ -61,7 +63,7 @@
                 <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
                 <div class="dropdown-divider"></div>
                     <!-- links to dashboard page -->
-                <a class="dropdown-item" href="{% url 'faq' %}">My Dashboard</a>
+                <a class="dropdown-item" href="{% url 'dashboard' %}">My Dashboard</a>
                 <div class="dropdown-divider"></div>
                     <!-- links to budget calculator -->
                 <a class="dropdown-item" href="{% url 'budget_calculator' %}">My Budget Calc</a>
