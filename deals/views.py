@@ -77,21 +77,28 @@ def budget(request):
 
     # Find the budget for that particular user with the index specified
     current_budget = Budget.objects.filter(profile_id=request.user.id)[budget_index - 1]
+    products = None
+    money_remaining = None
+    budget_list = None
     # find the single list that belongs to that budget
-    budget_list = List.objects.get(budget=current_budget.id)
+    if current_budget.list is None:
+        pass
+    else:
+        budget_list = List.objects.get(budget=current_budget.id)
+        products = budget_list.products.all()
+        print(products)
+        # increment total money spent for the price of each item
+        for product in products:
+            total_spent += product.price
 
-    products = budget_list.products.all()
-    # increment total money spent for the price of each item
-    for product in products:
-        total_spent += product.price
+        money_remaining = current_budget.max_spend - total_spent
 
-    money_remaining = current_budget.max_spend - total_spent
-    money_remaining = current_budget.max_spend - total_spent
     return render(request, 'pages/budget.html', {'products': products,
                                                  'budget': current_budget,
                                                  'all_budgets': budgets,
                                                  'money_spent': total_spent,
-                                                 'money_remaining': money_remaining
+                                                 'money_remaining': money_remaining,
+                                                 'budget_list': budget_list,
                                                  })
 
 
@@ -422,9 +429,8 @@ def suggestion_view(request):
     return render(request, 'pages/about.html', context)
 
 
-def delete_from_budget(request, pk):
+def deleteFromBudget(request, pk):
     product = Product.objects.get(id=pk)
-    current_budget = Budget.objects.filter(profile_id=request.user.id)[global_budget_index() - 1]
     if request.method == "POST":
         if product.product_type == 2 or product.product_type == 3:
             product.delete()
