@@ -139,7 +139,15 @@
         </div>
 
 {#        <span style="display:block; height: 5px;"></span>#}
-        <h1 style="text-align:center">{{ budget.name }}</h1>
+        <h1 style="text-align:center">Budget: {{ budget.name }}</h1>
+        <h2 style="text-align:center">List: {{ budget_list.name }}</h2>
+
+        <div class="container">
+            <div class="card-body">
+                <div class="row justify-content-center">
+                    <a href="{% url 'budget_calculator' %}">Budget Calculator</a>
+                </div>
+            </div>
 
         <div class="row">
             <div class="col 14" align="left">
