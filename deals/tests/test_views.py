@@ -1,9 +1,5 @@
-from django.contrib.auth.models import User
-from django.test import TestCase
 from django.urls import reverse
 from django.test import TestCase
-from django.test import Client
-from ..forms import UserRegisterForm
 
 
 class DashboardViewTest(TestCase):

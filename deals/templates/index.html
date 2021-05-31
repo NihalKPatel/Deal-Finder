@@ -79,8 +79,10 @@
             border-radius: 50px;
             transition: 0.5s;
             border: 1px solid #000000;
-            color: #000000;
+
         }
+
+
         body{
             background-color: #ffffff;
         }
@@ -121,13 +123,8 @@
                                 </div>
 
 
-                                <a href="{% url 'faq' %}">
-                                    <button type="button" class="btn-get-started scrollto" data-toggle="popover" title="More information" data-content="Click here for more information">FAQ</button></a>
-{#                                <a href="{% url 'about' %}" class="btn-get-started scrollto">Contact Us!</a>#}
-                                <a href="{% url 'about' %}">
-                                    <button type="button" class="btn-get-started scrollto" data-toggle="popover" title="Suggestions" data-content="Tell us what you think! :)"> Contact Us!</button></a>
-
-
+                                <a href="{% url 'faq' %}" class="btn-get-started" data-toggle="popover" title="More information" data-content="Click here for more information">Guide</a>
+                                <a href="{% url 'about' %}"  class="btn-get-started" data-toggle="popover" title="Suggestions" data-content="Tell us what you think! :)">Contact Us!</a></a>
                             </div>
                         </div>
 
