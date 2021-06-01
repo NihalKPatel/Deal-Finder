@@ -27,4 +27,4 @@ In future springs, we aim to have more user-focused features.
 ### How to setup scheduled weekly budgets
 1. Firstly install RabbitMQ message broker from https://www.rabbitmq.com/download.html
 2. run the worker with the following: celery -A dealfinder worker -l info --pool=solo
-3. run the consumer with: celery -A dealfinder beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler
+3. run the beat scheduler with: celery -A dealfinder beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler
