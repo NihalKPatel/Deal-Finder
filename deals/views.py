@@ -37,10 +37,6 @@ def faq(request):
     return render(request, 'pages/faq.html')
 
 
-# View to handle the shop template
-def shop(request):
-    return render(request, 'pages/shop.html')
-
 
 # View to handle the dashboard template
 # @login_required(login_url='/accounts/login/')
@@ -184,16 +180,6 @@ class Browse(LoginRequiredMixin, generic.ListView):
 
         context['all_lists'] = List.objects.filter(profile_id=self.request.user.id)
         return context
-
-
-# View to handle the categories template
-def categories(request):
-    return render(request, 'pages/categories.html')
-
-
-# View to handle the compare list template
-def compare_list(request):
-    return render(request, 'pages/compare_list.html')
 
 
 # list view to display all of the users lists

@@ -11,7 +11,6 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('', views.index, name='index'),
     path('profile', views.profile, name='profile'),
-    path('shop', views.shop, name='shop'),
     path('budget', views.budget, name='budget'),
     path('budget/<int:pk>/update/', views.BudgetUpdate.as_view(), name='budget_update'),
     path('budget/<int:pk>/delete/', views.BudgetDelete.as_view(), name='budget_delete'),
@@ -24,9 +23,7 @@ urlpatterns = [
     path('shopping_list/create', views.ShoppingListCreate.as_view(), name='shopping_list_create'),
     path('shopping_list/<int:pk>/update/', views.ShoppingListUpdate.as_view(), name='shopping_list_update'),
     path('shopping_list/<int:pk>/delete/', views.ShoppingListDelete.as_view(), name='shopping_list_delete'),
-    path('compare_list', views.compare_list, name='compare_list'),
     path('browse', views.Browse.as_view(), name='browse'),
-    path('categories', views.categories, name='categories'),
     path('details', views.details, name='details'),
     path('notification', views.notification, name='notification'),
     path('password-reset/',
