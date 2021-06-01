@@ -1,6 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 import os
 from celery import Celery
+from celery.schedules import crontab
 from django.conf import settings
 
 # set the default Django settings module for the 'celery' program.
@@ -12,10 +13,11 @@ app = Celery('dealfinder')
 app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()
 
+# execute scheduled task every sunday at midnight
 app.conf.beat_schedule = {
     'weekly-budget': {
         'task': 'deals.tasks.create_weekly_budgets',
-        'schedule': 30.0,
+        'schedule': crontab(hour=0, minute=0, day_of_week=6),
     }
 }
 
