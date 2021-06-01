@@ -15,6 +15,6 @@ class faq(TestCase):
 
     # test that the dashboard view is using the correct template
     def test_view_uses_correct_template_faq(self):
-        response = self.client.get(reverse('FAQ'))
+        response = self.client.get(reverse('faq'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'pages/faq.html')
