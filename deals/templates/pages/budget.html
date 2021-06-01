@@ -4,20 +4,20 @@
     <head xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 
     <style>
-        a {
+        a{
             border: 0;
             border-radius: 15px;
-            background: #2d6760;
-            color: #fff;
+            background-color: #2d6760;
+            color: white;
             font-weight: 500;
             font-size: 1rem;
             padding: 5px 16px;
-            margin-bottom: 5px;
-            margin-left: 6px;
         }
         a:hover {
             color: white;
             background-color: rgba(45, 103, 96, 0.78);
+            text-decoration: none;
+
         }
 
         .card-body button {
@@ -139,7 +139,15 @@
         </div>
 
 {#        <span style="display:block; height: 5px;"></span>#}
-        <h1 style="text-align:center">{{ budget.name }}</h1>
+        <h1 style="text-align:center">Budget: {{ budget.name }}</h1>
+        <h2 style="text-align:center">List: {{ budget_list.name }}</h2>
+
+        <div class="container">
+            <div class="card-body">
+                <div class="row justify-content-center">
+                    <a href="{% url 'budget_calculator' %}">Budget Calculator</a>
+                </div>
+            </div>
 
         <div class="row">
             <div class="col 14" align="left">

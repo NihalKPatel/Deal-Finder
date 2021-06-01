@@ -4,20 +4,50 @@
     <!DOCTYPE html>
     <html>
     <head>
+        <style>
+            .btn {
+                border: 0;
+                border-radius: 15px;
+                background: #2d6760;
+                color: #fff;
+                font-weight: 500;
+                font-size: 1rem;
+                padding: 5px 16px;
+                width: 50rem;
+
+            }
+            .btn:hover{
+                background-color: rgba(45, 103, 96, 0.78);
+
+
+            }
+            .list-group li {
+                border: white;
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+                width: 50rem
+
+
+            }
+            .collapse {
+                text-align: center;
+
+            }
+        </style>
     </head>
     <body>
-    <div class="container">
-        <span style="display:block; height: 20px;"></span>
+        <span style="display:flex; height: 2rem;"></span>
         <h2 align="center">Our FAQ and what DealFinder can do</h2>
         <p align="Center">Click on each button to see the answer.</p>
 
         <ul class="list-group">
             <li class="list-group-item">
-                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#q1">
+                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#q1" >
                     How do I create my own profile?
                 </button>
                 <div id="q1" class="collapse">
-                    <span style="display:block; height: 8px;"></span>
+                    <span style="display:block; height: 0.5rem;"></span>
                     Navigate to the right hand-side of the page and click on register
                 </div>
             </li>
@@ -26,7 +56,7 @@
                     How can I create a Budget?
                 </button>
                 <div id="q2" class="collapse">
-                    <span style="display:block; height: 8px;"></span>
+                    <span style="display:block; height: 0.5rem"></span>
                     By clicking on the <a href="{% url 'budget_create' %}"> "Budget" </a>" Tab, you will then be able to click on the "Create New Budget" button.
                     From there you can follow the form to create a new Budget.
                     
@@ -37,17 +67,17 @@
                     How can I create a Shopping List?
                 </button>
                 <div id="q3" class="collapse">
-                    <span style="display:block; height: 8px;"></span>
+                    <span style="display:block; height: 0.5rem"></span>
                     By clicking on the "Shopping List" Tab, you will then be able to click on the "Create New List" button.
                     From there you can follow the form to create a new Shopping List.
                 </div>
             </li>
             <li class="list-group-item">
-                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#q4">
+            <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#q4">
                     How do Shopping Lists and Budgets Work?
                 </button>
                 <div id="q4" class="collapse">
-                    <span style="display:block; height: 8px;"></span>
+                    <span style="display:block; height: 0.5rem;"></span>
                     - A Shopping List is where you add all the products that you want in that list.
                     <br>
                     - A Budget has certain parameters such as maximum spending, current spending and spending remaining.
@@ -63,8 +93,8 @@
                     How many shopping lists can I create?
                 </button>
                 <div id="q5" class="collapse">
-                    <span style="display:block; height: 8px;"></span>
-                    As many as you like! <a href="{% url 'shopping_list' %}"> click here to create a new one  </a>
+                    <span style="display:block; height: 0.5rem;"></span>
+                    As many as you like! <a href="{% url 'shopping_list' %}"> click here </a>to create a new one
                 </div>
             </li>
             <li class="list-group-item">
@@ -72,8 +102,8 @@
                     How many shops near by can I see?
                 </button>
                 <div id="q6" class="collapse">
-                    <span style="display:block; height: 8px;"></span>
-                    There are many shops options available <a href="{% url 'browse' %}"> click here to enter your location </a> and look for stores - keep in mind that you might need to login
+                    <span style="display:block; height: 0.5rem"></span>
+                    There are many shops options available <a href="{% url 'browse' %}"> click here</a>  to enter the store zip and look for stores
                 </div>
             </li>
             <li class="list-group-item">
@@ -81,7 +111,7 @@
                     What happens if I go over budget?
                 </button>
                 <div id="q7" class="collapse">
-                    <span style="display:block; height: 8px;"></span>
+                    <span style="display:block; height: 0.5rem"></span>
                     When a Budget's max has been exceeded you can still add products, however the warnings will remain
                     there until the spending has been placed back to safe levels.
                 </div>
@@ -92,13 +122,12 @@
                 </button>
                 <a ></a>
                 <div id="q8" class="collapse">
-                    <span style="display:block; height: 8px;"></span>
-                    <a href="{% url 'budget_calculator' %}"> Click here to use our amazing budget calculator </a>
+                    <span style="display:block; height: 0.5rem;"></span>
+                    <a href="{% url 'budget_calculator' %}"> Click here</a>  to use our amazing budget calculator
                 </div>
             </li>
 
         </ul>
-    </div>
 
     </body>
     </html>
