@@ -1,90 +1,86 @@
 {% extends "base.html" %}
 {% block content %}
 
-<head>
-    <style>
-        input
-        {
-            display: block;
-            padding: 5px;
-            margin: 12px auto;
-            width: 100%;
-        }
+    <head>
+        <style>
+            input
+            {
+                display: block;
+                padding: 5px;
+                margin: 12px auto;
+                width: 100%;
+            }
 
-        .results
-        {
-            min-height: 20px;
-            padding: 20px;
-            margin: 20px 0;
-            border: 1px solid #e3e3e3;
-            border-radius: 4px;
-        }
+            .results
+            {
+                min-height: 20px;
+                padding: 20px;
+                margin: 20px 0;
+                border: 1px solid #e3e3e3;
+                border-radius: 4px;
+            }
 
-        .results-data
-        {
-            margin: 1.5rem 0;
-        }
+            .results-data
+            {
+                margin: 1.5rem 0;
+            }
 
-        .box
-        {
-            margin: 20px;
-        }
-        .card-body button {
-            border: 0;
-            border-radius: 15px;
-            background: #2d6760;
-            color: #fff;
-            font-weight: 500;
-            font-size: 1rem;
-            padding: 5px 16px;
-            margin-bottom: 5px;
-            margin-left: 6px;
-        }
-        .btn:hover{
-            background-color: rgba(45, 103, 96, 0.78);
-
-
-        }
+            .box
+            {
+                margin: 20px;
+            }
+            .card-body button {
+                border: 0;
+                border-radius: 15px;
+                background: #2d6760;
+                color: #fff;
+                font-weight: 500;
+                font-size: 1rem;
+                padding: 5px 16px;
+                margin-bottom: 5px;
+                margin-left: 6px;
+            }
+            .btn:hover{
+                background-color: rgba(45, 103, 96, 0.78);
 
 
-    </style>
+            }
 
-</head>
-<body>
+
+        </style>
+
+    </head>
+    <body>
     <div class="container">
         <div class="card-body">
-        <h1 align="center">My Budget Calculator</h1>
-        <p align="center">A budget calculator designed to help you calculate your expenses.</p>
-        <div class="container-fluid center-box">
-            <div class="row">
-                <div class="col-sm-6 col-sm-offset-1">
-                    <div class="box">
-                        <form>
-                            <input class="form-control input-lg" type="text" id="income" placeholder="Weekly Income"/>
-                            <input class="form-control input-lg" type="text" id="rent" placeholder="Rent"/>
-                            <input class="form-control input-lg" type="text" id="food" placeholder="Food"/>
-                            <input class="form-control input-lg" type="text" id="utilities" placeholder="Utilities"/>
-                            <input class="form-control input-lg" type="text" id="transport" placeholder="Transport"/>
-                        </form>
-                        <button type="button" class="btn btn-primary btn-lg btn-block">Calculate!</button>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="results">
-                        <h2>Results</h2>
-                        <div class="results-data">
-                            <p>Submit button will calculate your results!</p>
-
+            <h1 align="center">My Budget Calculator</h1>
+            <p align="center">A budget calculator designed to help you calculate your expenses.</p>
+            <div class="container-fluid center-box">
+                <div class="row">
+                    <div class="col-sm-6 col-sm-offset-1">
+                        <div class="box">
+                            <form>
+                                <input class="form-control input-lg" type="text" id="income" placeholder="Weekly Income"/>
+                                <input class="form-control input-lg" type="text" id="rent" placeholder="Rent"/>
+                                <input class="form-control input-lg" type="text" id="food" placeholder="Food"/>
+                                <input class="form-control input-lg" type="text" id="utilities" placeholder="Utilities"/>
+                                <input class="form-control input-lg" type="text" id="transport" placeholder="Transport"/>
+                            </form>
+                            <button type="button" class="btn btn-primary btn-lg btn-block">Calculate!</button>
                         </div>
-
                     </div>
-
+                    <div class="col-sm-4">
+                        <div class="results">
+                            <h2>Results</h2>
+                            <div class="results-data">
+                                <p>Submit button will calculate your results!</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
             </div>
-
         </div>
-        </div>
-
     </div>
 
     <script>
@@ -125,6 +121,6 @@
         }
 
     </script>
-</body>
+    </body>
 
 {% endblock %}
